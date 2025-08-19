@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Matan Tzur</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body class="bg-dark text-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Matan Tzur's Portfolio</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#resume">Resume</a></li>
+        <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section id="home" class="vh-100 d-flex align-items-center justify-content-center text-center">
+  <div>
+    <h1 class="display-4">Hi, I'm <span class="text-primary">Matan</span></h1>
+    <p class="lead">Data Analyst | BI Engineer | Analytics Engineer</p>
+    <a href="#" class="btn btn-outline-primary mt-3">Download Resume</a>
+  </div>
+</section>
+
+<section id="about" class="container py-5">
+  <h2 class="text-center mb-4">About Me</h2>
+  <p class="text-center">
+    Data professional with 5+ years of experience in analytics, BI, and data engineering.<br> 
+    Skilled in data analytics, building scalable analytics infrastructure, automating workflows,<br>
+    and delivering actionable insights to support data-driven decision-making.<br> 
+    Experienced in SQL, Python, PySpark, and BI tools such as Looker and Tableau.<br>
+    Collaborative team player with strong communication skills and a passion for learning new technologies.
+</p>
+</section>
+
+<section id="resume" class="container py-5">
+  <h2 class="text-center mb-4">Resume</h2>
+  <ul class="timeline list-unstyled">
+    <li class="mb-4"><h5>&nbsp;2024-2025: Big Data Engineer Course - Naya College</h5>
+    </li>
+    <li class="mb-4"><h5>&nbsp;2024-2025: Data Engineering Nanodegree - Udacity</h5>
+    </li>
+    <li class="mb-4"><h5>&nbsp;2023–2025: Data Analyst + BI Solutions - Yael Group </h5>
+      <p>
+        Built end-to-end analytics DWH infrastructure from scratch, including databases,<br> ETL pipelines, and automated workflows using Python, SQL, Airflow, and Kafka.<br>
+        Integrated data from APIs, S3, and emails, improving data flow efficiency <br> and reducing manual work by 90%.<br>
+        Partnered with stakeholders to define KPIs, design dashboards, and monitor business/operational metrics.<br>
+        Optimized SQL queries and automated reporting workflows to enhance team productivity.
+      </p>
+    </li>
+
+    <li class="mb-4"><h5>&nbsp;2022–2023: BI Data Analyst - Kissterra</h5>
+      <p>
+        Developed analytical models (Python, PySpark, SQL) to improve publishing algorithm performance <br> and validate A/B test hypotheses.<br>
+        Built BigQuery-based data warehouse with custom ETL logic orchestrated via Airflow.<br>
+        Created Looker dashboards and automated reports to track KPIs and improve decision-making.<br>
+        Improved CPA by 22% and budget utilization by 36% <br> per month through analytical model development.
+      </p>
+    </li></li>
+    <li class="mb-4"><h5>&nbsp;2020–2022: Data Analyst - Pandologic</h5>
+      <p>
+        Conducted daily analysis of algorithm performance and optimized processes through micro-actions.<br>
+        Automated reporting tools, improving team efficiency and workflow tracking.<br>
+        Collaborated with customer success to identify and solve potential issues proactively.<br>
+        Contributed to a 15% MoM increase in campaign budgets,<br> improving margins through targeted analysis.
+      </p>
+    </li>
+    </li>
+    <li class="mb-4"><h5>&nbsp;2020–2021: Statistical Inference Teaching Assistant - Afeka College</h5>
+      <p>
+        Applied R in academic settings to guide students<br> through statistical inference and hypothesis testing.<br>
+        Supported students in translating data into meaningful conclusions<br> and building critical analytical skills.<br>
+      </p>
+    </li>
+    <li class="mb-4"><h5>&nbsp;2018–2023: B.Sc. Industrial Engineering - Afeka College</h5>
+    </li>
+  </ul>
+</section>
+
+<section id="skills" class="container py-5 text-center">
+  <h2 class="mb-4">Skills</h2>
+  
+  <div class="row justify-content-center g-3">
+    <!-- First Row of Skills -->
+    <div class="col-auto">
+      <span class="badge bg-primary fs-6 px-3 py-2">Python</span>
+    </div>
+    <div class="col-auto">
+      <span class="badge bg-success fs-6 px-3 py-2">SQL</span>
+    </div>
+    <div class="col-auto">
+      <span class="badge bg-primary fs-6 px-3 py-2">Tableau</span>
+    </div>
+    <div class="col-auto">
+      <span class="badge bg-success fs-6 px-3 py-2">Airflow</span>
+    </div>
+    <div class="col-auto">
+      <span class="badge bg-primary fs-6 px-3 py-2">AWS</span>
+    </div>
+  </div>
+
+  <div class="row justify-content-center g-3 mt-3">
+    <!-- Second Row of Skills -->
+    <div class="col-auto">
+      <span class="badge bg-success fs-6 px-3 py-2">Pandas / NumPy / PySpark</span>
+    </div>
+    <div class="col-auto">
+      <span class="badge bg-primary fs-6 px-3 py-2">MSSQL / BigQuery</span>
+    </div>
+    <div class="col-auto">
+      <span class="badge bg-success fs-6 px-3 py-2">Looker</span>
+    </div>
+    <div class="col-auto">
+      <span class="badge bg-primary fs-6 px-3 py-2">Kafka</span>
+    </div>
+    <div class="col-auto">
+      <span class="badge bg-success fs-6 px-3 py-2">S3 / Glue / Athena</span>
+    </div>
+  </div>
+
+   <div class="row justify-content-center g-3 mt-3">
+    <!-- third Row of Skills -->
+    <div class="col-auto">
+      <span class="badge bg-primary fs-6 px-3 py-2">KPI Modeling</span>
+    </div>
+    <div class="col-auto">
+      <span class="badge bg-success fs-6 px-3 py-2">Statistical Analysis</span>
+    </div>
+    <div class="col-auto">
+      <span class="badge bg-primary fs-6 px-3 py-2">A/B Testing</span>
+    </div>
+    <div class="col-auto">
+      <span class="badge bg-success fs-6 px-3 py-2">API Ingestion</span>
+    </div>
+    <div class="col-auto">
+      <span class="badge bg-primary fs-6 px-3 py-2">ETL Design</span>
+    </div>
+  </div>
+
+
+</section>
+
+
+<section id="projects" class="container py-5">
+  <h2 class="text-center mb-4">Projects</h2>
+  <div class="row g-4">
+    <!-- Project 1 -->
+    <div class="col-md-4">
+      <div class="card bg-primary text-light h-100">
+        <div class="card-body">
+          <h5 class="card-title">Feature Utilization Rate</h5>
+          <p class="card-text">
+          Conducting product data research to evaluate new feature performance.<br> Analyzing usage patterns, defining metrics, identifying trends and anomalies, and performing segment analysis.<br> Providing data-driven recommendations based on impact evaluation.
+          </p>
+          <p><small>Skills: Data Analysis, Python, mainly Pandas to navigate the data and Seaborn to visualize the data</small></p>
+          <a href="https://www.notion.so/Feature-Utilization-Rate-2545262535ff806991d7e42d3515832c?source=copy_link" class="btn btn-outline-light">View Project</a>
+        </div>
+      </div>
+    </div>
+    <!-- Project 2 -->
+    <div class="col-md-4">
+      <div class="card bg-primary text-light h-100">
+        <div class="card-body">
+          <h5 class="card-title">KPI & ETL Design for Retention</h5>
+          <p class="card-text">Defining a KPI that is important for product analysis<br>and design a high level ETL outline<br>for cleaning, transforming and validating the data.<br>This project assumes legacy data sources.</p>
+          <p><small>Skills: Data Modeling, ETL Design, Cohort Analysis, Retention Analysis </small></p>
+          <a href="https://www.notion.so/KPI-ETL-Design-for-Retention-2545262535ff8000af20c1a0227e684b?source=copy_link" class="btn btn-outline-light">View Project</a>
+        </div>
+      </div>
+    </div>
+    <!-- Project 3 -->
+    <div class="col-md-4">
+      <div class="card bg-primary text-light h-100">
+        <div class="card-body">
+          <h5 class="card-title">A/B Test - Does the Change Increase Retention?</h5>
+          <p class="card-text">Will providing users with a 7-day trial period increase their likelihood of becoming paying customers?</p>
+          <p><small>Skills: Python, BigQuery SQL, Statistical Inference, A/B Testing, Data Analysis</small></p>
+          <a href="https://www.notion.so/A-B-Test-Does-the-Change-Increase-Retention-2545262535ff807ca1daee83b75b4cfa?source=copy_link" class="btn btn-outline-light">View Project</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="container py-5">
+  <div class="row g-4">
+    <!-- Project 4 -->
+    <div class="col-md-4">
+      <div class="card bg-secondary text-light h-100">
+        <div class="card-body">
+          <h5 class="card-title">What Do You Remember From Your High School Matriculation Exam ?</h5>
+          <p class="card-text">
+          I used data exploration and statistical inference to find out which one of two age-groups remembers their matriculation exam better -<br> A) Adults 23-28 YO <br> B) Young Adults 18-20
+          </p>
+          <p><small>Skills: Statistical Inference, Python, Pandas, Numpy</small></p>
+          <a href="https://github.com/matantsour/Core_Studies_Memory_Analysis" class="btn btn-outline-light">View Project</a>
+        </div>
+      </div>
+    </div>
+    <!-- Project 5 -->
+    <div class="col-md-4">
+      <div class="card bg-secondary text-light h-100">
+        <div class="card-body">
+          <h5 class="card-title">ETL for DB hosted in Redshift</h5>
+          <p class="card-text">In this project, I have loaded data from 𝗔𝗪𝗦 𝗦𝟯 to staging tables on 𝗥𝗲𝗱𝘀𝗵𝗶𝗳𝘁, I extracted, transformed and loaded this data through SQL statements in order to create analytics tables (dimenstions tables and facts tables)</p>
+          <p><small>Skills: Data Modeling, AWS, ETL, RedShift </small></p>
+          <a href="https://github.com/matantsour/Data-Engineering-Projects/tree/main/DE%20AWS%20Redshift%20ETL" class="btn btn-outline-light">View Project</a>
+        </div>
+      </div>
+    </div>
+    <!-- Project 6 -->
+    <div class="col-md-4">
+      <div class="card bg-secondary text-light h-100">
+        <div class="card-body">
+          <h5 class="card-title">NoSQL Data Modeling</h5>
+          <p class="card-text">In this project, I designed a 𝗡𝗼𝗦𝗤𝗟 database using 𝗔𝗽𝗮𝗰𝗵𝗲 𝗖𝗮𝘀𝘀𝗮𝗻𝗱𝗿𝗮 and developed an 𝗘𝗧𝗟 pipeline to extract data from multiple 𝗖𝗦𝗩 files, transform it into a unified format, and load it into Cassandra tables</p>
+          <p><small>Skills: NoSQL, Cassandra, Data Modeling</small></p>
+          <a href="https://github.com/matantsour/Data-Engineering-Projects/tree/main/DE%20Data%20Modeling" class="btn btn-outline-light">View Project</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="container py-5 text-center">
+  <h2 class="mb-4">Contact</h2>
+  <p>Email: <a href="mailto:matani.ts1@gmail.com" class="text-primary">matani.ts1@Gmail.com</a></p>
+  <p><a href="https://www.linkedin.com/in/matan-tsour/" class="text-primary">LinkedIn</a> | <a href="https://github.com/matantsour" class="text-primary">GitHub</a></p>
+</section>
+
+<footer class="text-center py-3 bg-black">
+  <small>© Matan tzur.</small>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
