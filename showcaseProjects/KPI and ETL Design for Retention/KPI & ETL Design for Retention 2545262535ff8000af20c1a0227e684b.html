@@ -1,0 +1,697 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>KPI &amp; ETL Design for Retention</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(142, 58, 1, 0.141); }
+.select-value-color-orange { background-color: rgba(213, 96, 0, 0.188); }
+.select-value-color-yellow { background-color: rgba(209, 155, 0, 0.238); }
+.select-value-color-green { background-color: rgba(1, 104, 42, 0.145); }
+.select-value-color-blue { background-color: rgba(0, 108, 191, 0.156); }
+.select-value-color-purple { background-color: rgba(104, 1, 184, 0.125); }
+.select-value-color-pink { background-color: rgba(204, 1, 88, 0.137); }
+.select-value-color-red { background-color: rgba(228, 26, 0, 0.148); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="25452625-35ff-8000-af20-c1a0227e684b" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🔠</span></div><h1 class="page-title">KPI &amp; ETL Design for Retention</h1><p class="page-description"></p></header><div class="page-body"><hr id="25452625-35ff-818f-9858-d852c1ea31e7"/><p id="25452625-35ff-8161-b8a2-daca4ae201db" class=""><strong>Background</strong></p><p id="25452625-35ff-8187-bbf0-e9078a7dedef" class="">At SecurityHero, we often work with legacy data sources that were not designed for analytics. The data may contain duplicates, missing values, inconsistent naming, and other quality issues. Your goal is to show us how you would define a reliable KPI and design the process to calculate it consistently.</p><h2 id="25452625-35ff-8171-8b99-f47460f0e459" class=""><strong>Instructions</strong></h2><ul id="25452625-35ff-813a-ac27-d77c9c1ee6c2" class="bulleted-list"><li style="list-style-type:disc">Choose one KPI: Select a business metric you believe is most critical for us ( Trial-to-Paid Conversion, Retention, ARPU, CAC, Churn). Explain why it’s important and what business question it helps answer.</li></ul><ul id="25452625-35ff-8151-b144-e8eb52143ac5" class="bulleted-list"><li style="list-style-type:disc">Define the KPI clearly: Specify the numerator and denominator. Which filters and assumptions are necessary? How would you handle duplicates, missing dates, or inconsistent values?</li></ul><ul id="25452625-35ff-81a6-b5fb-e29aa57f04e6" class="bulleted-list"><li style="list-style-type:disc">Design a high-level ETL outline (no code needed): Outline steps for cleaning, transforming, and validating the data. Describe how you’d handle schema changes or new issues in the future.</li></ul><ul id="25452625-35ff-81da-a877-d69112b0dc98" class="bulleted-list"><li style="list-style-type:disc">Discuss tradeoffs: What risks exist in your definition? How would you balance speed vs. accuracy? How would you explain your approach to leadership in non-technical terms?</li></ul><h2 id="25452625-35ff-810f-bc7f-eda3e5363748" class=""><strong>Deliverables</strong></h2><ul id="25452625-35ff-81a2-bade-fa94f3c3643e" class="bulleted-list"><li style="list-style-type:disc">A written explanation (1–2 pages) describing your KPI definition, ETL outline, and key assumptions.</li></ul><ul id="25452625-35ff-8110-a084-df039553d3bd" class="bulleted-list"><li style="list-style-type:disc">A simple diagram or bullet list of the ETL process (see example).</li></ul><h2 id="25452625-35ff-815c-bd27-daa8814b06fe" class=""><strong>Example ETL Outline (for reference)</strong></h2><ul id="25452625-35ff-81d6-961d-c6a2e4be98e9" class="bulleted-list"><li style="list-style-type:disc">Raw Legacy Data → Multiple sources with inconsistencies</li></ul><ul id="25452625-35ff-817c-ba8f-d12ae2d89806" class="bulleted-list"><li style="list-style-type:disc">Data Cleaning → Remove duplicates, standardize values, handle missing data</li></ul><ul id="25452625-35ff-81a2-bb62-c8b6c8df5803" class="bulleted-list"><li style="list-style-type:disc">Transformation → Join tables, map inconsistent fields, apply business rules</li></ul><ul id="25452625-35ff-81cc-b2d7-dba7d214223d" class="bulleted-list"><li style="list-style-type:disc">Validation → Data quality checks, schema consistency, outlier detection</li></ul><ul id="25452625-35ff-81b7-8294-e8a2754ae388" class="bulleted-list"><li style="list-style-type:disc">KPI Calculation → Compute chosen KPI (CAC, Trial-to-Paid Conversion) and document assumptions</li></ul><ul id="25452625-35ff-8156-bbc3-e88a89196df3" class="bulleted-list"><li style="list-style-type:disc">Dashboard / Reporting → Share KPI with leadership and teams</li></ul><p id="25452625-35ff-81c1-b525-c398c68f9cf5" class="">
+</p><p id="25452625-35ff-81cb-853e-ca7f83b64a05" class="">
+</p><p id="25452625-35ff-817e-8be7-eeeeea9003b5" class=""><strong>Step A: Choose one KPI</strong></p><p id="25452625-35ff-8168-81e1-faf0dfc3cb8a" class="">SecurityHero sells an online secuirity platform and features to users.<br/>In a non-premium version users have major limitations in terms of using all the features. <br/>If a user subscribes to Online security, they gain full access to all of the product’s features.<br/>Since a subscription is limited by time (monthly or yearly), it is in the business best interest that the users will renew their subscription or convert from monthly subscription to yearly subscription.<br/>Counting, measuring and forecasting the renewals will help to estimate Growth and the business success. <br/>Addressing renewals is nice, but it’s not enough to truly assess the business success.<br/>We need to look at usage over time. This is often reffered to retention - How many users return and keep using the product over time.<br/>In my opinion, this is the most important KPI to a business like SecurityHero. <br/>This can indicate not just about the viability of the product but its success and demand over time as well as its competetive value in the market compared to similar products.</p><p id="25452625-35ff-81ba-9715-dead59fab78c" class="">There are more KPIs of great value to a business like SecurityHero, such as:<br/>* Churn - somewhat complementary to retention. It is vital to know not just how many users are retained but also how many user abandon the product without ever renewing again.<br/>* Revenue, revenue per ser - if the product works but doesn’t work for the organizaion (doesn’t generate enough revenue to be sustainable), then it’s time to stop using it.</p><p id="25452625-35ff-81ac-a934-de1062e4f6ac" class="">*Customer Acquisition Rate, Customer Acquisition Cost - how much does it cost (the marketing mainly) to get a user to subscribe to SecurityHero. Including how much it costs to download the platform (even without paid subscription). <br/>* from the earlier task - Trial-to-Paid conversion rate.  <br/></p><p id="25452625-35ff-8116-9bee-c12245686dcf" class=""><strong>Step B - Defining the chosen KPI - Retention:</strong></p><p id="25452625-35ff-81f8-9068-f5dd946a106f" class="">Retention measures how well users continue using or paying for the product over time.<br/>Since SecurityHero has subscriptions with renewals (monthly/yearly), retention should include:</p><ul id="25452625-35ff-81c1-890e-d7d56139058a" class="bulleted-list"><li style="list-style-type:disc">user engagement over time (active use and not just payment)</li></ul><ul id="25452625-35ff-81bd-a9a4-d68edff4be5e" class="bulleted-list"><li style="list-style-type:disc">subscription renewals (continues payments)</li></ul><ul id="25452625-35ff-81e1-b936-f422aba00a90" class="bulleted-list"><li style="list-style-type:disc"><em>possible</em> and cautiosly I suggest - upgrades/downgrades (monthly to yearly or opposite way).</li></ul><p id="25452625-35ff-8172-b417-c83c7815d889" class="">
+</p><div id="25452625-35ff-81ff-9c2d-c29bbfec5b59" class="column-list"><div id="25452625-35ff-8161-bfd5-d2e6f2f62c76" style="width:50%" class="column"><p id="25452625-35ff-81ec-ac82-ca969a9849c7" class=""><strong><span style="border-bottom:0.05em solid">Numerator</span></strong></p><p id="25452625-35ff-81d4-b1be-f0d30e3621d2" class="">Number of unique users<br/>who are <strong>active, </strong>meaning:<br/>performed either of these actions<strong><br/></strong><em><mark class="highlight-purple">logged in, <br/>used features,<br/>renewed subscription<br/>upgraded/downgraded subscription</mark></em><br/>in a given time period<br/>since their initial subscription.</p></div><div id="25452625-35ff-810f-bf90-dfbe710ca284" style="width:49.99999999999999%" class="column"><p id="25452625-35ff-8167-a22c-cda38a374c86" class=""><strong><span style="border-bottom:0.05em solid">Denorminator</span></strong></p><p id="25452625-35ff-8171-b7e0-ea7fa6e59e76" class="">Number of unique users<br/>who subscribed or renewed<br/>at the start of a time period.</p><p id="25452625-35ff-8183-9974-da7a7584bb17" class="">
+</p></div></div><p id="25452625-35ff-81be-963e-dd1b2c875df5" class="">Retention window - Day 30.  This is a defined time period to measure the retention.<br/>Renewal inclusion - treat subscription renewals as positive action (renewed users count as retained)</p><p id="25452625-35ff-8196-8e03-cdbec03070c7" class="">
+</p><p id="25452625-35ff-814d-97bc-e89ad5d0e150" class=""><strong>An Example:</strong></p><p id="25452625-35ff-81ae-a547-c0b3ab313b42" class="">Criteria for being &quot;retained&quot;:</p><ol type="1" id="25452625-35ff-818d-a678-da782c170974" class="numbered-list" start="1"><li>User <strong>logged in OR used a key feature</strong> at least once between Day 1 and Day 30<p id="25452625-35ff-81a4-b946-e7fe2ac6388c" class=""><strong>OR</strong></p></li></ol><ol type="1" id="25452625-35ff-81d6-9b88-faefc4cedc61" class="numbered-list" start="2"><li>User <strong>renewed subscription</strong> before Day 30.</li></ol><p id="25452625-35ff-8191-9ea2-d85a43560be6" class="">
+</p><p id="25452625-35ff-81be-9418-e9a012b92225" class="">We refer to Month 2025-01, <span style="border-bottom:0.05em solid">in the 30 day time period since each user’s begining of subscription/renewal in that month.</span><br/>1000 users begun their subscription in the January 2025.<br/>700 users logged in at least once in the 30 days period since their starting date.<br/>50 users did not log in, but renewed their subscription early.<br/>20 of those renewed users were already in the 700 active group so we need to count them only once. <br/>None of the 1000 canceled their subscription (a happy coincidence).<br/>Retained users for January 2025 = (50-20)+700  = 730</p><p id="25452625-35ff-8175-b5f8-d81efaa30479" class="">Retention 30 days = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>730</mn><mn>1000</mn></mfrac><mo>=</mo><mn>0.73</mn></mrow><annotation encoding="application/x-tex">\frac{730}{1000} = 0.73</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1000</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">730</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.73</span></span></span></span></span><span>﻿</span></span> = 73% </p><p id="25452625-35ff-819b-99c8-d0984a66e59e" class=""><strong>Example Interpretation</strong></p><ul id="25452625-35ff-819c-acc0-f8698b99f831" class="bulleted-list"><li style="list-style-type:disc"><strong>73% 30-day retention</strong> means nearly 3 out of every 4 users who started in January were still active or paying after 30 days.</li></ul><ul id="25452625-35ff-8161-918c-f79fa445935a" class="bulleted-list"><li style="list-style-type:disc">This suggests good short-term engagement, but we’d need to check later months (Day 60, Day 90) to see if retention holds up.</li></ul><p id="25452625-35ff-8131-97c8-c071ef3648e3" class=""><strong>By including renewals, we capture loyal customers who may not be active daily but are still paying which matters for revenue.<br/></strong>If we were to exclude them the retention would be 70%. The retention rate points at revenue metric so I would be beneficial to include the renewals as well. they are paying customers.</p><p id="25452625-35ff-81e0-9004-db322d867fee" class="">
+</p><p id="25452625-35ff-8194-8d6e-d573d6e0e00f" class=""><strong>Filters: </strong></p><p id="25452625-35ff-8189-bf36-df7515881425" class="">Need to extract valid users, and exclude duplicate users. Count only unique users.<br/>Maybe there are some users we would also want to exclude, like special discount groups, users who get a massive discount are surely retained with no effort so we need to neutralize their effect.</p><p id="25452625-35ff-81f7-a09a-c34507a73e0a" class="">
+</p><p id="25452625-35ff-81c6-b6d9-f5c06bbf2db1" class=""><strong>Edge cases:</strong><br/>*Users switching plans - this is a tricky one, we need to make sure to not count them twice. Only once.</p><p id="25452625-35ff-818f-acd0-d9c4fb1585cb" class="">* suppose a user renewed but a day or even three days after that decided to cancel subscription.  These users should also be neutralized and not be counted in the numerator.<br/>Meaning - exclude canceled subscription’s users as well as refunded users.</p><p id="25452625-35ff-81e4-9500-d1217c8dd53c" class="">*Missing data - if the user lack timestamp for its activity, consider this as no-activity, unless there was detected a payment in another legacy system or something.</p><p id="25452625-35ff-8164-bf3c-e1067dd887be" class="">
+</p><p id="25452625-35ff-8191-bf68-d1b41b6b2f93" class="">Special challenges with this type of legacy data (probably)<br/>* Duplicates - what is a duplicate? do users have a standard id? how to detect unique users?<br/>* missing dates, why does it happen ? does it happen a lot? can we even use this data? is there enough events with dates to make any kind of analysis?</p><p id="25452625-35ff-810e-ba14-e08a5deedc7b" class="">*Inconsistent naming: in legacy data, usually data was inserted using a form or a human made interaction with a legacy system. So, if we can’t identify user by an identification number and need to combine string fields to create a manual key (horrible practice but sometimes there is nothing else to go by other than that), inconsistent namings are a problem. <br/>*Plan switching - this complicates things.  Especially if the data for monthly users is managed on a different source than data of yearly susbscried users. </p><p id="25452625-35ff-813d-af86-c85eabf1f484" class="">
+</p><h3 id="25452625-35ff-8148-a264-cada5a9ed491" class=""><strong>Step C: Design high-level ETL outline</strong><br/></h3><figure id="25452625-35ff-8113-be71-e46ae1d420e5" class="image"><a href="image.png"><img style="width:667.34375px" src="image.png"/></a></figure><p id="25452625-35ff-8161-abb5-ff1c198566eb" class=""><strong>Extract:</strong><div class="indented"><p id="25452625-35ff-81d2-aea2-f76ba1008612" class="">*Gather raw data from all relevant legacy sources: user profiles, subscription payments, login/activity logs, renewal events.</p><p id="25452625-35ff-81ba-b116-e25e3bdb9a25" class="">*Data may come from multiple systems such as CRM, billing and of course product usage logs.</p></div></p><p id="25452625-35ff-81d3-b79b-cdd7af71f693" class=""><strong>Clean:</strong><div class="indented"><p id="25452625-35ff-8107-aecd-f65b724aff36" class="">*Remove duplicates based on unique user ID or other unique keys.</p><p id="25452625-35ff-812e-919b-d43888201259" class="">*Standardize field names across data sources ( unify “user_id”, “userid”, “client_id”).</p><p id="25452625-35ff-8158-9bb9-ca92fc408be6" class="">*Fill or flag missing critical data (subscription start dates, renewal dates).</p><p id="25452625-35ff-8183-83b3-e8b7e0b0421c" class="">*Correct erroneous records ( future-dated renewals or impossible timestamps).</p></div></p><p id="25452625-35ff-81f7-98ad-e3bac3dc0980" class=""><strong>Transform:</strong><div class="indented"><p id="25452625-35ff-81b7-bafe-fa4cbbc4396a" class="">* Join user profiles with payment and usage logs by user ID.</p><p id="25452625-35ff-819a-924e-e67d1fff49a2" class="">*Define business rules for &quot;active user&quot; (any login or feature usage in period) and &quot;renewed subscription&quot; (payment transaction within renewal window).</p><p id="25452625-35ff-8134-89bd-e9b6fdc3c26d" class="">*Create cohorts (groups) based on subscription start dates (monthly, yearly cohorts).</p><p id="25452625-35ff-81c0-8c1c-f2ea07b1118b" class="">*Calculate retention flags for each user in each time period ( retained if active or renewed).</p><p id="25452625-35ff-81b3-885e-f56f9a25a661" class="">*Handle plan switches by assigning users to retention groups based on latest subscription status or split them carefully.</p></div></p><p id="25452625-35ff-81bb-895e-c737839f2658" class=""><strong>Validate:</strong><div class="indented"><p id="25452625-35ff-81ed-a80a-cf890167ebaa" class="">*Verify schema consistency after transformation.</p><p id="25452625-35ff-8110-9660-eb041f5c2a63" class="">*Check cohort sizes and retention rates for outliers or sudden drops (may indicate data issues).</p><p id="25452625-35ff-811e-8650-c9b15bf4a13a" class="">*Compare against known benchmarks or prior reports to validate trends.</p><p id="25452625-35ff-81e7-8857-f0c41ffebf66" class="">*Log and alert for missing critical fields or anomalies.</p></div></p><p id="25452625-35ff-8177-a501-d2ff2ddd5045" class=""><strong>Calculate KPI:</strong><div class="indented"><p id="25452625-35ff-81b1-adc5-ce64ebd9dc43" class="">*Aggregate retention rates by cohort and time period ( % retained at 30, 60, 90 days).</p><p id="25452625-35ff-81f3-92d6-c58c0e375cf7" class="">*Separate by subscription type (monthly, yearly) and other relevant dimensions ( trial vs non-trial).</p><p id="25452625-35ff-811b-98af-c97cd5855ab1" class="">*Document assumptions and filters clearly in metadata.</p></div></p><p id="25452625-35ff-8143-be84-e0a85d422e1c" class=""><strong>Report:</strong><div class="indented"><p id="25452625-35ff-81f6-acc6-dded3bfbe14f" class="">*Visualize retention curves, renewal rates, and cohort trends in dashboards.</p><figure id="25452625-35ff-81dd-b7d4-c9cd59edcb3f" class="image"><a href="image%201.png"><img style="width:429.98577880859375px" src="image%201.png"/></a></figure><p id="25452625-35ff-81fa-83a5-f746a2b763d9" class="">*Share with product, marketing, and leadership teams to inform decisions.</p><figure id="25452625-35ff-8164-baf3-ea5d7687bdfd" class="image"><a href="image%202.png"><img style="width:530.9658813476562px" src="image%202.png"/></a></figure></div></p><p id="25452625-35ff-816c-9df0-fbdca614cf5f" class="">
+</p><h3 id="25452625-35ff-8145-9c7d-d395a0c79ab0" class="">Step D: <strong>Discuss tradeoffs and communication</strong></h3><p id="25452625-35ff-81c4-ba6d-ddd86aa770a7" class=""><strong>Risks:</strong><div class="indented"><p id="25452625-35ff-81c9-a511-d67ea1a5613f" class="">*Legacy data inconsistencies can bias retention metrics if duplicates or missing data are not handled properly.</p><p id="25452625-35ff-813c-bb05-f3f1c388e783" class="">*Business rules (what counts as renewal or active usage) may evolve, requiring updates to the ETL logic.</p><p id="25452625-35ff-81b6-a3ab-c6dc81844357" class="">*Overly strict cleaning may exclude borderline cases, underestimating retention; too loose may overestimate.</p></div></p><p id="25452625-35ff-8180-a120-cb222acfde48" class=""><strong>Speed vs Accuracy:</strong><div class="indented"><p id="25452625-35ff-813c-8a34-e37a3e88b0ae" class="">*Quick daily or weekly reports may rely on partial data and fewer validation steps.</p><p id="25452625-35ff-8153-8128-e782534915c0" class="">*Monthly or quarterly in-depth reports can incorporate thorough cleaning and validation for accuracy.</p><p id="25452625-35ff-8136-96fc-ca39738ef833" class="">*Choose cadence based on business needs (product team may want near-real-time, finance prefers accuracy).</p><p id="25452625-35ff-814a-9944-fb3da7efb4e4" class="">*It might be difficult to produce ad-hoc cohort analysis for a time period that was not discussed initialy. If the ETL is set to calculate 30-days, 60-days, 90-days retention. <br/>It might be hard to instantly produce 180 days cohort analysis.</p></div></p><p id="25452625-35ff-81d0-b11f-f73e118d0aca" class=""><strong>Communication to Leadership:</strong><div class="indented"><p id="25452625-35ff-81b7-905f-f6558ec3fb68" class="">*Explain retention as the “percentage of users who continue to find value and pay for the product over time.”</p><p id="25452625-35ff-81ac-949f-eaf8ce18e567" class="">*Emphasize how this KPI predicts growth and revenue stability.</p><p id="25452625-35ff-81a3-93f1-c13fcf4188fb" class="">*Be transparent about data limitations and how assumptions impact results.</p><p id="25452625-35ff-8154-bb41-c8babfbb0921" class="">*Propose a roadmap to improve data quality and the retention calculation as new data becomes available.</p></div></p><p id="25452625-35ff-8135-8c77-cf56b6319434" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
