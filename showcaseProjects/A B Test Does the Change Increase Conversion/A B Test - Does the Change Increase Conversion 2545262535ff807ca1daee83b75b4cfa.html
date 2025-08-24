@@ -1,0 +1,1059 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>A/B Test - Does the Change Increase Conversion?</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(142, 58, 1, 0.141); }
+.select-value-color-orange { background-color: rgba(213, 96, 0, 0.188); }
+.select-value-color-yellow { background-color: rgba(209, 155, 0, 0.238); }
+.select-value-color-green { background-color: rgba(1, 104, 42, 0.145); }
+.select-value-color-blue { background-color: rgba(0, 108, 191, 0.156); }
+.select-value-color-purple { background-color: rgba(104, 1, 184, 0.125); }
+.select-value-color-pink { background-color: rgba(204, 1, 88, 0.137); }
+.select-value-color-red { background-color: rgba(228, 26, 0, 0.148); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="25452625-35ff-807c-a1da-ee83b75b4cfa" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🔠</span></div><h1 class="page-title">A/B Test - Does the Change Increase Conversion?</h1><p class="page-description"></p></header><div class="page-body"><hr id="25452625-35ff-8101-a1ab-d7820e1c8a3f"/><p id="25452625-35ff-8182-ae00-c948ad19e477" class=""><strong>Background</strong> – SecurityHero provides Online Security, a robust solution designed to protect users from a wide range of cyber threats while enhancing their online privacy. It combines advanced security features to safeguard your digital identity from scams and hacking attempts</p><p id="25452625-35ff-8141-8335-cedf25daffc5" class="">In a non-premium version users have major limitations in terms of using all the features. </p><p id="25452625-35ff-817b-a5a5-e4538227f511" class="">To be able to use all the features users should subscribe to Online security (via the upgrade buttons on the app, or on the website).</p><p id="25452625-35ff-81f4-a350-c44a645f161b" class=""><strong>The Hypothesis:</strong> Providing users with a 7-day trial period will increase their likelihood of becoming paying customers and result in higher retention rates compared to offering only the option to purchase without a trial.</p><p id="25452625-35ff-812d-8c1f-ccf969cd0fde" class=""><strong>The Question:</strong></p><p id="25452625-35ff-816e-b4db-d7af959ae0c1" class="">Validate or reject the hypothesis using A/B test data from the appendix.</p><p id="25452625-35ff-8189-8fe9-e7e864ac13a3" class=""><strong>Tasks:</strong></p><ol type="1" id="25452625-35ff-8129-992b-c3bbb0669f8e" class="numbered-list" start="1"><li>Analyze the data to validate or reject the hypothesis.</li></ol><ol type="1" id="25452625-35ff-8166-a02b-ebbd8989d169" class="numbered-list" start="2"><li>Identify key KPIs, justify their selection, and provide recommendations.</li></ol><ol type="1" id="25452625-35ff-8164-b6c8-c2718a43fff9" class="numbered-list" start="3"><li>Discuss tradeoffs: Which KPIs improved or worsened, and how do they impact recommendations?</li></ol><ol type="1" id="25452625-35ff-8115-b7ab-d9d4afe8d723" class="numbered-list" start="4"><li>Summarize findings with relevant visualizations if needed (graphs, tables).</li></ol><ol type="1" id="25452625-35ff-81ef-9f04-fc927ea45a3f" class="numbered-list" start="5"><li>Detail your methodology, including statistical tests, queries, and insights.</li></ol><p id="25452625-35ff-81ff-b476-fc2b5fa238a7" class="">
+</p><h3 id="25452625-35ff-81a4-a4ec-d09bd9ca1293" class=""><mark class="highlight-red"><strong>Matan’s Prior Notes and Assumptions:</strong></mark></h3><ul id="25452625-35ff-81ed-96d3-c229f2412555" class="bulleted-list"><li style="list-style-type:disc"><strong><span style="border-bottom:0.05em solid">t2_transaction:</span></strong><br/>t2_transaction.timestamp is string with only one value 00:00:00 and not timestamp.<br/>This makes it quite challenging to solve without proper assumptions. <br/>* First of all, I would assume that the year for all the transactions is 2025. <br/>Therefore, a user can’t make more than one purchase of yearly plan.<br/></li></ul><figure id="25452625-35ff-81cc-8520-c5b17124eec1" class="image"><a href="image.png"><img style="width:667.3295288085938px" src="image.png"/></a></figure><p id="25452625-35ff-8104-a249-ea45ea161b89" class="">However, a user can make a purchase of a yearly plan after montly plan.<br/>I don’t actually know the sequence of the events, but I will assume it was “monthly”→”yearly”</p><figure id="25452625-35ff-8141-a7b8-e827c20f4c6c" class="image"><a href="image%201.png"><img style="width:667.3295288085938px" src="image%201.png"/></a></figure><p id="25452625-35ff-8132-8088-df277e774fb6" class="">
+</p><ul id="25452625-35ff-815a-9c17-e1315cc90a8f" class="bulleted-list"><li style="list-style-type:disc"><strong><span style="border-bottom:0.05em solid">t1_userbase:</span></strong><br/>In the experiment, there are 59,677 users. <br/>Out of those, there are 323 users that belong to both  test group and control group<br/>Those require neutralizing, hence I will filter them out. <br/>After filtering, each group remains with 29,677 users.</li></ul><p id="25452625-35ff-8123-9f24-e5fbf51dcba2" class="">
+</p><p id="25452625-35ff-81a5-b1d2-eb7a2e76fda5" class="">
+</p><p id="25452625-35ff-815b-a9fb-f7103c41841d" class=""><mark class="highlight-default"><mark class="highlight-yellow_background"><strong>5)  Methodology<br/></strong></mark></mark><mark class="highlight-default"><mark class="highlight-yellow_background">A) Data preperation:<br/>* Cleaned tables to ensure 1 row per event <br/>* Refunds treated as non-conversions<br/>* working without timestamps, assuming there is no issue regarding logic or flow consistency.<br/>*final data - joined table transactions_users<br/>B) KPI calculations (see queries (1) +(2) below)<br/>C)concucting statistical z-test for A/B Testing<br/>D) calculate more KPIs and reflect upon their meaning. <br/>E) some visualizations provided, as excel file for aggregated results per 4 types of grouping analysis.</mark></mark></p><h3 id="25452625-35ff-8195-9e33-f69d86f4742f" class="">1) Analyze the data to validate or reject the hypothesis:</h3><p id="25452625-35ff-8155-a5f9-cc8d8dda513e" class="">A first review of the users data, it is revealed that we have 29,677 users in each of the experiment groups (after filtering out users that belong to both groups).<br/><strong>Group A - Control Group:</strong> users without a 7-day trial period<br/><strong>Group B - Test group:</strong> users <mark class="highlight-purple"><strong>with </strong></mark>a 7-day trial period.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="25452625-35ff-8125-9da0-c6c8f8cbf707" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">with users_tbl as
+(
+  select * from `data_q1.t1_userbase`
+  where
+  exp_id = &#x27;ab_test_trial_purchase&#x27;
+)
+, duplicate_users as
+(
+  select 
+  userid
+  from users_tbl
+  group by userid
+  having count(*) &gt;1
+)
+, users_no_dups as
+(
+  select u1.*
+  from users_tbl u1
+  left join duplicate_users u2 on u1.userid=u2.userid
+  where 1=1
+  and u2.userid IS NULL
+)
+select 
+test_group_flag,count(userid) as participants
+from users_no_dups
+group by test_group_flag</code></pre><figure id="25452625-35ff-8126-946f-e637b6e659c9" class="image" style="text-align:left"><a href="image%202.png"><img style="width:312.95452880859375px" src="image%202.png"/></a></figure><p id="25452625-35ff-8182-aed4-ca164cbdb8f0" class="">Upon reviewing the transactions table, and removing duplicates (same event and plan per user regardless of the timestamp), There are 8,305 transactions.<br/></p><p id="25452625-35ff-819c-945d-c3aeb7431d5f" class="">When joining the transactions table (cleaned and deduped) with the users table (cleaned and deduped):<br/>There are 60 unique users that made a transaction but that have no record in the users table.<br/>Hence the proper joining method here is a regular join. We only want users that we have information about, specifically their experiment group.<br/>After the join, the number of users in each group is not balancd.<br/>Group A - no trial period, has  2024 users <br/>whereas Group B- 7-day trial period has 3560 users.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="25452625-35ff-81ca-9077-d9273b59c110" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">SELECT 
+u.test_group_flag,count(distinct u.userid) as distinct_users
+FROM transactions_no_dups as T
+JOIN users_no_dups as U
+ON T.ruserid = U.userid
+group by u.test_group_flag</code></pre><figure id="25452625-35ff-81f9-abfe-feee94843b21" class="image" style="text-align:left"><a href="image%203.png"><img style="width:305.9516906738281px" src="image%203.png"/></a></figure><p id="25452625-35ff-81cb-81c7-e22af57120c4" class="">As per the data, it seems like all the transactions for users in the test group, had a trial period.</p><p id="25452625-35ff-81b9-8a2b-f670960389d2" class="">
+</p><p id="25452625-35ff-8199-927c-e3c1bc572b64" class=""><strong>The Hypothesis:</strong> Providing users with a 7-day trial period will increase their likelihood of becoming paying customers and result in higher retention rates compared to offering only the option to purchase without a trial.</p><ol type="1" id="25452625-35ff-8198-8c7e-c2bbeb44ebfe" class="numbered-list" start="1"><li><strong><span style="border-bottom:0.05em solid">Goal &amp; Metrics:</span></strong><strong><br/>Paid Conversion Rate%<br/></strong>The proportion of eligible users who had a purchase event after exposure (for group B, within 30 days of trial period ending).<br/>The 30 days window after the trial period is important because the trial effect should be relatively immediate. However, we don’t have a valid timestamp data so we can’t properly define a window after the trial period.<br/><br/>Paid conversion is the direct business outcome. However, there are more metrics that can assist in creating the full picture for this analysis.<br/><br/><strong><span style="border-bottom:0.05em solid">More Metrics to help assess the efficiency of the 7-day trial period:</span></strong><br/></li></ol><p id="25452625-35ff-8142-b538-eb205d87d00c" class=""><em>Metrics calculation will be performed later on.</em><div class="indented"><p id="25452625-35ff-81ef-ad86-d1e86a27e340" class="">#<strong>Net Paying Customers<br/></strong>Purchases minues refunds.<br/><br/>$<strong>Average Price<br/></strong><br/>$<strong>Average revenue per user<br/></strong>Taking into account refunds.<br/><br/>$<strong>Total Revenue per group<br/></strong>Taking into account refunds.<br/><br/><strong>Refund Rate%</strong><br/><br/><strong>Retention%:</strong><br/>% Of paying users that are still active after 30 days. <br/>This analysis requires more data.<br/></p></div></p><ol type="1" id="25452625-35ff-81df-97bb-c9ef8389ccae" class="numbered-list" start="1"><li><strong><span style="border-bottom:0.05em solid">Design the experiment:</span></strong><br/><br/><strong>Clean data:</strong><br/>* I already removed duplicates and ambigious data points (i.e: users that belong to the two groups)<br/>* I would assume that whenever a user had got the opportunity to have a trial period, it’s because they are new customers with no prior purchases.<br/>* I would assume all the users that had 7-day trial period started their trial period at the same time. <br/><br/><strong>Decide what to do about Refunds:</strong><br/>Refunds:<br/>If a user had purchased, but soon after that a refund was issued for that user, we can’t consider them as a paying user. Therfore, no conversion.<br/>In conclusion, refund purchases are counted as non-converted. <br/><br/><strong>Decide what to do about users that had multiple purchases:<br/></strong>I will count them as one conversion, since this analysis is for user-level conversion.<br/><br/><strong>Verify that I have only one experiment to check:<br/></strong>I am only working with data of exp_id=’’ab_test_trial_purchase”. One experiment.<br/><br/><strong>Price&gt;0:<br/></strong>I checked that the price data is valid. No purchase should be at the price of $0,<br/>Moreover, trials shouldn’t cost anything. I verified that as well.<br/><br/><strong>Check randomization and balance.</strong><br/>Helas I don’t have a valid timestamp, but it would be important to check that the population is truly randomized and distribution evenly. <br/><br/><strong>Sample the data</strong><br/>2024 users in Group A and 3560  users in Group B are more than enough to detect meaningful improvements with decent confidence. Therefore, I will use the data from both groups. <br/><br/><p id="25452625-35ff-8108-b430-e7635d9d8afa" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>A</mi></msub></mrow><annotation encoding="application/x-tex">p_A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> - paid conversion rate in the control group (no trial)</p><p id="25452625-35ff-8119-a639-e5dba2346368" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>B</mi></msub></mrow><annotation encoding="application/x-tex">p_B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> - paid conversion rate in the treatment group (7-day trial)</p><p id="25452625-35ff-817e-b43c-f0c0551eca3f" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">H_0  </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0813em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> ⇒ There is no difference in the paid conversion rates between users offered the 7-day trial period (Group B) and users not offered a trial (Group A). </p><p id="25452625-35ff-816e-bedf-ef07545d3b9b" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mn>0</mn></msub><mo>:</mo><msub><mi>p</mi><mi>B</mi></msub><mo>=</mo><msub><mi>p</mi><mi>A</mi></msub></mrow><annotation encoding="application/x-tex">H_0 : p_B = p_A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0813em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><p id="25452625-35ff-81f1-bb06-fc5817de0714" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">H_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0813em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> ⇒ Users offered the 7-day trial period have a higher paid conversion rate than users without a trial period.</p><p id="25452625-35ff-81c2-b314-fc2bc277c976" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mn>1</mn></msub><mo>:</mo><msub><mi>p</mi><mi>B</mi></msub><mo>&gt;</mo><msub><mi>p</mi><mi>A</mi></msub></mrow><annotation encoding="application/x-tex">H_1 : p_B &gt; p_A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0813em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span><br/></p><ul id="25452625-35ff-8109-80fe-eef04e816b3c" class="bulleted-list"><li style="list-style-type:disc">This is a <strong>one-sided test</strong> because the hypothesis expects an increase in conversion rate (not just any difference).</li></ul><ul id="25452625-35ff-814a-b8da-c106c7ef432f" class="bulleted-list"><li style="list-style-type:disc">The conversion rates are calculated as the proportion of users in each group who made a purchase (after exposure and within the 30-day window), counting users with refunds as non-converted.</li></ul><ul id="25452625-35ff-8140-a37c-edc59032c3fa" class="bulleted-list"><li style="list-style-type:disc">The test will be performed using a <strong>two-proportion z-test</strong> comparing <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>A</mi></msub></mrow><annotation encoding="application/x-tex">p_A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>  and <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>B</mi></msub></mrow><annotation encoding="application/x-tex">p_B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> .</li></ul><p id="25452625-35ff-8163-bd2e-f6ab07b8b6ec" class="">
+</p><p id="25452625-35ff-8187-b716-f30f26f48283" class=""><strong>Test Interpretation</strong></p><p id="25452625-35ff-8193-8ab6-f6b557b57bd9" class="">After computing the test statistic (z-score) and the corresponding p-value for the difference in paid conversion rates between Group B (7-day trial) and Group A (no trial):</p><ul id="25452625-35ff-816d-a96a-da09e6cde0db" class="bulleted-list"><li style="list-style-type:disc"><strong>If the p-value is less than the chosen significance level (0.05):</strong><p id="25452625-35ff-81e8-adb8-fa839e71f913" class="">We reject the null hypothesis H0. This means there is statistically significant evidence that offering a 7-day trial increases the paid conversion rate compared to no trial.</p></li></ul><ul id="25452625-35ff-8180-8759-fd61a2b0d19f" class="bulleted-list"><li style="list-style-type:disc"><strong>If the p-value is greater than or equal to 0.05:</strong><p id="25452625-35ff-81c5-844d-dd121caad849" class="">We fail to reject H0 . This means the data do not provide sufficient evidence that the 7-day trial improves paid conversion rates; any observed difference could be due to chance.</p><p id="25452625-35ff-8133-904b-c519d445e34a" class="">
+</p></li></ul></li></ol><ol type="1" id="25452625-35ff-81d7-b900-c0df2bae77fa" class="numbered-list" start="3"><li><strong><span style="border-bottom:0.05em solid">Run the experiment</span></strong><br/></li></ol><table id="25452625-35ff-81ec-98ec-caeae06ad670" class="simple-table"><thead class="simple-table-header"><tr id="25452625-35ff-81af-8e54-ff49d26eee49"><th id="ArXu" class="simple-table-header-color simple-table-header">Test Group</th><th id="dS[o" class="simple-table-header-color simple-table-header">Users</th><th id="AXpj" class="simple-table-header-color simple-table-header">Refund Users</th><th id="]?B?" class="simple-table-header-color simple-table-header">Refund%</th><th id="VuME" class="simple-table-header-color simple-table-header">Converted Users</th><th id="p{Zr" class="simple-table-header-color simple-table-header">Conversion</th></tr></thead><tbody><tr id="25452625-35ff-81b5-ab3d-e18a464a8f7f"><td id="ArXu" class="">A- No Trial Period</td><td id="dS[o" class="">2024</td><td id="AXpj" class="">645</td><td id="]?B?" class="">31.86%</td><td id="VuME" class="">1379</td><td id="p{Zr" class="">68.13%</td></tr><tr id="25452625-35ff-81db-bb2c-edc6eac28dcd"><td id="ArXu" class="">B -Trial Period</td><td id="dS[o" class="">3560</td><td id="AXpj" class="">88</td><td id="]?B?" class="">2.47%</td><td id="VuME" class="">1813</td><td id="p{Zr" class="">50.93%</td></tr></tbody></table><div id="25452625-35ff-81b1-8319-f363a75d2c65" class="column-list"><div id="25452625-35ff-8118-a873-e960e8df72e3" style="width:50%" class="column"><p id="25452625-35ff-8144-b88d-f8587cbc1ea6" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mi>A</mi></msub><mo>=</mo><mn>2024</mn></mrow><annotation encoding="application/x-tex">n_A = 2024</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2024</span></span></span></span></span><span>﻿</span></span></p><p id="25452625-35ff-815d-a3f6-cf2c31607954" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>A</mi></msub><mo>=</mo><mn>0.6813</mn></mrow><annotation encoding="application/x-tex">p_A = 0.6813</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.6813</span></span></span></span></span><span>﻿</span></span></p></div><div id="25452625-35ff-81bb-b311-d7a3994967c9" style="width:50%" class="column"><p id="25452625-35ff-813c-95ee-c8e1a33d4fd8" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mi>B</mi></msub><mo>=</mo><mn>3560</mn></mrow><annotation encoding="application/x-tex">n_B = 3560</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3560</span></span></span></span></span><span>﻿</span></span></p><p id="25452625-35ff-81ba-a2f0-d5bbf71e0260" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>B</mi></msub><mo>=</mo><mn>0.5093</mn></mrow><annotation encoding="application/x-tex">p_B = 0.5093</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.5093</span></span></span></span></span><span>﻿</span></span></p></div></div><figure id="25452625-35ff-81fc-bd5b-de1fd8b4cd8d" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>p</mi><mi>t</mi></msub><mo>=</mo><mo stretchy="false">(</mo><mn>1379</mn><mo>+</mo><mn>1813</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mo stretchy="false">(</mo><mn>2024</mn><mo>+</mo><mn>3560</mn><mo stretchy="false">)</mo><mo>=</mo><mn>0.5717</mn></mrow><annotation encoding="application/x-tex">p_t = (1379+1813)/(2024+3560) = 0.5717</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1379</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1813</span><span class="mclose">)</span><span class="mord">/</span><span class="mopen">(</span><span class="mord">2024</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">3560</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.5717</span></span></span></span></span></div></figure><figure id="25452625-35ff-8186-9268-f1aa7310ed27" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>S</mi><mi>E</mi><mo>=</mo><msqrt><mrow><msub><mi>p</mi><mi>t</mi></msub><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msub><mi>p</mi><mi>t</mi></msub><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mfrac><mn>1</mn><msub><mi>n</mi><mi>A</mi></msub></mfrac><mo>+</mo><mfrac><mn>1</mn><msub><mi>n</mi><mi>B</mi></msub></mfrac><mo stretchy="false">)</mo></mrow></msqrt></mrow><annotation encoding="application/x-tex">SE= \sqrt {p_t(1-p_t)(\frac{1}{n_A}+\frac{1}{n_B})} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">SE</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.44em;vertical-align:-0.8634em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.5766em;"><span class="svg-align" style="top:-4.4em;"><span class="pstrut" style="height:4.4em;"></span><span class="mord" style="padding-left:1em;"><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.836em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.836em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span></span></span><span style="top:-3.5366em;"><span class="pstrut" style="height:4.4em;"></span><span class="hide-tail" style="min-width:1.02em;height:2.48em;"><svg xmlns="http://www.w3.org/2000/svg" width='400em' height='2.48em' viewBox='0 0 400000 2592' preserveAspectRatio='xMinYMin slice'><path d='M424,2478
+c-1.3,-0.7,-38.5,-172,-111.5,-514c-73,-342,-109.8,-513.3,-110.5,-514
+c0,-2,-10.7,14.3,-32,49c-4.7,7.3,-9.8,15.7,-15.5,25c-5.7,9.3,-9.8,16,-12.5,20
+s-5,7,-5,7c-4,-3.3,-8.3,-7.7,-13,-13s-13,-13,-13,-13s76,-122,76,-122s77,-121,77,-121
+s209,968,209,968c0,-2,84.7,-361.7,254,-1079c169.3,-717.3,254.7,-1077.7,256,-1081
+l0 -0c4,-6.7,10,-10,18,-10 H400000
+v40H1014.6
+s-87.3,378.7,-272.6,1166c-185.3,787.3,-279.3,1182.3,-282,1185
+c-2,6,-10,9,-24,9
+c-8,0,-12,-0.7,-12,-2z M1001 80
+h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8634em;"><span></span></span></span></span></span></span></span></span></span></div></figure><figure id="25452625-35ff-818b-9544-cafee255b388" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>S</mi><mi>E</mi><mo>=</mo><msqrt><mrow><mn>0.5717</mn><mo>∗</mo><mn>0.4283</mn><mo stretchy="false">(</mo><mfrac><mn>1</mn><mn>2024</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>3560</mn></mfrac><mo stretchy="false">)</mo></mrow></msqrt><mo>=</mo><mn>0.01378</mn></mrow><annotation encoding="application/x-tex">SE= \sqrt {0.5717*0.4283(\frac{1}{2024}+\frac{1}{3560})} = 0.01378</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">SE</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.44em;vertical-align:-0.7884em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6516em;"><span class="svg-align" style="top:-4.4em;"><span class="pstrut" style="height:4.4em;"></span><span class="mord" style="padding-left:1em;"><span class="mord">0.5717</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">0.4283</span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2024</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3560</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span></span></span><span style="top:-3.6116em;"><span class="pstrut" style="height:4.4em;"></span><span class="hide-tail" style="min-width:1.02em;height:2.48em;"><svg xmlns="http://www.w3.org/2000/svg" width='400em' height='2.48em' viewBox='0 0 400000 2592' preserveAspectRatio='xMinYMin slice'><path d='M424,2478
+c-1.3,-0.7,-38.5,-172,-111.5,-514c-73,-342,-109.8,-513.3,-110.5,-514
+c0,-2,-10.7,14.3,-32,49c-4.7,7.3,-9.8,15.7,-15.5,25c-5.7,9.3,-9.8,16,-12.5,20
+s-5,7,-5,7c-4,-3.3,-8.3,-7.7,-13,-13s-13,-13,-13,-13s76,-122,76,-122s77,-121,77,-121
+s209,968,209,968c0,-2,84.7,-361.7,254,-1079c169.3,-717.3,254.7,-1077.7,256,-1081
+l0 -0c4,-6.7,10,-10,18,-10 H400000
+v40H1014.6
+s-87.3,378.7,-272.6,1166c-185.3,787.3,-279.3,1182.3,-282,1185
+c-2,6,-10,9,-24,9
+c-8,0,-12,-0.7,-12,-2z M1001 80
+h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7884em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.01378</span></span></span></span></span></div></figure><figure id="25452625-35ff-8116-b934-c457e834612b" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>Z</mi><mi>s</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>e</mi><mo>=</mo><mfrac><mrow><msub><mi>p</mi><mi>B</mi></msub><mo>−</mo><msub><mi>p</mi><mi>A</mi></msub></mrow><mrow><mi>S</mi><mi>E</mi></mrow></mfrac><mo>=</mo><mfrac><mrow><mo>−</mo><mn>0.1720</mn></mrow><mn>0.01378</mn></mfrac><mo>=</mo><mo>−</mo><mn>12.48</mn></mrow><annotation encoding="application/x-tex">Zscore = \frac{p_B-p_A}{SE} = \frac{-0.1720}{0.01378} = -12.48</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="mord mathnormal">score</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.9463em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.2603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">SE</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0.01378</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mord">0.1720</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">12.48</span></span></span></span></span></div></figure><ol type="1" id="25452625-35ff-81f2-8da2-ff837eb7c6f9" class="numbered-list" start="4"><li><strong><span style="border-bottom:0.05em solid">Analyze the results</span></strong></li></ol><p id="25452625-35ff-8113-9645-db8163947f37" class="">The Z-score came out negative, hence the opposite direction of H1 and therefore the p-value is close to 1.  Fail to reject H0.<br/>Meaning, no evidence for H1, based on the sample data,<br/>there is no support that offering a 7-day trial increases paid conversion rate.</p><ol type="1" id="25452625-35ff-8183-baf8-cea020b725c7" class="numbered-list" start="5"><li><strong><span style="border-bottom:0.05em solid">Conclusions and recommendations:</span></strong><p id="25452625-35ff-8199-a49a-fcae9a1b33c2" class="">Why is it that the conversion rate for paying customers are actually lower whenever given the trial period?<br/>My speculations are:<br/>* Some sign up just to try, without ever intending to pay.<br/>* Others forget or lose interest before the trial ends.<br/>* By the time they must pay, they probably cancel.<br/>The trials have increased the reach and the signups, but decreased conversion.<br/><strong>So even though more people start because of the opportunity to start free of charge, a smaller percenrage of them actually convert to paying customers, lowering the conversion rate.</strong></p><p id="25452625-35ff-8179-93ed-e38d29acca99" class="">
+</p><p id="25452625-35ff-811a-b432-c32bad6a5bcd" class="">On the other hand, you have Group A, the users with no trial.<br/>One can look at it a two ways:<br/>* The users have to pay to start, those users who didn’t get the change to try the product for free tend to more dissatisfaction later so we see higher refund rate,<br/>*Only people who are already convinced will sign up, so the conversion rate is naturally higher, because the denominator is only users willing to make a decision right away.</p></li></ol><p id="25452625-35ff-8116-9e6c-c98c7afdf1b4" class="">
+</p><h3 id="25452625-35ff-815c-8311-f9a331e63f2b" class="">2) Identify key KPIs, justify their selection, and provide recommendations.</h3><p id="25452625-35ff-81f1-9f5d-c544bd1a8092" class="">
+</p><p id="25452625-35ff-811f-87e8-eae31f20ed96" class=""><strong>#Total paying Users<br/></strong>Count of distinct users with at least one purchase	</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="25452625-35ff-817e-b3a9-d871ea9f290d" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">COUNT(DISTINCT CASE WHEN event=&#x27;purchase&#x27; AND price&gt;0 THEN userid END)	</code></pre><p id="25452625-35ff-814e-b334-f7d304c8d429" class="">Shows how many users convert to paying customers.<br/></p><p id="25452625-35ff-81db-a340-c37d60a190c9" class=""><strong># Total Refund Users<br/></strong>Count of distinct users who received a refund	</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="25452625-35ff-81f3-9988-c87ae62ac0a9" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">COUNT(DISTINCT CASE WHEN event=&#x27;refund&#x27; THEN userid END)	</code></pre><p id="25452625-35ff-8134-9d11-ef7dee9641d0" class="">High refund counts suggest dissatisfaction or product mismatch.</p><p id="25452625-35ff-8178-9f69-d2a9061724a5" class=""><br/><strong>#Actual Paying Users</strong><br/>Count of paying users in each group, minus the users that made refund.<br/>High signup volume can </p><figure id="25452625-35ff-8193-af3d-dbf85d61c7c5" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>T</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mi>P</mi><mi>a</mi><mi>y</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi><mo>−</mo><mi>T</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mi>R</mi><mi>e</mi><mi>f</mi><mi>u</mi><mi>n</mi><mi>d</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">Total Paying Users - Total Refund Users</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.13889em;">lP</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal">in</span><span class="mord mathnormal" style="margin-right:0.10903em;">gU</span><span class="mord mathnormal">sers</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.00773em;">lR</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">u</span><span class="mord mathnormal">n</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">sers</span></span></span></span></span></div></figure><p id="25452625-35ff-81a5-b20d-eb0b2129d136" class="">Reflects net paying customers who actually stayed after purchase.<br/></p><p id="25452625-35ff-81ba-b9ce-e2939b22e5be" class=""><strong>Refund Rate%<br/></strong>% of paying users who were refunded.<br/>This will indicate of the quality of the conversion. High refunds suggest dissatisfaction or mismatch with expectations.</p><figure id="25452625-35ff-8171-a5a2-da82500a1c5d" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mrow><mi>T</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mi>R</mi><mi>e</mi><mi>f</mi><mi>u</mi><mi>n</mi><mi>d</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi></mrow><mrow><mi>T</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mi>P</mi><mi>a</mi><mi>y</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{Total Refund Users}{Total Paying Users}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.2519em;vertical-align:-0.8804em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.13889em;">lP</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal">in</span><span class="mord mathnormal" style="margin-right:0.10903em;">gU</span><span class="mord mathnormal">sers</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.00773em;">lR</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">u</span><span class="mord mathnormal">n</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">sers</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8804em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></figure><p id="25452625-35ff-81d4-8cfd-efbb7d881059" class=""><strong>Retention%:</strong><br/>% Of paying users that are still active after 30 days.<br/>This analysis requires timestamp data which is lacking at the moment.</p><p id="25452625-35ff-8169-bd3f-f1f40eb4bd2f" class=""><mark class="highlight-red"><strong>Requires timestamps, not calculable here.<br/>The next exercise (Task 2) will expand on the Retention KPI.</strong></mark></p><figure id="25452625-35ff-81e2-a3a3-efdabcf1e66c" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mrow><mi>A</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mi>P</mi><mi>a</mi><mi>y</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi><mn>30</mn><mi>D</mi><mi>a</mi><mi>y</mi><mi>s</mi></mrow><mrow><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>S</mi><mi>u</mi><mi>b</mi><mi>s</mi><mi>c</mi><mi>r</mi><mi>i</mi><mi>b</mi><mi>e</mi><mi>d</mi><mi>I</mi><mi>n</mi><mi>S</mi><mi>p</mi><mi>e</mi><mi>c</mi><mi>i</mi><mi>f</mi><mi>i</mi><mi>c</mi><mi>M</mi><mi>o</mi><mi>n</mi><mi>t</mi><mi>h</mi><mi>O</mi><mi>r</mi><mi>E</mi><mi>v</mi><mi>e</mi><mi>n</mi><mi>A</mi><mi>u</mi><mi>t</mi><mi>o</mi><mi>R</mi><mi>e</mi><mi>n</mi><mi>e</mi><mi>w</mi><mi>a</mi><mi>l</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{Active Paying Users 30Days}{Users Subscribed In Specific Month Or Even AutoRenewal}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.2408em;vertical-align:-0.8804em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">sers</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord mathnormal">u</span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.02778em;">scr</span><span class="mord mathnormal">ib</span><span class="mord mathnormal">e</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord mathnormal">n</span><span class="mord mathnormal">Sp</span><span class="mord mathnormal">ec</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">A</span><span class="mord mathnormal">u</span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="mord mathnormal">c</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal">in</span><span class="mord mathnormal" style="margin-right:0.10903em;">gU</span><span class="mord mathnormal">sers</span><span class="mord">30</span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mord mathnormal">a</span><span class="mord mathnormal">ys</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8804em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></figure><div id="25452625-35ff-81ed-af9c-ff1ff22ad892" class="column-list"><div id="25452625-35ff-81a4-82b0-d7e13f84d186" style="width:50%" class="column"><p id="25452625-35ff-81c0-9461-e7169ffbc032" class=""><strong>$Total Income </strong></p><p id="25452625-35ff-81ae-954c-ea523c725cf4" class="">Sum of all purchase amounts	</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="25452625-35ff-81e1-8157-d07acf17e35e" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">SUM(CASE WHEN event=&#x27;purchase&#x27;
+THEN price ELSE 0 END)	</code></pre></div><div id="25452625-35ff-81fc-a6cd-c2d3d4ee1dfd" style="width:50%" class="column"><p id="25452625-35ff-8175-9ccc-c1a7b05f7e33" class=""><strong>$Average Income<br/></strong>Sum of all purchase amounts</p><figure id="25452625-35ff-8103-b126-e612e2bfb1aa" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mrow><mi>t</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mi>I</mi><mi>n</mi><mi>c</mi><mi>o</mi><mi>m</mi><mi>e</mi></mrow><mrow><mi>T</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mi>P</mi><mi>a</mi><mi>y</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{total Income}{Total Paying Users}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.2519em;vertical-align:-0.8804em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.13889em;">lP</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal">in</span><span class="mord mathnormal" style="margin-right:0.10903em;">gU</span><span class="mord mathnormal">sers</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord mathnormal">n</span><span class="mord mathnormal">co</span><span class="mord mathnormal">m</span><span class="mord mathnormal">e</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8804em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></figure><p id="25452625-35ff-81be-8e51-e4d52c7be536" class="">Helps compare per-user monetization.<br/></p></div></div><div id="25452625-35ff-816e-a6ec-cc5487c69475" class="column-list"><div id="25452625-35ff-818e-8262-fcd5ab52a941" style="width:100%" class="column"><p id="25452625-35ff-81b1-8d04-c4b2932ccae3" class=""><strong>$Total Refund</strong></p><p id="25452625-35ff-8111-947f-ef8e7ae270a6" class="">Sum of refund amounts</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="25452625-35ff-8129-a585-d670a0196a70" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">SUM(CASE WHEN event=&#x27;refund&#x27; 
+THEN price ELSE 0 END)</code></pre></div><div id="25452625-35ff-816a-9350-c18c721030fb" style="width:100%" class="column"><p id="25452625-35ff-81cb-b8c5-fba8bc74dd77" class=""><strong> $Average Refund <br/></strong>Avg. refund per refunding user</p><figure id="25452625-35ff-8137-89fe-d81445e2775c" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mrow><mi>T</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mi>R</mi><mi>e</mi><mi>f</mi><mi>u</mi><mi>n</mi><mi>d</mi></mrow><mrow><mi>T</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mi>R</mi><mi>e</mi><mi>f</mi><mi>u</mi><mi>n</mi><mi>d</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{TotalRefund}{TotalRefundUsers}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.2519em;vertical-align:-0.8804em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.00773em;">lR</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">u</span><span class="mord mathnormal">n</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">sers</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.00773em;">lR</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">u</span><span class="mord mathnormal">n</span><span class="mord mathnormal">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8804em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></figure></div></div><div id="25452625-35ff-81d2-a51d-e3ed9697d033" class="column-list"><div id="25452625-35ff-81b4-8f81-feb09e91a4e7" style="width:100%" class="column"><p id="25452625-35ff-81e9-94aa-ce543b77f6d2" class=""><strong>$Total Revenue</strong></p><p id="25452625-35ff-81a8-a401-dfd4025ab382" class="">Income minus refunds</p><figure id="25452625-35ff-81cb-aa2b-f1de154514af" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>T</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mi>I</mi><mi>n</mi><mi>c</mi><mi>o</mi><mi>m</mi><mi>e</mi><mo>−</mo><mi>T</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mi>R</mi><mi>e</mi><mi>f</mi><mi>u</mi><mi>n</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">Total Income - Total Refund</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord mathnormal">n</span><span class="mord mathnormal">co</span><span class="mord mathnormal">m</span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.00773em;">lR</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">u</span><span class="mord mathnormal">n</span><span class="mord mathnormal">d</span></span></span></span></span></div></figure></div><div id="25452625-35ff-8166-a866-c9c3f1fc9b5c" style="width:100%" class="column"><p id="25452625-35ff-8159-95f3-c62909f4fb24" class=""><strong>$Average Revenue<br/></strong></p><figure id="25452625-35ff-81bc-8841-c12a1b76d05b" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mrow><mi>T</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mi>R</mi><mi>e</mi><mi>v</mi><mi>e</mi><mi>n</mi><mi>u</mi><mi>e</mi></mrow><mrow><mi>A</mi><mi>c</mi><mi>t</mi><mi>u</mi><mi>a</mi><mi>l</mi><mi>P</mi><mi>a</mi><mi>y</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{TotalRevenue}{Actual Paying Users}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.2519em;vertical-align:-0.8804em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="mord mathnormal">c</span><span class="mord mathnormal">t</span><span class="mord mathnormal">u</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.13889em;">lP</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal">in</span><span class="mord mathnormal" style="margin-right:0.10903em;">gU</span><span class="mord mathnormal">sers</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.00773em;">lR</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8804em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></figure><p id="25452625-35ff-8151-bd47-d4215cea8c97" class="">
+</p></div></div><p id="25452625-35ff-81cd-b1da-c52d21d8acbd" class=""><strong><span style="border-bottom:0.05em solid">Results:</span></strong></p><figure id="25452625-35ff-8180-a365-d57a7ae33a76"><div class="source"><a href="section_1_results.xlsx">section 1 results.xlsx</a></div></figure><p id="25452625-35ff-810a-8270-d6109afc6aca" class="">
+</p><p id="25452625-35ff-81b4-8c1b-c4eca8142962" class="">Using the query in B) CTE to calculate all KPIs and metrics,<br/>These are the full results :</p><ul id="25452625-35ff-816d-aa23-d3311d6b80c9" class="bulleted-list"><li style="list-style-type:disc"><strong>Total Population Metrics</strong></li></ul><table id="25452625-35ff-81e5-8e21-edfd08aa28b3" class="simple-table"><tbody><tr id="25452625-35ff-81a1-8e59-e06ec2ecbf0b"><td id="plN\" class="block-color-brown_background"><strong>Group_Flag</strong></td><td id="cw]Y" class="block-color-brown_background"><strong>Plan_Type</strong></td><td id="Afgc" class="block-color-brown_background"><strong>Total_Users</strong></td><td id="@j:L" class="block-color-brown_background"><strong>Total_Paying_Users</strong></td><td id="gqOb" class="block-color-brown_background"><strong>Actual_Paying_Users</strong></td><td id="MY;U" class="block-color-brown_background"><strong>Paid_Conversion_Rate_Pct</strong></td><td id="}RNT" class="block-color-brown_background"><strong>Total_Income</strong></td><td id="Eo{V" class="block-color-brown_background"><strong>Avg_Income</strong></td><td id="lWCv" class="block-color-brown_background" style="width:151.99999237060547px"><strong>Total_Refund_Users</strong></td><td id="i^S~" class="block-color-brown_background"><strong>Refund_Rate_Pct</strong></td><td id="\dN?" class="block-color-brown_background"><strong>Total_Refund_Amount</strong></td><td id="esin" class="block-color-brown_background"><strong>Avg_Refund_Amount</strong></td><td id="&lt;Koa" class="block-color-brown_background"><strong>Total_Revenue</strong></td><td id="c_}P" class="block-color-brown_background"><strong>Avg_Revenue<br/>per paying user</strong></td><td id="^@MD" class="block-color-brown_background"><strong>Avg Net revenue</strong></td></tr><tr id="25452625-35ff-8159-ba2d-cb7b3e8503df"><td id="plN\" class="">All Groups</td><td id="cw]Y" class="">All Plans</td><td id="Afgc" class="">5584</td><td id="@j:L" class="">3925</td><td id="gqOb" class="">3192</td><td id="MY;U" class="">57.16%</td><td id="}RNT" class="">$117,009.14</td><td id="Eo{V" class="">$29.81</td><td id="lWCv" class="" style="width:151.99999237060547px">733</td><td id="i^S~" class="">18.68%</td><td id="\dN?" class="">$24,154.01</td><td id="esin" class="">$32.95</td><td id="&lt;Koa" class="">$92,855.13</td><td id="c_}P" class="">$29.09</td><td id="^@MD" class="">$16.63</td></tr></tbody></table><ul id="25452625-35ff-8186-bed7-f9049200b953" class="bulleted-list"><li style="list-style-type:disc"><strong>Per Group</strong> (A, B)</li></ul><table id="25452625-35ff-81b0-a4dc-d913cb7b702c" class="simple-table"><tbody><tr id="25452625-35ff-8155-9a4d-c305bf1a9db7"><td id=":BjD" class="block-color-teal_background"><strong>Group_Flag</strong></td><td id="tAFp" class="block-color-teal_background"><strong>Plan_Type</strong></td><td id="zt[T" class="block-color-teal_background"><strong>Total_Users</strong></td><td id="fZ{;" class="block-color-teal_background"><strong>Total_Paying_Users</strong></td><td id="N^ZO" class="block-color-teal_background"><strong>Actual_Paying_Users</strong></td><td id="Swa}" class="block-color-teal_background"><strong>Paid_Conversion_Rate_Pct</strong></td><td id="^Shk" class="block-color-teal_background"><strong>Total_Income</strong></td><td id="DXIX" class="block-color-teal_background"><strong>Avg_Income</strong></td><td id="W;[u" class="block-color-teal_background"><strong>Total_Refund_Users</strong></td><td id="[SSW" class="block-color-yellow_background" style="width:163.99999237060547px"><strong>Refund_Rate_Pct</strong></td><td id="E^T{" class="block-color-teal_background"><strong>Total_Refund_Amount</strong></td><td id="eI]A" class="block-color-teal_background"><strong>Avg_Refund_Amount</strong></td><td id="Jg|K" class="block-color-teal_background"><strong>Total_Revenue</strong></td><td id="PHRI" class="block-color-teal_background"><strong>Avg_Revenue<br/>per paying user</strong></td><td id="saY=" class="block-color-teal_background"><strong>Avg Net revenue</strong></td></tr><tr id="25452625-35ff-81c9-9c38-d5a0c5de136c"><td id=":BjD" class="">No Trial Period</td><td id="tAFp" class="">All Plans</td><td id="zt[T" class="">2024</td><td id="fZ{;" class="">2024</td><td id="N^ZO" class="">1379</td><td id="Swa}" class="">68.13%</td><td id="^Shk" class="">$69,113.77</td><td id="DXIX" class="">$34.15</td><td id="W;[u" class="">645</td><td id="[SSW" class="block-color-yellow_background" style="width:163.99999237060547px"><strong>31.87%</strong></td><td id="E^T{" class="">$21,767.20</td><td id="eI]A" class="">$33.75</td><td id="Jg|K" class="">$47,346.57</td><td id="PHRI" class="">$34.33</td><td id="saY=" class="">$23.39</td></tr><tr id="25452625-35ff-81c3-8203-d1ff53991970"><td id=":BjD" class="">Trial Period</td><td id="tAFp" class="">All Plans</td><td id="zt[T" class="">3560</td><td id="fZ{;" class="">1901</td><td id="N^ZO" class="">1813</td><td id="Swa}" class="">50.93%</td><td id="^Shk" class="">$47,895.37</td><td id="DXIX" class="">$25.19</td><td id="W;[u" class="">88</td><td id="[SSW" class="block-color-yellow_background" style="width:163.99999237060547px"><strong>4.63%</strong></td><td id="E^T{" class="">$2,386.81</td><td id="eI]A" class="">$27.12</td><td id="Jg|K" class="">$45,508.56</td><td id="PHRI" class=""><strong>$25.10</strong></td><td id="saY=" class="">$12.78</td></tr></tbody></table><ul id="25452625-35ff-816f-812a-f111c2e078cf" class="bulleted-list"><li style="list-style-type:disc"><strong>Per Plan</strong> (Monthly, Yearly)</li></ul><table id="25452625-35ff-811c-9095-c3e5aa5088ef" class="simple-table"><tbody><tr id="25452625-35ff-81ec-976f-ff04ded3bdeb"><td id="{jjx" class="block-color-orange_background"><strong>Group_Flag</strong></td><td id="[}E]" class="block-color-orange_background"><strong>Plan_Type</strong></td><td id="Vvq[" class="block-color-orange_background"><strong>Total_Users</strong></td><td id="DL&lt;D" class="block-color-orange_background"><strong>Total_Paying_Users</strong></td><td id="rw&lt;J" class="block-color-orange_background"><strong>Actual_Paying_Users</strong></td><td id="xpsP" class="block-color-orange_background"><strong>Paid_Conversion_Rate_Pct</strong></td><td id="[t?N" class="block-color-orange_background"><strong>Total_Income</strong></td><td id="~vGS" class="block-color-orange_background"><strong>Avg_Income</strong></td><td id="@;kb" class="block-color-orange_background"><strong>Total_Refund_Users</strong></td><td id="m|Wj" class="block-color-orange_background"><strong>Refund_Rate_Pct</strong></td><td id="u^\V" class="block-color-orange_background"><strong>Total_Refund_Amount</strong></td><td id="=pdg" class="block-color-orange_background"><strong>Avg_Refund_Amount</strong></td><td id="~&gt;?a" class="block-color-orange_background"><strong>Total_Revenue</strong></td><td id="CxwG" class="block-color-yellow_background"><strong>Avg_Revenue<br/>per paying user</strong></td><td id="{El&gt;" class="block-color-orange_background"><strong>Avg Net revenue</strong></td></tr><tr id="25452625-35ff-818f-896d-d47465d31543"><td id="{jjx" class="">All Groups</td><td id="[}E]" class="">monthly</td><td id="Vvq[" class="">707</td><td id="DL&lt;D" class="">707</td><td id="rw&lt;J" class="">473</td><td id="xpsP" class="">66.90%</td><td id="[t?N" class="">$3,998.77</td><td id="~vGS" class="">$5.66</td><td id="@;kb" class="">234</td><td id="m|Wj" class="">33.10%</td><td id="u^\V" class="">$1,309.48</td><td id="=pdg" class="">$5.60</td><td id="~&gt;?a" class="">$2,689.29</td><td id="CxwG" class="block-color-yellow_background">$5.69</td><td id="{El&gt;" class="">$3.11</td></tr><tr id="25452625-35ff-8199-9ff1-d0ded411700b"><td id="{jjx" class="">All Groups</td><td id="[}E]" class="">yearly</td><td id="Vvq[" class="">1317</td><td id="DL&lt;D" class="">1317</td><td id="rw&lt;J" class="">906</td><td id="xpsP" class="">68.79%</td><td id="[t?N" class="">$65,115.00</td><td id="~vGS" class="">$49.44</td><td id="@;kb" class="">411</td><td id="m|Wj" class="">31.21%</td><td id="u^\V" class="">$20,457.72</td><td id="=pdg" class="">$49.78</td><td id="~&gt;?a" class="">$44,657.28</td><td id="CxwG" class="block-color-yellow_background">$49.29</td><td id="{El&gt;" class="">$28.97</td></tr></tbody></table><p id="25452625-35ff-81cc-9df6-d01ba9771aba" class="">
+</p><ul id="25452625-35ff-8130-a3d2-c451c36dccef" class="bulleted-list"><li style="list-style-type:disc"><strong>Per Group + Plan  </strong>(A-Monthly, A-Yearly, B-Monthly, B-Yearly)</li></ul><table id="25452625-35ff-81fc-897b-f561dc288c0f" class="simple-table"><tbody><tr id="25452625-35ff-8166-8c4a-d78dda8e8e88"><td id="ChzF" class="block-color-blue_background"><strong>Group_Flag</strong></td><td id="J:y:" class="block-color-blue_background"><strong>Plan_Type</strong></td><td id="nO?Z" class="block-color-blue_background"><strong>Total_Users</strong></td><td id="_&gt;n_" class="block-color-blue_background"><strong>Total_Paying_Users</strong></td><td id="ju;=" class="block-color-blue_background"><strong>Actual_Paying_Users</strong></td><td id="}IBr" class="block-color-blue_background"><strong>Paid_Conversion_Rate_Pct</strong></td><td id="aVWD" class="block-color-blue_background"><strong>Total_Income</strong></td><td id="s=|k" class="block-color-blue_background"><strong>Avg_Income</strong></td><td id="A&gt;XR" class="block-color-blue_background"><strong>Total_Refund_Users</strong></td><td id="}GME" class="block-color-blue_background"><strong>Refund_Rate_Pct</strong></td><td id="QHoh" class="block-color-blue_background"><strong>Total_Refund_Amount</strong></td><td id="|@]F" class="block-color-blue_background"><strong>Avg_Refund_Amount</strong></td><td id="GYzH" class="block-color-blue_background"><strong>Total_Revenue</strong></td><td id="&gt;bhz" class="block-color-blue_background"><strong>Avg_Revenue<br/>per paying user</strong></td><td id="ha=i" class="block-color-blue_background"><strong>Avg Net revenue</strong></td></tr><tr id="25452625-35ff-81ee-914b-c2cd0d639e6f"><td id="ChzF" class="">No Trial Period</td><td id="J:y:" class="">monthly</td><td id="nO?Z" class="">707</td><td id="_&gt;n_" class="">707</td><td id="ju;=" class="">473</td><td id="}IBr" class="">66.90%</td><td id="aVWD" class="">$3,998.77</td><td id="s=|k" class="">$5.66</td><td id="A&gt;XR" class="">234</td><td id="}GME" class="">33.10%</td><td id="QHoh" class="">$1,309.48</td><td id="|@]F" class="">$5.60</td><td id="GYzH" class="">$2,689.29</td><td id="&gt;bhz" class="">$5.69</td><td id="ha=i" class="">$3.8</td></tr><tr id="25452625-35ff-8125-aa57-e851006d76f1"><td id="ChzF" class="">No Trial Period</td><td id="J:y:" class="">yearly</td><td id="nO?Z" class="">1317</td><td id="_&gt;n_" class="">1317</td><td id="ju;=" class="">906</td><td id="}IBr" class="">68.79%</td><td id="aVWD" class="">$65,115.00</td><td id="s=|k" class="">$49.44</td><td id="A&gt;XR" class="">411</td><td id="}GME" class="">31.21%</td><td id="QHoh" class="">$20,457.72</td><td id="|@]F" class="">$49.78</td><td id="GYzH" class="">$44,657.28</td><td id="&gt;bhz" class="">$49.29</td><td id="ha=i" class="">$33.91</td></tr><tr id="25452625-35ff-81c9-8b01-dbab3901f165"><td id="ChzF" class="">Trial Period</td><td id="J:y:" class="">monthly</td><td id="nO?Z" class="">1958</td><td id="_&gt;n_" class="">1063</td><td id="ju;=" class="">1016</td><td id="}IBr" class="">51.89%</td><td id="aVWD" class="">$5,854.81</td><td id="s=|k" class="">$5.51</td><td id="A&gt;XR" class="">47</td><td id="}GME" class="">4.42%</td><td id="QHoh" class="">$251.53</td><td id="|@]F" class="">$5.35</td><td id="GYzH" class="">$5,603.28</td><td id="&gt;bhz" class="">$5.52</td><td id="ha=i" class="">$2.86</td></tr><tr id="25452625-35ff-81d1-93ae-d2ea3d274f7d"><td id="ChzF" class="">Trial Period</td><td id="J:y:" class="">yearly</td><td id="nO?Z" class="">1602</td><td id="_&gt;n_" class="">838</td><td id="ju;=" class="">797</td><td id="}IBr" class="">49.75%</td><td id="aVWD" class="">$42,040.56</td><td id="s=|k" class="">$50.17</td><td id="A&gt;XR" class="">41</td><td id="}GME" class="">4.89%</td><td id="QHoh" class="">$2,135.28</td><td id="|@]F" class="">$52.08</td><td id="GYzH" class="">$39,905.28</td><td id="&gt;bhz" class="">$50.07</td><td id="ha=i" class="">$24.91</td></tr></tbody></table><h3 id="25452625-35ff-81dc-b709-f5a7d4a2ca97" class="">3) Discuss tradeoffs: Which KPIs improved or worsened, and how do they impact recommendations?</h3><p id="25452625-35ff-814a-91ab-fa4a0ad4eac7" class=""><strong>Conversion</strong></p><ul id="25452625-35ff-8199-bc9b-d06de1baecad" class="bulleted-list"><li style="list-style-type:disc">No Tiral Group (A), had significantly higher conversion rate (68%) but also much higher refund rate (32%).</li></ul><ul id="25452625-35ff-8113-9eda-c1647165b498" class="bulleted-list"><li style="list-style-type:disc">Trial Group (B) reduces refunds significantly but at the cost of conversion rate and average revenue per user.</li></ul><p id="25452625-35ff-81c1-8cff-f223674b1f96" class="">
+</p><p id="25452625-35ff-8158-b50e-d70b8f2e9072" class=""><strong>Refund</strong>:</p><ul id="25452625-35ff-81d6-b699-dd496efd0e10" class="bulleted-list"><li style="list-style-type:disc">Refund rate difference is significant. Trial users (B) almost never refund. Suggesting expectations are better managed. </li></ul><figure id="25452625-35ff-81b2-b55f-e79bb7434361" class="image" style="text-align:left"><a href="image%204.png"><img style="width:240px" src="image%204.png"/></a></figure><ul id="25452625-35ff-81c5-82af-f2bab590cd43" class="bulleted-list"><li style="list-style-type:disc">Yearly plans have higher refund rates than monthly plans (especially in No Trial Group)<figure id="25452625-35ff-81c0-80de-ca85b8d0b287" class="image"><a href="image%205.png"><img style="width:240px" src="image%205.png"/></a></figure></li></ul><p id="25452625-35ff-8184-bbaa-fa4758fb190f" class=""><strong><br/>Revenue (amongts paying users, no refunds)</strong></p><ul id="25452625-35ff-81b2-887f-f4847f886668" class="bulleted-list"><li style="list-style-type:disc">The total revenue is slightly higher for No Trial group (A) despite fewer users due to higher conversion and average revenue.</li></ul><div id="25452625-35ff-81f8-8eaf-dd06dd69ea2a" class="column-list"><div id="25452625-35ff-8187-baae-d0620c6042d1" style="width:50%" class="column"><figure id="25452625-35ff-81bb-b47f-e3a03ebad3a7" class="image"><a href="image%206.png"><img style="width:309.6590881347656px" src="image%206.png"/></a></figure></div><div id="25452625-35ff-8188-9334-d0765e541cbb" style="width:50%" class="column"><figure id="25452625-35ff-8179-908a-ee5522b06faa" class="image"><a href="image%207.png"><img style="width:490.9801025390625px" src="image%207.png"/></a></figure></div></div><ul id="25452625-35ff-8103-866d-fab5d37c67f9" class="bulleted-list"><li style="list-style-type:disc">Yearly plans contribute the bulk of revenue across both groups. <br/>I guess this is due to possible discount when purchasing a yearly plan.<br/>On average, a user that purchases monthly plan would pay 12 *$5.66  = $67.92 wheras a user that purchase a yearly plan pays $49.55.<br/>This is about 27% discount. It pays off.<br/></li></ul><p id="25452625-35ff-81f6-863f-ee8b4adf699b" class=""><strong>Net Revnue (across all users)</strong><br/><strong>High price</strong> boosts revenue potential.</p><ul id="25452625-35ff-819f-a04a-c3f161eaaeaf" class="bulleted-list"><li style="list-style-type:disc"><strong>High refund amounts</strong> (especially in No Trial group) make the potential revenue decerease.</li></ul><ul id="25452625-35ff-815d-a1df-e3fc057049a9" class="bulleted-list"><li style="list-style-type:disc"><strong>Net revenue</strong> is positive across the population, but refund-heavy groups reduce profitability and may cause operational costs or brand damage.</li></ul><ul id="25452625-35ff-814f-8a7d-c2b52f8990a7" class="bulleted-list"><li style="list-style-type:disc">No Trial Group (A) - generates $23.39 net revenue per user.<br/>Trial Group (B) - generates $12.78 net revenue per user.<br/>This is a 83% gap between the groups in favor for No Trial Group, suggesting that monetization per user is much lower in Group B despite the high volume of users. </li></ul><h2 id="25452625-35ff-81a9-b830-c29073546e84" class=""><strong><span style="border-bottom:0.05em solid">Recommendations:</span></strong></h2><p id="25452625-35ff-81f4-804e-f4292db1f37e" class=""><strong><span style="border-bottom:0.05em solid">A) Focus on Marketing</span></strong></p><figure id="25452625-35ff-81b9-9e80-cde73e825b1a" class="image"><a href="image%208.png"><img style="width:551.960205078125px" src="image%208.png"/></a></figure><ol type="1" id="25452625-35ff-81b0-9940-f8a87e4d132f" class="numbered-list" start="1"><li><strong>Trial + Monthly plan</strong><p id="25452625-35ff-81c1-86b2-c74f82b03333" class="">This segment has the highest user volume and the lowest refund rate (4.42%).</p><p id="25452625-35ff-8162-939b-c5b67215ca3d" class="">Even with current net revenue of <strong>$2.86/user/month</strong>, scaling retention could yield around <strong>$34.32/user/year</strong>.</p><p id="25452625-35ff-8119-9cd7-e1a3b6fbca19" class="">I recommend to improve onboarding and engagement to increase month-to-month retention, ensuring that trial users stick around long enough to realize this potential.<br/></p></li></ol><ol type="1" id="25452625-35ff-813d-8b10-c950bdf0d98e" class="numbered-list" start="2"><li><strong>No Trial + Yearly plan</strong><p id="25452625-35ff-81ba-a2f1-e8ada0356197" class="">This is the strongest segment in the No Trial group, combining high conversion rates with high net revenue per user (<strong>$33.91</strong>).</p><p id="25452625-35ff-816b-8555-d422302df40a" class="">I would recommend to prioritize targeted campaigns for this segment, potentially using discounts or limited-time offers to further boost sign-ups without introducing a trial.</p></li></ol><p id="25452625-35ff-81ef-a454-d948516cfae5" class=""><strong><span style="border-bottom:0.05em solid">B) Customer Feedback Loop</span></strong></p><ul id="25452625-35ff-8122-b074-c78aa5a12e1a" class="bulleted-list"><li style="list-style-type:disc"><strong>Collect and analyze qualitative feedback</strong> from refunding customers to pinpoint common pain points (product experience, value perception, unexpected charges).</li></ul><ul id="25452625-35ff-8156-8b46-dc16b7302d84" class="bulleted-list"><li style="list-style-type:disc">Use this feedback to refine messaging, improve onboarding, or adjust feature sets.</li></ul><p id="25452625-35ff-813d-8703-ecec97f2caa4" class="">
+</p><p id="25452625-35ff-8161-97c7-d865ad7442ea" class="">This just shows that users given trial period actually perform quite well, yes, they are less converted, the average revenue per user is lower in that group, but due to the volume of users and the exposure it creates for SecurityHero, the revenue isn’t that far off from No Trial group’s revenue.<br/></p><ol type="1" id="25452625-35ff-816c-a61e-eac45ae04996" class="numbered-list" start="3"><li><strong>Pricing strategy - consider adjusting.</strong><br/>If more refunds come from yearly plans (20.97%) than monthly plans (15.88%) than consider introducing a quarterly plan as a middle ground to balance the refund rate per group.</li></ol><p id="25452625-35ff-8127-bd4a-feed865b89b0" class="">
+</p><h3 id="25452625-35ff-8130-ab41-e699c0ce9f8c" class=""><br/></h3><h2 id="25452625-35ff-814d-a3d5-e35e9a21005e" class="">A) Calculating measures script for A/B test:</h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="25452625-35ff-816b-b3bd-db38bf307c3a" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">WITH users_tbl AS (
+  SELECT * 
+  FROM `data_q1.t1_userbase`
+  WHERE exp_id = &#x27;ab_test_trial_purchase&#x27;
+),
+
+duplicate_users AS (
+  SELECT userid
+  FROM users_tbl
+  GROUP BY userid
+  HAVING COUNT(*) &gt; 1
+),
+
+users_no_dups AS (
+  SELECT u1.*
+  FROM users_tbl u1
+  LEFT JOIN duplicate_users u2 ON u1.userid = u2.userid
+  WHERE u2.userid IS NULL
+),
+
+transactions_tbl AS (
+  SELECT 
+    ruserid,
+    event,
+    plan,
+    timestamp,
+    price
+  FROM `data_q1.t2_transactions`
+),
+
+duplicate_transactions AS (
+  SELECT 
+    ruserid,
+    event, 
+    plan
+  FROM transactions_tbl
+  GROUP BY ruserid, event, plan
+  HAVING COUNT(*) &gt; 1
+),
+
+transactions_no_dups AS (
+  SELECT t1.*
+  FROM transactions_tbl t1
+  LEFT JOIN duplicate_transactions t2 
+    ON t1.ruserid = t2.ruserid 
+    AND t1.event = t2.event 
+    AND t1.plan = t2.plan
+  WHERE t2.ruserid IS NULL
+),
+
+transaction_users AS (
+  SELECT 
+    *
+  FROM transactions_no_dups AS T
+  JOIN users_no_dups AS U
+    ON T.ruserid = U.userid
+),
+
+users_per_group AS (
+  SELECT
+    test_group_flag,
+    COUNT(DISTINCT userid) AS total_users
+  FROM transaction_users
+  GROUP BY test_group_flag
+),
+
+purchase_users AS (
+  SELECT DISTINCT
+    userid,
+    test_group_flag
+  FROM transaction_users
+  WHERE event = &#x27;purchase&#x27;
+    AND price &gt; 0
+),
+
+refund_users AS (
+  SELECT DISTINCT
+    userid,
+    test_group_flag
+  FROM transaction_users
+  WHERE event = &#x27;refund&#x27;
+),
+
+converted_users AS (
+  SELECT
+    p.userid,
+    p.test_group_flag
+  FROM purchase_users p
+  LEFT JOIN refund_users r ON p.userid = r.userid
+  WHERE r.userid IS NULL
+),
+
+refund_count_per_group AS (
+  SELECT
+    test_group_flag,
+    COUNT(DISTINCT userid) AS refund_users
+  FROM refund_users
+  GROUP BY test_group_flag
+)
+
+SELECT
+  u.test_group_flag,
+  u.total_users,
+  COUNT(DISTINCT c.userid) AS converted_users,
+  COALESCE(r.refund_users, 0) AS refund_users,
+  ROUND(COUNT(DISTINCT c.userid) * 1.0 / u.total_users,4) AS paid_conversion_rate
+FROM users_per_group u
+LEFT JOIN converted_users c ON u.test_group_flag = c.test_group_flag
+LEFT JOIN refund_count_per_group r ON u.test_group_flag = r.test_group_flag
+GROUP BY u.test_group_flag, u.total_users, r.refund_users
+ORDER BY u.test_group_flag;
+</code></pre><p id="25452625-35ff-8167-a77d-c0cd1343247b" class="">
+</p><h2 id="25452625-35ff-8122-aa2b-fa0247467dc9" class="">B) CTE to calculate all KPIs and metrics<br/>4 analysis levels:</h2><ul id="25452625-35ff-81f3-b0a4-edda8a1afa3a" class="bulleted-list"><li style="list-style-type:disc"><strong>Total population metrics</strong></li></ul><ul id="25452625-35ff-8124-9885-ce383e6b39eb" class="bulleted-list"><li style="list-style-type:disc"><strong>Per group</strong> (A, B)</li></ul><ul id="25452625-35ff-81fc-b17e-e3040e46110e" class="bulleted-list"><li style="list-style-type:disc"><strong>Per plan</strong> (Monthly, Yearly)</li></ul><ul id="25452625-35ff-8138-8898-cb6e5446fea5" class="bulleted-list"><li style="list-style-type:disc"><strong>Per group + plan combination</strong> (A-Monthly, A-Yearly, B-Monthly, B-Yearly)</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="25452625-35ff-8143-b2c9-d813d375a10e" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">WITH users_tbl AS (
+  SELECT * 
+  FROM `data_q1.t1_userbase`
+  WHERE exp_id = &#x27;ab_test_trial_purchase&#x27;
+),
+
+duplicate_users AS (
+  SELECT userid
+  FROM users_tbl
+  GROUP BY userid
+  HAVING COUNT(*) &gt; 1
+),
+
+users_no_dups AS (
+  SELECT u1.*
+  FROM users_tbl u1
+  LEFT JOIN duplicate_users u2 ON u1.userid = u2.userid
+  WHERE u2.userid IS NULL
+),
+
+transactions_tbl AS (
+  SELECT 
+    ruserid,
+    event,
+    plan,
+    timestamp,
+    price
+  FROM `data_q1.t2_transactions`
+),
+
+duplicate_transactions AS (
+  SELECT 
+    ruserid,
+    event, 
+    plan
+  FROM transactions_tbl
+  GROUP BY ruserid, event, plan
+  HAVING COUNT(*) &gt; 1
+),
+
+transactions_no_dups AS (
+  SELECT t1.*
+  FROM transactions_tbl t1
+  LEFT JOIN duplicate_transactions t2 
+    ON t1.ruserid = t2.ruserid 
+    AND t1.event = t2.event 
+    AND t1.plan = t2.plan
+  WHERE t2.ruserid IS NULL
+),
+
+transaction_users AS (
+  SELECT 
+    T.*,
+    U.test_group_flag,
+    U.userid
+  FROM transactions_no_dups AS T
+  JOIN users_no_dups AS U
+    ON T.ruserid = U.userid
+),
+
+-- Core metrics calculation by dimension
+metrics AS (
+  SELECT
+    COALESCE(CAST(test_group_flag AS STRING), &#x27;ALL_GROUPS&#x27;) AS group_flag,
+    COALESCE(plan, &#x27;ALL_PLANS&#x27;) AS plan_type,
+    COUNT(DISTINCT userid) AS total_users,
+    COUNT(DISTINCT CASE WHEN event = &#x27;purchase&#x27; AND price &gt; 0 THEN userid END) AS total_paying_users,
+    COUNT(DISTINCT CASE WHEN event = &#x27;refund&#x27; THEN userid END) AS total_refund_users,
+    COUNT(DISTINCT CASE WHEN event = &#x27;purchase&#x27; AND price &gt; 0 THEN userid END)
+      - COUNT(DISTINCT CASE WHEN event = &#x27;refund&#x27; THEN userid END) AS actual_paying_users,
+    ROUND(SAFE_DIVIDE(COUNT(DISTINCT CASE WHEN event = &#x27;refund&#x27; THEN userid END),
+          COUNT(DISTINCT CASE WHEN event = &#x27;purchase&#x27; AND price &gt; 0 THEN userid END)), 4) AS refund_rate_pct,
+    ROUND(SAFE_DIVIDE(
+          COUNT(DISTINCT CASE WHEN event = &#x27;purchase&#x27; AND price &gt; 0 THEN userid END)
+          - COUNT(DISTINCT CASE WHEN event = &#x27;refund&#x27; THEN userid END),
+          COUNT(DISTINCT userid)), 4) AS paid_conversion_rate_pct,
+    ROUND(SUM(CASE WHEN event = &#x27;purchase&#x27; THEN price ELSE 0 END), 2) AS total_income,
+    ROUND(SAFE_DIVIDE(SUM(CASE WHEN event = &#x27;purchase&#x27; THEN price ELSE 0 END),
+          COUNT(DISTINCT CASE WHEN event = &#x27;purchase&#x27; AND price &gt; 0 THEN userid END)), 2) AS avg_income,
+    ROUND(SUM(CASE WHEN event = &#x27;refund&#x27; THEN price ELSE 0 END), 2) AS total_refund_amount,
+    ROUND(SAFE_DIVIDE(SUM(CASE WHEN event = &#x27;refund&#x27; THEN price ELSE 0 END),
+          COUNT(DISTINCT CASE WHEN event = &#x27;refund&#x27; THEN userid END)), 2) AS avg_refund_amount,
+    ROUND(SUM(CASE WHEN event = &#x27;purchase&#x27; THEN price ELSE 0 END) 
+      - SUM(CASE WHEN event = &#x27;refund&#x27; THEN price ELSE 0 END), 2) AS total_revenue,
+    ROUND(SAFE_DIVIDE(
+          SUM(CASE WHEN event = &#x27;purchase&#x27; THEN price ELSE 0 END) 
+          - SUM(CASE WHEN event = &#x27;refund&#x27; THEN price ELSE 0 END),
+          COUNT(DISTINCT CASE WHEN event = &#x27;purchase&#x27; AND price &gt; 0 AND userid NOT IN 
+              (SELECT userid FROM transaction_users WHERE event = &#x27;refund&#x27;) THEN userid END)
+          ), 2) AS avg_revenue
+  FROM transaction_users
+  GROUP BY group_flag, plan_type
+),
+
+-- 1) Total population
+total_pop AS (
+  SELECT &#x27;TOTAL_POPULATION&#x27; AS analysis_level, 
+  &#x27;All Groups&#x27; as group_flag,
+  &#x27;All Plans&#x27; as plan_type,
+  SUM(total_users) as total_users,
+  SUM(total_paying_users) as total_paying_users,
+  SUM(total_refund_users) as total_refund_users,
+  SUM(actual_paying_users) as actual_paying_users,
+  ROUND(SAFE_DIVIDE(SUM(total_refund_users),SUM(total_paying_users)), 4) as refund_rate_pct,
+  ROUND(SAFE_DIVIDE(SUM(actual_paying_users),SUM(total_users)), 4) as paid_conversion_rate_pct,
+  ROUND(SUM(total_income), 2) as total_income,
+  ROUND(SAFE_DIVIDE(SUM(total_income),SUM(total_paying_users)), 2) AS avg_income,
+  ROUND(SUM(total_refund_amount), 2) AS total_refund_amount,
+  ROUND(SAFE_DIVIDE(SUM(total_refund_amount),SUM(total_refund_users)), 2) AS avg_refund_amount,
+  ROUND(SUM(total_revenue), 2) AS total_revenue,
+  ROUND(SAFE_DIVIDE(SUM(total_revenue),SUM(actual_paying_users)), 2) AS avg_revenue
+  FROM metrics
+),
+
+-- 2) Per group
+per_group AS (
+  SELECT &#x27;PER_GROUP&#x27; AS analysis_level, 
+    CASE when group_flag = &#x27;0&#x27; then &#x27;No Trial Period&#x27; else &#x27;Trial Period&#x27; end as group_flag,
+    &#x27;All Plans&#x27; as plan_type,
+    SUM(total_users) AS total_users,
+    SUM(total_paying_users) AS total_paying_users,
+    SUM(total_refund_users) AS total_refund_users,
+    SUM(actual_paying_users) AS actual_paying_users,
+    ROUND(SAFE_DIVIDE(SUM(total_refund_users), SUM(total_paying_users)), 4) AS refund_rate_pct,
+    ROUND(SAFE_DIVIDE(SUM(actual_paying_users), SUM(total_users)), 4) AS paid_conversion_rate_pct,
+    ROUND(SUM(total_income), 2) AS total_income,
+    ROUND(SAFE_DIVIDE(SUM(total_income), SUM(total_paying_users)), 2) AS avg_income,
+    ROUND(SUM(total_refund_amount), 2) AS total_refund_amount,
+    ROUND(SAFE_DIVIDE(SUM(total_refund_amount), SUM(total_refund_users)), 2) AS avg_refund_amount,
+    ROUND(SUM(total_revenue), 2) AS total_revenue,
+    ROUND(SAFE_DIVIDE(SUM(total_revenue), SUM(actual_paying_users)), 2) AS avg_revenue
+  FROM metrics
+  GROUP BY group_flag
+),
+
+-- 3) Per plan
+per_plan AS (
+  SELECT &#x27;PER_PLAN&#x27; AS analysis_level, 
+    &#x27;All Groups&#x27; group_flag,
+    plan_type,
+    SUM(total_users) AS total_users,
+    SUM(total_paying_users) AS total_paying_users,
+    SUM(total_refund_users) AS total_refund_users,
+    SUM(actual_paying_users) AS actual_paying_users,
+    ROUND(SAFE_DIVIDE(SUM(total_refund_users), SUM(total_paying_users)), 4) AS refund_rate_pct,
+    ROUND(SAFE_DIVIDE(SUM(actual_paying_users), SUM(total_users)), 4) AS paid_conversion_rate_pct,
+    ROUND(SUM(total_income), 2) AS total_income,
+    ROUND(SAFE_DIVIDE(SUM(total_income), SUM(total_paying_users)), 2) AS avg_income,
+    ROUND(SUM(total_refund_amount), 2) AS total_refund_amount,
+    ROUND(SAFE_DIVIDE(SUM(total_refund_amount), SUM(total_refund_users)), 2) AS avg_refund_amount,
+    ROUND(SUM(total_revenue), 2) AS total_revenue,
+    ROUND(SAFE_DIVIDE(SUM(total_revenue), SUM(actual_paying_users)), 2) AS avg_revenue
+  FROM metrics
+  GROUP BY plan_type
+),
+
+-- 4) Per group + plan
+per_group_plan AS (
+  SELECT &#x27;PER_GROUP_PLAN&#x27; AS analysis_level, 
+    CASE when group_flag = &#x27;0&#x27; then &#x27;No Trial Period&#x27; else &#x27;Trial Period&#x27; end as group_flag,
+    plan_type,
+    SUM(total_users) AS total_users,
+    SUM(total_paying_users) AS total_paying_users,
+    SUM(total_refund_users) AS total_refund_users,
+    SUM(actual_paying_users) AS actual_paying_users,
+    ROUND(SAFE_DIVIDE(SUM(total_refund_users), SUM(total_paying_users)), 4) AS refund_rate_pct,
+    ROUND(SAFE_DIVIDE(SUM(actual_paying_users), SUM(total_users)), 4) AS paid_conversion_rate_pct,
+    ROUND(SUM(total_income), 2) AS total_income,
+    ROUND(SAFE_DIVIDE(SUM(total_income), SUM(total_paying_users)), 2) AS avg_income,
+    ROUND(SUM(total_refund_amount), 2) AS total_refund_amount,
+    ROUND(SAFE_DIVIDE(SUM(total_refund_amount), SUM(total_refund_users)), 2) AS avg_refund_amount,
+    ROUND(SUM(total_revenue), 2) AS total_revenue,
+    ROUND(SAFE_DIVIDE(SUM(total_revenue), SUM(actual_paying_users)), 2) AS avg_revenue
+  FROM metrics
+  GROUP BY group_flag, plan_type
+)
+
+-- Combine all analyses
+SELECT * FROM total_pop
+UNION ALL
+SELECT * FROM per_group
+UNION ALL 
+SELECT * FROM per_plan
+UNION ALL
+SELECT * FROM per_group_plan
+ORDER BY 
+CASE analysis_level
+WHEN &#x27;PER_GROUP&#x27; THEN 1
+WHEN &#x27;PER_PLAN&#x27; THEN 2
+WHEN &#x27;PER_GROUP_PLAN&#x27; THEN 3
+WHEN &#x27;TOTAL_POPULATION&#x27; THEN 4
+END,
+group_flag, plan_type;
+</code></pre><p id="25452625-35ff-8191-a1b2-ca7078b69baf" class="">
+</p><hr id="25452625-35ff-8171-95bf-d1d3c76d32a1"/></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
