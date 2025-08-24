@@ -1,0 +1,745 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Feature Utilization Rate</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(142, 58, 1, 0.141); }
+.select-value-color-orange { background-color: rgba(213, 96, 0, 0.188); }
+.select-value-color-yellow { background-color: rgba(209, 155, 0, 0.238); }
+.select-value-color-green { background-color: rgba(1, 104, 42, 0.145); }
+.select-value-color-blue { background-color: rgba(0, 108, 191, 0.156); }
+.select-value-color-purple { background-color: rgba(104, 1, 184, 0.125); }
+.select-value-color-pink { background-color: rgba(204, 1, 88, 0.137); }
+.select-value-color-red { background-color: rgba(228, 26, 0, 0.148); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="25452625-35ff-8069-91d7-e42d3515832c" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🔠</span></div><h1 class="page-title">Feature Utilization Rate</h1><p class="page-description"></p></header><div class="page-body"><p id="25452625-35ff-8192-9d45-ef0d70e84f33" class="">
+</p><h1 id="25452625-35ff-8135-8c25-ce3a0df51012" class="">Scenario:</h1><p id="25452625-35ff-819f-8a3d-f61f90fdf04d" class="">TicketHero is a platform built for IT teams to manage internal support across the organization.<br/> TicketHero helps IT provide faster, more efficient service whether employees need help with:</p><ul id="25452625-35ff-8138-9792-dbea46ac6be7" class="bulleted-list"><li style="list-style-type:disc">Resetting a password</li></ul><ul id="25452625-35ff-813a-82f2-c42848e3aabb" class="bulleted-list"><li style="list-style-type:disc">Fixing a device</li></ul><ul id="25452625-35ff-81ca-901d-c3be4cd52682" class="bulleted-list"><li style="list-style-type:disc">Getting access to a system</li></ul><p id="25452625-35ff-8126-b4d7-fe0ee61ae483" class="">
+</p><p id="25452625-35ff-81db-9c60-c980a1102c31" class="">Today, employees can open IT support tickets in several ways, for example:</p><ul id="25452625-35ff-81e0-b319-ecb0d639bc2f" class="bulleted-list"><li style="list-style-type:disc">Emailing the helpdesk</li></ul><ul id="25452625-35ff-812c-995b-cb08671bc784" class="bulleted-list"><li style="list-style-type:disc">Calling a technician</li></ul><ul id="25452625-35ff-819d-92e4-f9b25daaaaa7" class="bulleted-list"><li style="list-style-type:disc">Using the self-service portal.</li></ul><p id="25452625-35ff-817c-89db-e6083e496ce0" class="">This assignment focuses on the self-service portal. </p><p id="25452625-35ff-81b4-9ae9-d4534ccbcff6" class="">The self-service portal is designed to let employees report issues on their own. </p><p id="25452625-35ff-819e-a0b7-c3fba2548fe3" class="">To improve that experience, we recently introduced a new feature: <strong>an AI-powered chatbot embedded in the self-service portal.</strong></p><p id="25452625-35ff-81ac-b3e1-c4583a05335f" class="">Now, when employees visit the portal, they have two options:<br/>1.  Open a ticket directly through a form<br/>2. Use the chatbot first, describing their issue in plain language</p><p id="25452625-35ff-81d0-8063-fa2aea461ba6" class="">The chatbot will:<br/>● Understand the request<br/>● Suggest a solution, such as a help article or instructions<br/>● Resolve the issue on the spot if possible<br/>● Or escalate the ticket to a technician if it can’t help</p><p id="25452625-35ff-8144-9c10-d9b9ad3a954f" class="">Note: Even when the chatbot successfully resolves the issue, a ticket is still created<br/>automatically, but it is marked as resolved immediately to reflect that no technician<br/>intervention was required.</p><p id="25452625-35ff-81f3-9c3c-db70909333b2" class=""><strong>You’ve joined the product team as a Product Analyst, and your job is to evaluate the impact<br/>and performance of the chatbot using real product data. You’ll work with mock datasets<br/>containing:</strong></p><p id="25452625-35ff-81ed-a44b-e2ca3ab71654" class="">● Support tickets (with resolution times, requestor, categories, and priorities)<br/>● Users (departments, locations, seniority)<br/>● Assets (devices or systems associated with tickets)</p><p id="25452625-35ff-8102-9432-d89d8b415471" class="">Your analysis will help drive data-informed decisions about chatbot improvements, support<br/>processes, and product strategy.</p><h2 id="25452625-35ff-817b-9ff1-c0201acff9e8" class="">Chatbot Flow for Self-Service Portal</h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="25452625-35ff-8125-926a-dc2c8354ee04" class="code code-wrap"><code class="language-Mermaid" style="white-space:pre-wrap;word-break:break-all">flowchart TD
+    A[&quot;Employee visits Self-Service Portal&quot;] --&gt; B{&quot;Choose interaction method&quot;}
+    B --&gt;|&quot;Use form directly&quot;| C[&quot;Complete ticket form&quot;]
+    B --&gt;|&quot;Use chatbot&quot;| D[&quot;Describe issue in natural language&quot;]
+    
+    D --&gt; E[&quot;Chatbot analyzes request&quot;]
+    E --&gt; F{&quot;Can chatbot resolve?&quot;}
+    
+    F --&gt;|&quot;Yes&quot;| G[&quot;Suggest solution/article&quot;]
+    G --&gt; H{&quot;Issue resolved?&quot;}
+    H --&gt;|&quot;Yes&quot;| H1[&quot;Create Ticket and mark as &#x27;Resolved Immediatley&#x27;&quot;]
+    H1 --&gt; I[&quot;Case closed&quot;]
+    H --&gt;|&quot;No&quot;| J[&quot;Escalate to technician&quot;]
+    
+    F --&gt;|&quot;No&quot;| J
+    
+    C --&gt; K[&quot;Ticket created&quot;]
+    J --&gt; K
+    
+    K --&gt; L[&quot;IT technician handles ticket&quot;]
+    L --&gt; M[&quot;Issue resolution&quot;]
+    M --&gt; I
+    
+    %% This diagram illustrates the flow of the TicketHero self-service portal with chatbot integration
+    %% It shows how employees can either use a form directly or interact with the chatbot</code></pre><p id="25452625-35ff-8156-ace5-dfe8ce3a60d9" class=""><mark class="highlight-red"><strong>* Due to unfull ticket opening time and Tecnician ID data, I defined that an immediatly resolved ticket is a ticket that was resolved in 30 minutes from opening it.</strong></mark></p><h1 id="25452625-35ff-8111-8bac-e721d00decfd" class=""><span style="border-bottom:0.05em solid">1. Start with the Data: Chatbot Usage and Behavior</span> </h1><blockquote id="25452625-35ff-81a1-887e-f04c144cfa7a" class="">Use this section to explore the data freely. You&#x27;re welcome to investigate patterns, segments,<br/>or behaviors that stand out to you. You are encouraged to make reasonable assumptions<br/>during your analysis, just be sure to clearly state and explain them where applicable.</blockquote><h2 id="25452625-35ff-8136-934f-d78a55236a48" class="">How would you define and calculate chatbot utilization? </h2><p id="25452625-35ff-817a-bafa-f8bead6a40db" class="">First, it is important to understand the product funnel based on the scenario:</p><table id="25452625-35ff-81f7-b0c7-e585e8dd5d83" class="simple-table"><thead class="simple-table-header"><tr id="25452625-35ff-8100-8bf1-ec5419877a3b"><th id="l~jX" class="simple-table-header-color simple-table-header" style="width:105px">Funnel Stage</th><th id="fc[H" class="simple-table-header-color simple-table-header" style="width:324px">Description</th></tr></thead><tbody><tr id="25452625-35ff-8106-83e6-fc2a1eb2bf11"><td id="l~jX" class="" style="width:105px"><strong>Visit</strong></td><td id="fc[H" class="" style="width:324px">Employee visits the portal</td></tr><tr id="25452625-35ff-81ec-9691-feeac93d14a2"><td id="l~jX" class="" style="width:105px"><strong>Engagement</strong></td><td id="fc[H" class="" style="width:324px">Chooses between chatbot or form</td></tr><tr id="25452625-35ff-81f2-82d0-ec93b342ff33"><td id="l~jX" class="" style="width:105px"><strong>Conversion</strong></td><td id="fc[H" class="" style="width:324px">Submits a ticket (via form or chatbot)</td></tr><tr id="25452625-35ff-8107-9f30-e2b31dfcff5e"><td id="l~jX" class="" style="width:105px"><strong>Resolution</strong></td><td id="fc[H" class="" style="width:324px">Ticket is resolved (by chatbot or technician)</td></tr><tr id="25452625-35ff-818c-9523-db0a82346913"><td id="l~jX" class="" style="width:105px"><strong>Satisfaction</strong></td><td id="fc[H" class="" style="width:324px">Feedback score (satisfaction_score)</td></tr></tbody></table><p id="25452625-35ff-8157-8977-ce27e1358256" class="">Next,  since the main goal is to evaluate the impact and the performance of the chatbot to guide:</p><ul id="25452625-35ff-8104-87c7-c9868360c62f" class="bulleted-list"><li style="list-style-type:disc">Chatbot Improvements</li></ul><ul id="25452625-35ff-817d-85a6-c4c779d55968" class="bulleted-list"><li style="list-style-type:disc">Support Process Optimizatation</li></ul><ul id="25452625-35ff-81f5-aa3f-e039285a27f8" class="bulleted-list"><li style="list-style-type:disc">Product Strategy</li></ul><p id="25452625-35ff-8177-b1ae-c31da95d9485" class="">The next step is to define key metrics by aligning product analytics concepts with measurable metrics, starting with ChatBot Utilization Rate (%)</p><p id="25452625-35ff-817c-9b06-d23bc10703bd" class="">More metrics in the second section of the assignment</p><h3 id="25452625-35ff-8187-a882-c481dedfe6db" class="">Utilization</h3><blockquote id="25452625-35ff-814c-b04b-fc980b2441c4" class=""><strong>a measure of how frequently and extensively users engage with a product or specific features within it</strong>.</blockquote><p id="25452625-35ff-8106-a9ba-ea79d810009a" class="">I would define the Chatbot Utilization Rate the % of support tickets submitted through the portal that involved the chatbot. Plain and simple.<br/>This metric reflects how often users choose the chatbot over the manual ticket form when seeking support.</p><figure id="25452625-35ff-81b0-8eb0-d4a65e34c0b6" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>C</mi><mi>h</mi><mi>a</mi><mi>t</mi><mi>b</mi><mi>o</mi><mi>t</mi><mi>U</mi><mi>t</mi><mi>i</mi><mi>l</mi><mi>R</mi><mi>a</mi><mi>t</mi><mi>e</mi><mo>=</mo><mi>T</mi><mi>i</mi><mi>c</mi><mi>k</mi><mi>e</mi><mi>t</mi><mi>s</mi><mi>W</mi><mi>i</mi><mi>t</mi><mi>h</mi><mi>C</mi><mi>h</mi><mi>a</mi><mi>t</mi><mi>B</mi><mi>o</mi><mi>t</mi><mi mathvariant="normal">/</mi><mi>T</mi><mi>i</mi><mi>c</mi><mi>k</mi><mi>e</mi><mi>t</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">ChatbotUtilRate = Tickets With ChatBot/ Tickets </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">ha</span><span class="mord mathnormal">t</span><span class="mord mathnormal">b</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.00773em;">lR</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal">e</span><span class="mord mathnormal">t</span><span class="mord mathnormal">s</span><span class="mord mathnormal">Wi</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">ha</span><span class="mord mathnormal" style="margin-right:0.05017em;">tB</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal">e</span><span class="mord mathnormal">t</span><span class="mord mathnormal">s</span></span></span></span></span></div></figure><p id="25452625-35ff-81ca-b521-c7d99e02d1c9" class="">We can break the chatbot utilization by time, user segments and ticket type/ assets.</p><p id="25452625-35ff-81dd-8d7f-ed12a76fcfac" class="">In this case,  There are <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10000</mn></mrow><annotation encoding="application/x-tex">10000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">10000</span></span></span></span></span><span>﻿</span></span> tickets. </p><p id="25452625-35ff-81bf-8930-e50e1e0df19e" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3400</mn></mrow><annotation encoding="application/x-tex">3400</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3400</span></span></span></span></span><span>﻿</span></span> of them involved the chatbot feature, therefore the util rate is 34%</p><p id="25452625-35ff-813a-ac67-f1e8fe53232e" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3400</mn><mi mathvariant="normal">/</mi><mn>10000</mn><mo>=</mo><mn>0.34</mn></mrow><annotation encoding="application/x-tex">3400/10000 = 0.34</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">3400/10000</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.34</span></span></span></span></span><span>﻿</span></span></p><p id="25452625-35ff-818d-b8ed-e706ba7df4cf" class="">This is not a great util-rate. People don’t seem to be over-enthusiatic yet about this feature.<br/>It requires improving.</p><h2 id="25452625-35ff-8140-919f-d2de529d95f4" class="">What trends, anomalies, or shifts do you notice over time?</h2><p id="25452625-35ff-81ad-8847-f8804aa3c25d" class="">First,  I looked at the chatbot utilization in a month-over-month perspective:</p><table id="25452625-35ff-81a9-8cef-d7618439d3e3" class="simple-table"><thead class="simple-table-header"><tr id="25452625-35ff-812b-a985-dffd30273b10"><th id="G[hn" class="block-color-brown_background simple-table-header"><strong>Year-Month</strong></th><th id="E_K[" class="block-color-brown_background simple-table-header"><strong>Tickets Opened</strong></th><th id="wOgY" class="block-color-brown_background simple-table-header"><strong>Used ChatBot</strong></th><th id="JIAD" class="block-color-brown_background simple-table-header"><strong>chatBotUtil</strong></th><th id="lHY;" class="block-color-brown_background simple-table-header">Last Month Difference</th></tr></thead><tbody><tr id="25452625-35ff-810c-80e7-cf5a6e824748"><td id="G[hn" class="">2025-06</td><td id="E_K[" class="">147</td><td id="wOgY" class="">1</td><td id="JIAD" class="">1%</td><td id="lHY;" class="">-</td></tr><tr id="25452625-35ff-8106-b0a5-de330a4a8c68"><td id="G[hn" class="">2025-07</td><td id="E_K[" class="">4400</td><td id="wOgY" class="">833</td><td id="JIAD" class="">19%</td><td id="lHY;" class="">18%</td></tr><tr id="25452625-35ff-8155-8324-dbb5a1dc2819"><td id="G[hn" class="">2025-08</td><td id="E_K[" class="">4453</td><td id="wOgY" class="">1916</td><td id="JIAD" class="">43%</td><td id="lHY;" class="">24%</td></tr><tr id="25452625-35ff-816b-953a-dcc96422cf33"><td id="G[hn" class="">2025-09</td><td id="E_K[" class="">1000</td><td id="wOgY" class="">650</td><td id="JIAD" class="">65%</td><td id="lHY;" class="">22%</td></tr><tr id="25452625-35ff-8143-bf95-ff9c171c7243"><td id="G[hn" class=""><strong><span style="border-bottom:0.05em solid">Total</span></strong></td><td id="E_K[" class=""><strong><span style="border-bottom:0.05em solid">10000</span></strong></td><td id="wOgY" class=""><strong><span style="border-bottom:0.05em solid">3400</span></strong></td><td id="JIAD" class=""><strong><span style="border-bottom:0.05em solid">34%</span></strong></td><td id="lHY;" class="">-</td></tr></tbody></table><figure id="25452625-35ff-8198-947b-e892285e02e4" class="image"><a href="image.png"><img style="width:691.9791870117188px" src="image.png"/></a></figure><p id="25452625-35ff-8164-a5b5-f61a0fbaf2ec" class="">Overall we do see a steady increasing trend of chatbot util month over month.  There is an optimistic future for the chatbot if its util-rate keeps on improving.<br/><strong>IT IS IMPORTANT TO NOTE:<br/>The data reflects up to the first week of September, so we still have a long time ahead of the month to be able to properly infer data about the chatbot utilization rate in September.</strong></p><p id="25452625-35ff-814b-9b8f-da45443b2f12" class="">I tried to look at specific days to see if some days appear to be more in demand for ticket creation/ chatbot utilization. No real insight there. </p><table id="25452625-35ff-8179-af1d-f7ff1e28bf30" class="simple-table"><thead class="simple-table-header"><tr id="25452625-35ff-812e-bd3c-f4568e4307d9"><th id="vbFs" class="simple-table-header-color simple-table-header"><strong>day_name</strong></th><th id="}x:}" class="simple-table-header-color simple-table-header"><strong>Tickets Opened</strong></th><th id="iMFw" class="simple-table-header-color simple-table-header"><strong>Used ChatBot</strong></th><th id="b?dv" class="simple-table-header-color simple-table-header"><strong>chatBotUtil</strong></th></tr></thead><tbody><tr id="25452625-35ff-8116-8307-d44bb8698f82"><th id="vbFs" class="simple-table-header-color simple-table-header"><strong>Sunday</strong></th><td id="}x:}" class="">1471</td><td id="iMFw" class="">474</td><td id="b?dv" class="">0.32</td></tr><tr id="25452625-35ff-8164-9193-c5cb2a8fcaa8"><th id="vbFs" class="simple-table-header-color simple-table-header"><strong>Monday</strong></th><td id="}x:}" class="">1406</td><td id="iMFw" class="">477</td><td id="b?dv" class="">0.34</td></tr><tr id="25452625-35ff-8152-abfa-cfa564b49067"><th id="vbFs" class="simple-table-header-color simple-table-header"><strong>Tuesday</strong></th><td id="}x:}" class="">1433</td><td id="iMFw" class="">526</td><td id="b?dv" class="">0.37</td></tr><tr id="25452625-35ff-8168-b4d5-c0f475cee2d8"><th id="vbFs" class="simple-table-header-color simple-table-header"><strong>Wednesday</strong></th><td id="}x:}" class="">1394</td><td id="iMFw" class="">478</td><td id="b?dv" class="">0.34</td></tr><tr id="25452625-35ff-814c-b651-f2143691fa49"><th id="vbFs" class="simple-table-header-color simple-table-header"><strong>Thursday</strong></th><td id="}x:}" class="">1419</td><td id="iMFw" class="">472</td><td id="b?dv" class="">0.33</td></tr><tr id="25452625-35ff-816d-8302-e50cf083f422"><th id="vbFs" class="simple-table-header-color simple-table-header"><strong>Friday</strong></th><td id="}x:}" class="">1413</td><td id="iMFw" class="">482</td><td id="b?dv" class="">0.34</td></tr><tr id="25452625-35ff-81cf-9f9e-e49ad48d57dc"><th id="vbFs" class="simple-table-header-color simple-table-header"><strong>Saturday</strong></th><td id="}x:}" class="">1464</td><td id="iMFw" class="">491</td><td id="b?dv" class="">0.34</td></tr></tbody></table><figure id="25452625-35ff-81d5-bf5b-f64c4d3ad252" class="image"><a href="image%201.png"><img style="width:709.984375px" src="image%201.png"/></a></figure><p id="25452625-35ff-81b2-9ad7-e4a8f5cca21f" class=""><strong>Let’s look at it weekly by week start date:</strong></p><table id="25452625-35ff-8156-9d75-cd543b88c5dc" class="simple-table"><thead class="simple-table-header"><tr id="25452625-35ff-813e-8861-dc8504ed23d3"><th id="JLj^" class="simple-table-header-color simple-table-header"><strong>WeekStart</strong></th><th id="ZYix" class="simple-table-header-color simple-table-header"><strong>Tickets Opened</strong></th><th id="gpyg" class="simple-table-header-color simple-table-header"><strong>Used ChatBot</strong></th><th id="HFAn" class="simple-table-header-color simple-table-header" style="width:106.59375px"><strong>chatBotUtil</strong></th><th id="{x&lt;s" class="simple-table-header-color simple-table-header">Last Week Difference</th></tr></thead><tbody><tr id="25452625-35ff-8115-b3f0-d8719f1047a3"><th id="JLj^" class="simple-table-header-color simple-table-header"><strong>2025-06-30</strong></th><td id="ZYix" class="">1000</td><td id="gpyg" class="">50</td><td id="HFAn" class="" style="width:106.59375px">0.05</td><td id="{x&lt;s" class="">-</td></tr><tr id="25452625-35ff-817c-a11f-f574a4828dd1"><th id="JLj^" class="simple-table-header-color simple-table-header"><strong>2025-07-07</strong></th><td id="ZYix" class="">1000</td><td id="gpyg" class="">100</td><td id="HFAn" class="" style="width:106.59375px">0.10</td><td id="{x&lt;s" class="">0.05</td></tr><tr id="25452625-35ff-8138-99af-f623a3f7b82b"><th id="JLj^" class="simple-table-header-color simple-table-header"><strong>2025-07-14</strong></th><td id="ZYix" class="">1000</td><td id="gpyg" class="">200</td><td id="HFAn" class="" style="width:106.59375px">0.20</td><td id="{x&lt;s" class="">0.10</td></tr><tr id="25452625-35ff-810f-af24-f9a0d90123b5"><th id="JLj^" class="simple-table-header-color simple-table-header"><strong>2025-07-21</strong></th><td id="ZYix" class="">1000</td><td id="gpyg" class="">400</td><td id="HFAn" class="" style="width:106.59375px">0.40</td><td id="{x&lt;s" class="">0.20</td></tr><tr id="25452625-35ff-8183-a3c0-e2d2a5748505"><th id="JLj^" class="block-color-yellow_background simple-table-header"><strong>2025-07-28</strong></th><td id="ZYix" class="block-color-yellow_background">1000</td><td id="gpyg" class="block-color-yellow_background">150</td><td id="HFAn" class="block-color-yellow_background" style="width:106.59375px">0.15</td><td id="{x&lt;s" class="block-color-yellow_background">-0.25</td></tr><tr id="25452625-35ff-8165-8541-f91c672e3201"><th id="JLj^" class="simple-table-header-color simple-table-header"><strong>2025-08-04</strong></th><td id="ZYix" class="">1000</td><td id="gpyg" class="">300</td><td id="HFAn" class="" style="width:106.59375px">0.30</td><td id="{x&lt;s" class="">0.15</td></tr><tr id="25452625-35ff-81b8-88c2-cc8ae062f5a5"><th id="JLj^" class="simple-table-header-color simple-table-header"><strong>2025-08-11</strong></th><td id="ZYix" class="">1000</td><td id="gpyg" class="">450</td><td id="HFAn" class="" style="width:106.59375px">0.45</td><td id="{x&lt;s" class="">0.15</td></tr><tr id="25452625-35ff-8105-a784-fccaf129ee32"><th id="JLj^" class="simple-table-header-color simple-table-header"><strong>2025-08-18</strong></th><td id="ZYix" class="">1000</td><td id="gpyg" class="">500</td><td id="HFAn" class="" style="width:106.59375px">0.50</td><td id="{x&lt;s" class="">0.05</td></tr><tr id="25452625-35ff-81ff-9106-f53f866ba46b"><th id="JLj^" class="simple-table-header-color simple-table-header"><strong>2025-08-25</strong></th><td id="ZYix" class="">1000</td><td id="gpyg" class="">600</td><td id="HFAn" class="" style="width:106.59375px">0.60</td><td id="{x&lt;s" class="">0.10</td></tr><tr id="25452625-35ff-8111-bb0f-da6f0817317d"><th id="JLj^" class="simple-table-header-color simple-table-header"><strong>2025-09-01</strong></th><td id="ZYix" class="">1000</td><td id="gpyg" class="">650</td><td id="HFAn" class="" style="width:106.59375px">0.65</td><td id="{x&lt;s" class="">0.05</td></tr></tbody></table><p id="25452625-35ff-8109-bd51-d58719884504" class="">It is interesting to dive deeper into the week that started at 07/28/2025. Something defenitly happened there with the chatBot that is worth investigating.<br/>In the week started July 28th, chatbot utilization dropped from a 40% to just 15%, despite stable overall ticket volume.<br/>The same number of tickets where opened, but significantly less amount of tickets involved the usage of the chatbot.</p><figure id="25452625-35ff-812f-b709-f4cd42322a2e" class="image"><a href="image%202.png"><img style="width:709.984375px" src="image%202.png"/></a></figure><p id="25452625-35ff-81e6-bcda-eea8beb0ffed" class="">Looking at the segements/user groups will help to identify the issue.</p><p id="25452625-35ff-81e1-8f35-efeb06bc3f02" class="">Possible causes:</p><ul id="25452625-35ff-8167-ae9b-fcaab462b274" class="bulleted-list"><li style="list-style-type:disc">a temporary bug in the chatbot system</li></ul><ul id="25452625-35ff-8147-b730-c8d68f01d620" class="bulleted-list"><li style="list-style-type:disc">reduced visibility of the chatbot on the portal</li></ul><ul id="25452625-35ff-812f-a289-f6937917a63d" class="bulleted-list"><li style="list-style-type:disc">a shift in issue type</li></ul><ul id="25452625-35ff-8173-9e8b-e88f45b5fb34" class="bulleted-list"><li style="list-style-type:disc">an internal company event that led employees to prefer human support.</li></ul><p id="25452625-35ff-81d6-9141-d4e837688212" class="">To understand better the cause of this, I would explore:</p><ul id="25452625-35ff-8109-b422-dd3fec415170" class="bulleted-list"><li style="list-style-type:disc">Chatbot activity logs. Perhaps the chatbot was not functioning during this week as much as it is used to function.</li></ul><ul id="25452625-35ff-81c1-900d-d6c6fb8a7aaa" class="bulleted-list"><li style="list-style-type:disc">Ticket category breakdown for that week compared to the previous periods. </li></ul><ul id="25452625-35ff-8131-b6ab-e64298a1694e" class="bulleted-list"><li style="list-style-type:disc">Users job title/department/ location for that week compared to the previous periods.<br/>perhaps a brach was on vacation this week, or maybe there was a convention for a set of personel that explains the lack of chatbot usage.</li></ul><p id="25452625-35ff-8151-86a1-d9cef5cecfb7" class="">Either way, clearly this was just a minor “blip” in the overall period the chatbot has been in use, we see that the trend keeps on increasing as from the following week.</p><p id="25452625-35ff-811b-a357-c908d4b56340" class="">Nonetheless, It is important to check the satisfaction score of the users during this week, this can indicate if the user experience was affected as well as the lower chatbot usage.</p><p id="25452625-35ff-8102-b087-e594987e5a74" class="">Satisfaction Score dropped 14% on the week of July 28th.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="25452625-35ff-8166-b0c3-d45e2fb8b62e" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Week 
+2025-07-21    6.924612
+2025-07-28    6.077936
+2025-08-04    6.550511</code></pre><p id="25452625-35ff-8190-9601-d79f8e3a7c48" class="">Proposal:</p><p id="25452625-35ff-8135-abf1-ce1d0c72bc20" class="">It may be helpful to implement automated monitoring for significant weekly changes in utilization and set up alerts for potential systel-level disruptions.</p><p id="25452625-35ff-8188-9b50-cabc50ce1351" class="">
+</p><p id="25452625-35ff-81fc-b4fd-ce1f8d5d0bf0" class=""><strong>Investigate the activity in the week 28th July and previous one 21th July across segments:</strong></p><p id="25452625-35ff-81fd-9f51-ec347dbdeae6" class=""><strong><span style="border-bottom:0.05em solid">ChatBot Utilization Metric Across Dimensions Comparing Weeks:</span></strong></p><p id="25452625-35ff-8183-80a9-ea65621831bd" class="">Categories:<br/>There is no signigicant conclusion from this analysis since chatbot util rate dropped  quite significantly across all categories.</p><table id="25452625-35ff-8169-a549-c5ef52a6e77c" class="simple-table"><thead class="simple-table-header"><tr id="25452625-35ff-814f-9dd8-c05ab6b28380"><th id="u|w^" class="simple-table-header-color simple-table-header"><strong>category</strong></th><th id="aQRn" class="simple-table-header-color simple-table-header">Week <br/>2025-07-21</th><th id="&lt;n:}" class="simple-table-header-color simple-table-header" style="width:121px">Week<br/>2025-07-28</th><th id="?C|V" class="simple-table-header-color simple-table-header">Week<br/>2025-08-04</th></tr></thead><tbody><tr id="25452625-35ff-81d7-99bf-c1d88f0b7b1e"><th id="u|w^" class="simple-table-header-color simple-table-header">Access</th><td id="aQRn" class="">0.40</td><td id="&lt;n:}" class="" style="width:121px">0.22</td><td id="?C|V" class="">0.30</td></tr><tr id="25452625-35ff-81bc-a68f-f966aeeb9963"><th id="u|w^" class="simple-table-header-color simple-table-header">Hardware</th><td id="aQRn" class="">0.43</td><td id="&lt;n:}" class="" style="width:121px">0.11</td><td id="?C|V" class="">0.27</td></tr><tr id="25452625-35ff-816a-b59b-c6677f8db141"><th id="u|w^" class="simple-table-header-color simple-table-header">Network</th><td id="aQRn" class="">0.37</td><td id="&lt;n:}" class="" style="width:121px">0.16</td><td id="?C|V" class="">0.33</td></tr><tr id="25452625-35ff-810e-8073-e2707314192e"><th id="u|w^" class="simple-table-header-color simple-table-header">Other</th><td id="aQRn" class="">0.44</td><td id="&lt;n:}" class="" style="width:121px">0.11</td><td id="?C|V" class="">0.30</td></tr><tr id="25452625-35ff-81de-ae55-de29eaaa9d2c"><th id="u|w^" class="simple-table-header-color simple-table-header">Software</th><td id="aQRn" class="">0.37</td><td id="&lt;n:}" class="" style="width:121px">0.14</td><td id="?C|V" class="">0.29</td></tr></tbody></table><p id="25452625-35ff-8105-b5ea-f4f824ea8994" class=""><strong>Interpretation</strong>: This points to a <strong>system-wide issue</strong>, not a change in ticket type.<br/></p><p id="25452625-35ff-8105-9447-f132fb60ea36" class="">Device Types:<br/>There is no signigicant conclusion from this analysis since chatbot util rate dropped quite significantly across all devices.</p><table id="25452625-35ff-8165-91f3-e3953e2b982b" class="simple-table"><thead class="simple-table-header"><tr id="25452625-35ff-8174-961a-e92c78bed35b"><th id="Bh:Y" class="simple-table-header-color simple-table-header"><strong>device_type</strong></th><th id="XHCw" class="simple-table-header-color simple-table-header">Week <br/>2025-07-21</th><th id="ChZo" class="simple-table-header-color simple-table-header">Week<br/>2025-07-28</th><th id="iSun" class="simple-table-header-color simple-table-header">Week<br/>2025-08-04</th></tr></thead><tbody><tr id="25452625-35ff-810c-9a86-e0e11772252e"><th id="Bh:Y" class="simple-table-header-color simple-table-header">Desktop</th><td id="XHCw" class="">0.43</td><td id="ChZo" class="">0.17</td><td id="iSun" class="">0.25</td></tr><tr id="25452625-35ff-81f9-a0b7-f630531929c5"><th id="Bh:Y" class="simple-table-header-color simple-table-header">Laptop</th><td id="XHCw" class="">0.42</td><td id="ChZo" class="">0.12</td><td id="iSun" class="">0.34</td></tr><tr id="25452625-35ff-8118-bf14-c237be207343"><th id="Bh:Y" class="simple-table-header-color simple-table-header">Monitor</th><td id="XHCw" class="">0.38</td><td id="ChZo" class="">0.15</td><td id="iSun" class="">0.32</td></tr><tr id="25452625-35ff-8105-a791-d652c523f2bc"><th id="Bh:Y" class="simple-table-header-color simple-table-header">Printer</th><td id="XHCw" class="">0.34</td><td id="ChZo" class="">0.15</td><td id="iSun" class="">0.28</td></tr><tr id="25452625-35ff-814c-8db3-ecd39abcf3cf"><th id="Bh:Y" class="simple-table-header-color simple-table-header">Router</th><td id="XHCw" class="">0.45</td><td id="ChZo" class="">0.16</td><td id="iSun" class="">0.32</td></tr></tbody></table><p id="25452625-35ff-8187-827e-ecb488d74476" class="">Warranity Expiry Year -<br/>There is no signigicant conclusion from this analysis since chatbot util rate dropped quite significantly across all expiry years.</p><table id="25452625-35ff-8188-bcd2-f2f2f1ba3e0c" class="simple-table"><thead class="simple-table-header"><tr id="25452625-35ff-8150-afee-f97c69c09747"><th id="w;M&lt;" class="simple-table-header-color simple-table-header"><strong>warranty_expiry_year</strong></th><th id="XUV]" class="simple-table-header-color simple-table-header">Week <br/>2025-07-21</th><th id="Yz?t" class="simple-table-header-color simple-table-header">Week<br/>2025-07-28</th><th id="G{Xk" class="simple-table-header-color simple-table-header">Week<br/>2025-08-04</th></tr></thead><tbody><tr id="25452625-35ff-81b0-90b2-fa34343a20dc"><th id="w;M&lt;" class="simple-table-header-color simple-table-header">2025</th><td id="XUV]" class="">0.40</td><td id="Yz?t" class="">0.15</td><td id="G{Xk" class="">0.25</td></tr><tr id="25452625-35ff-81a4-ae1b-cf627abec46b"><th id="w;M&lt;" class="simple-table-header-color simple-table-header">2026</th><td id="XUV]" class="">0.42</td><td id="Yz?t" class="">0.16</td><td id="G{Xk" class="">0.34</td></tr><tr id="25452625-35ff-813a-b1a0-d6ffd64e3a09"><th id="w;M&lt;" class="simple-table-header-color simple-table-header">2027</th><td id="XUV]" class="">0.37</td><td id="Yz?t" class="">0.14</td><td id="G{Xk" class="">0.29</td></tr></tbody></table><p id="25452625-35ff-811b-8970-ff1eb79dafe5" class="">Asset Status-<br/>There is no signigicant conclusion from this analysis since chatbot util rate dropped quite significantly across all asset statuses.</p><table id="25452625-35ff-8192-a619-cf72fbdd428a" class="simple-table"><thead class="simple-table-header"><tr id="25452625-35ff-813f-a4f5-ff508de5f9c6"><th id="cfz_" class="simple-table-header-color simple-table-header"><strong>status</strong></th><th id="xBqw" class="simple-table-header-color simple-table-header">Week <br/>2025-07-21</th><th id="eW|j" class="simple-table-header-color simple-table-header">Week<br/>2025-07-28</th><th id="dF&lt;y" class="simple-table-header-color simple-table-header">Week<br/>2025-08-04</th></tr></thead><tbody><tr id="25452625-35ff-81ec-ba82-dda1afee3c48"><th id="cfz_" class="simple-table-header-color simple-table-header">Active</th><td id="xBqw" class="">0.39</td><td id="eW|j" class="">0.15</td><td id="dF&lt;y" class="">0.30</td></tr><tr id="25452625-35ff-8199-9efa-dd65794fed0c"><th id="cfz_" class="simple-table-header-color simple-table-header">Decommissioned</th><td id="xBqw" class="">0.36</td><td id="eW|j" class="">0.14</td><td id="dF&lt;y" class="">0.32</td></tr><tr id="25452625-35ff-8185-a0f7-e62fd3872336"><th id="cfz_" class="simple-table-header-color simple-table-header">Repair</th><td id="xBqw" class="">0.43</td><td id="eW|j" class="">0.13</td><td id="dF&lt;y" class="">0.35</td></tr><tr id="25452625-35ff-814f-8651-fadd6bdc9584"><th id="cfz_" class="simple-table-header-color simple-table-header">Retired</th><td id="xBqw" class="">0.42</td><td id="eW|j" class="">0.17</td><td id="dF&lt;y" class="">0.24</td></tr></tbody></table><p id="25452625-35ff-813d-9f81-ea791d847ae9" class=""><strong>Interpretation</strong>: The anomaly is user-agnostic — possibly affecting the <strong>portal interface</strong> or chatbot availability.</p><p id="25452625-35ff-81c0-8a93-e6dd810c505e" class="">
+</p><p id="25452625-35ff-814c-8f12-dcd83dd4b22c" class="">Users: Job title, Location and Department Analysis:</p><table id="25452625-35ff-81ff-9156-d6b991b4bff4" class="simple-table"><thead class="simple-table-header"><tr id="25452625-35ff-81e0-ac63-ddacb3a952f4"><th id="V=Tr" class="simple-table-header-color simple-table-header"><strong>job_title</strong></th><th id="WTWw" class="simple-table-header-color simple-table-header">Week <br/>2025-07-21</th><th id="Fuue" class="simple-table-header-color simple-table-header">Week<br/>2025-07-28</th><th id="WCOq" class="simple-table-header-color simple-table-header">Week<br/>2025-08-04</th></tr></thead><tbody><tr id="25452625-35ff-8176-8094-e1fc8e6f3cac"><th id="V=Tr" class="simple-table-header-color simple-table-header">Analyst</th><td id="WTWw" class="">0.43</td><td id="Fuue" class="">0.16</td><td id="WCOq" class="">0.33</td></tr><tr id="25452625-35ff-810d-a56e-d733b697ac96"><th id="V=Tr" class="simple-table-header-color simple-table-header">Engineer</th><td id="WTWw" class="">0.38</td><td id="Fuue" class="">0.11</td><td id="WCOq" class="">0.33</td></tr><tr id="25452625-35ff-81a1-be4d-c1d1580c7ca3"><th id="V=Tr" class="simple-table-header-color simple-table-header">HR Manager</th><td id="WTWw" class="">0.41</td><td id="Fuue" class="">0.18</td><td id="WCOq" class="">0.26</td></tr><tr id="25452625-35ff-818a-897b-e626478a8504"><th id="V=Tr" class="simple-table-header-color simple-table-header">Sales Rep</th><td id="WTWw" class="">0.42</td><td id="Fuue" class="">0.18</td><td id="WCOq" class="">0.29</td></tr><tr id="25452625-35ff-81ef-bd4f-d328501f2f0f"><th id="V=Tr" class="simple-table-header-color simple-table-header">Support Agent</th><td id="WTWw" class="">0.36</td><td id="Fuue" class="">0.11</td><td id="WCOq" class="">0.29</td></tr></tbody></table><p id="25452625-35ff-8179-b83e-ee71d2dd06c3" class=""><strong>Interpretation</strong>: The anomaly is user-agnostic — possibly affecting the <strong>portal interface</strong> or chatbot availability.<br/></p><table id="25452625-35ff-811a-85b5-e4e382434b00" class="simple-table"><thead class="simple-table-header"><tr id="25452625-35ff-81a1-a190-f94f4069a17b"><th id="B|]p" class="simple-table-header-color simple-table-header"><strong>location</strong></th><th id="KPip" class="simple-table-header-color simple-table-header">Week <br/>2025-07-21</th><th id="XoKM" class="simple-table-header-color simple-table-header">Week<br/>2025-07-28</th><th id="g;Xn" class="simple-table-header-color simple-table-header">Week<br/>2025-08-04</th></tr></thead><tbody><tr id="25452625-35ff-8130-b080-e4df7b35103f"><th id="B|]p" class="simple-table-header-color simple-table-header"><strong>Berlin</strong></th><td id="KPip" class="">0.48</td><td id="XoKM" class="">0.19</td><td id="g;Xn" class="">0.31</td></tr><tr id="25452625-35ff-81f8-bf4b-e69e33c9a3c7"><th id="B|]p" class="simple-table-header-color simple-table-header"><strong>London</strong></th><td id="KPip" class="">0.40</td><td id="XoKM" class="">0.15</td><td id="g;Xn" class="">0.31</td></tr><tr id="25452625-35ff-8136-a381-d52c33e2e572"><th id="B|]p" class="simple-table-header-color simple-table-header"><strong>New York</strong></th><td id="KPip" class="">0.37</td><td id="XoKM" class="">0.12</td><td id="g;Xn" class="">0.30</td></tr><tr id="25452625-35ff-8170-b2ac-fc3074d24c93"><th id="B|]p" class="simple-table-header-color simple-table-header"><strong>Tel Aviv</strong></th><td id="KPip" class="">0.36</td><td id="XoKM" class="">0.14</td><td id="g;Xn" class="">0.28</td></tr></tbody></table><p id="25452625-35ff-81ba-ad85-d45f25536c97" class=""><strong>Interpretation</strong>: Again, this suggests a global/portal-level issue, <strong>not a region-specific event</strong>.<br/><br/></p><table id="25452625-35ff-81ce-8432-c99fab6f511c" class="simple-table"><thead class="simple-table-header"><tr id="25452625-35ff-8135-88c4-e00a7d22630c"><th id="nLy:" class="simple-table-header-color simple-table-header"><strong>department</strong></th><th id="sI=A" class="simple-table-header-color simple-table-header">Week <br/>2025-07-21</th><th id="JNyp" class="simple-table-header-color simple-table-header">Week<br/>2025-07-28</th><th id="L_aS" class="simple-table-header-color simple-table-header">Week<br/>2025-08-04</th></tr></thead><tbody><tr id="25452625-35ff-8170-9a7d-fcaac4a86b69"><th id="nLy:" class="block-color-yellow_background simple-table-header"><strong>Engineering</strong></th><td id="sI=A" class="block-color-yellow_background">0.60</td><td id="JNyp" class="block-color-yellow_background">0.26</td><td id="L_aS" class="block-color-yellow_background">0.50</td></tr><tr id="25452625-35ff-816c-8a83-c5043079d9db"><th id="nLy:" class="block-color-yellow_background simple-table-header"><strong>Finance</strong></th><td id="sI=A" class="block-color-yellow_background">0.15</td><td id="JNyp" class="block-color-yellow_background">0.00</td><td id="L_aS" class="block-color-yellow_background">0.04</td></tr><tr id="25452625-35ff-8171-a7b3-f083267cff11"><th id="nLy:" class="block-color-yellow_background simple-table-header"><strong>HR</strong></th><td id="sI=A" class="block-color-yellow_background">0.32</td><td id="JNyp" class="block-color-yellow_background">0.00</td><td id="L_aS" class="block-color-yellow_background">0.08</td></tr><tr id="25452625-35ff-8187-bc0c-da35cc2ccbe5"><th id="nLy:" class="simple-table-header-color simple-table-header"><strong>Marketing</strong></th><td id="sI=A" class="">0.35</td><td id="JNyp" class="">0.10</td><td id="L_aS" class="">0.33</td></tr><tr id="25452625-35ff-81cb-9020-fb2fdb0d35b1"><th id="nLy:" class="simple-table-header-color simple-table-header"><strong>Sales</strong></th><td id="sI=A" class="">0.44</td><td id="JNyp" class="">0.24</td><td id="L_aS" class="">0.38</td></tr><tr id="25452625-35ff-81b7-b194-e4dcbadc71a8"><th id="nLy:" class="simple-table-header-color simple-table-header"><strong>Support</strong></th><td id="sI=A" class="">0.51</td><td id="JNyp" class="">0.27</td><td id="L_aS" class="">0.48</td></tr></tbody></table><p id="25452625-35ff-818b-b788-e3b62ad25c27" class=""><strong>Interpretation</strong>: Something may have disrupted chatbot visibility or reliability <strong>across all users</strong> — especially for departments with smaller usage bases (Finance, HR).<br/><br/><strong>Main Conclusion:</strong></p><p id="25452625-35ff-8154-b7db-d0286d431120" class="">During the week of July 28th, the chatbot utilization % dropped across all user groups, categories, and locations. In some departments it fell to zero. This appears to be systematic issue and not specific to one dimension.<br/>Durind the following week, it seems like the chatbot utilization is back on track.</p><p id="25452625-35ff-8114-9c52-f6cd04716807" class="">
+</p><h2 id="25452625-35ff-8145-8348-caa0a4053625" class="">What segments or user groups show meaningful differences in how they use the chatbot?</h2><p id="25452625-35ff-8186-8d11-ffd3e123b37a" class="">
+</p><p id="25452625-35ff-817d-9261-f1bc18895477" class="">
+</p><h3 id="25452625-35ff-81a5-a718-c168637c7e9d" class="">Chatbot Util Breakdown by Department</h3><figure id="25452625-35ff-8125-a47a-cc7c159e70af" class="image"><a href="image%203.png"><img style="width:709.96875px" src="image%203.png"/></a></figure><p id="25452625-35ff-8165-b1bf-cbf131084883" class="">The average Chatbot Util across departments is 34%<br/>We see that while Engineering and support use the chatbot heavily, Marketing, HR and Finance are below the average. Possibly due to less familiarty or lack of percieved relevance of the chatbot to their issues.</p><p id="25452625-35ff-81b3-a0ea-d564a800ce11" class="">Looking at the avereage satisfaction scores for each department, this is in complete allignment with the chatbot utilization.</p><table id="25452625-35ff-8110-8bcb-db8fc8aa840f" class="simple-table"><thead class="simple-table-header"><tr id="25452625-35ff-8122-a158-df032a65d434"><th id="~nE^" class="simple-table-header-color simple-table-header"><strong>department</strong></th><th id="AwMO" class="simple-table-header-color simple-table-header">Satisfaction Score (AVG)</th><th id="o`U{" class="simple-table-header-color simple-table-header">Util Rate</th></tr></thead><tbody><tr id="25452625-35ff-819d-9aee-f29ad5542d73"><th id="~nE^" class="simple-table-header-color simple-table-header"><strong>Finance</strong></th><td id="AwMO" class="">5.9</td><td id="o`U{" class="">11%</td></tr><tr id="25452625-35ff-81a3-9d0e-fab428c432e0"><th id="~nE^" class="simple-table-header-color simple-table-header"><strong>HR</strong></th><td id="AwMO" class="">6.25</td><td id="o`U{" class="">20%</td></tr><tr id="25452625-35ff-8141-93e5-fff546caec08"><th id="~nE^" class="simple-table-header-color simple-table-header"><strong>Marketing</strong></th><td id="AwMO" class="">6.537</td><td id="o`U{" class="">30%</td></tr><tr id="25452625-35ff-8160-8d26-fc113b04b300"><th id="~nE^" class="simple-table-header-color simple-table-header"><strong>Sales</strong></th><td id="AwMO" class="">6.89</td><td id="o`U{" class="">40%</td></tr><tr id="25452625-35ff-81d8-960a-c741f40f4aed"><th id="~nE^" class="simple-table-header-color simple-table-header"><strong>Support</strong></th><td id="AwMO" class="">7.26</td><td id="o`U{" class="">50%</td></tr><tr id="25452625-35ff-81b8-b5de-cf455892cc5c"><th id="~nE^" class="simple-table-header-color simple-table-header"><strong>Engineering</strong></th><td id="AwMO" class="">7.3</td><td id="o`U{" class="">52%</td></tr></tbody></table><p id="25452625-35ff-81f5-9271-f1ef673ed805" class="">Conclusion: The more a user is satisfied with the chatbot → the more they will use it.</p><h3 id="25452625-35ff-819c-84e2-eba4b2f5bba3" class="">Chatbot util Breakdown by Job Title:</h3><figure id="25452625-35ff-81de-b981-eee3c639a641" class="image"><a href="image%204.png"><img style="width:709.96875px" src="image%204.png"/></a></figure><p id="25452625-35ff-8189-ac46-fdbe3c486215" class="">This is quite an even distribution. No further analysis per this group.</p><h3 id="25452625-35ff-81e6-8a1b-f738e941524d" class="">Chatbot util Breakdown by Location:</h3><p id="25452625-35ff-815b-b78b-eb2e82751b11" class="">
+</p><figure id="25452625-35ff-8180-9350-d50b79688fe4" class="image"><a href="image%205.png"><img style="width:709.96875px" src="image%205.png"/></a></figure><p id="25452625-35ff-8103-901a-e1fd2f779e29" class="">This is quite an even distribution. No further analysis per this group.</p><h3 id="25452625-35ff-81e9-b227-c7a93276dfea" class="">Chatbot util Breakdown by User Seniority (Months Since Employment):</h3><figure id="25452625-35ff-81a3-9f6b-d4396805b7cf" class="image"><a href="image%206.png"><img style="width:709.96875px" src="image%206.png"/></a></figure><p id="25452625-35ff-81cb-88bc-c1aa4e58446a" class="">This is quite an even distribution. No further analysis per this group.</p><h3 id="25452625-35ff-812b-adcf-d19c090fc08a" class="">Chatbot util Breakdown by Device Type:</h3><figure id="25452625-35ff-816d-8d99-e27b17f167c9" class="image"><a href="image%207.png"><img style="width:709.96875px" src="image%207.png"/></a></figure><p id="25452625-35ff-8135-a868-e3321b13c778" class="">This is quite an even distribution. No further analysis per this group.</p><h3 id="25452625-35ff-81ac-8256-fbc5ca22eef3" class="">Chatbot util Breakdown by Wararnty expiry year:</h3><figure id="25452625-35ff-8180-94ab-d50c0965c5e8" class="image"><a href="image%208.png"><img style="width:709.96875px" src="image%208.png"/></a></figure><p id="25452625-35ff-81ec-b0df-f5f120a98942" class="">
+</p><p id="25452625-35ff-81d0-ac1d-cdaf1eb5222d" class="">This is quite an even distribution. No further analysis per this group.</p><p id="25452625-35ff-81ad-bff7-cb2639bdec18" class="">
+</p><h2 id="25452625-35ff-812c-9d62-faf92ca36993" class="">Do users who interact with the chatbot behave differently than those who don’t?<br/></h2><p id="25452625-35ff-819f-8e37-ce1518891f15" class="">The relevant cohorts:</p><table id="25452625-35ff-81d9-86c5-da7ad5dc05eb" class="simple-table"><tbody><tr id="25452625-35ff-812d-a4cf-e9ffcf98a37d"><td id="N{p\" class="block-color-blue_background">Chatbot Users</td><td id="PAcN" class="block-color-blue_background">Non-Chatbot users</td></tr><tr id="25452625-35ff-81d8-b5fd-f928ec5bffeb"><td id="N{p\" class="">Users who interacted with the chatbot at least once</td><td id="PAcN" class="">Users who submitted support requests but never interacted with the chatbot.</td></tr></tbody></table><h3 id="25452625-35ff-81d4-91b7-c4f38842c727" class="">Average satisfaction</h3><table id="25452625-35ff-8174-a3b1-d8fa03e440b2" class="simple-table"><tbody><tr id="25452625-35ff-81d2-8f9d-de0a5106a8ef"><td id="WAdB" class="block-color-gray_background" style="width:241px">Chatbot Users</td><td id=":xE\" class="block-color-gray_background" style="width:240.71875px">Non-Chatbot users</td><td id="]XTJ" class="block-color-gray_background">Difference</td></tr><tr id="25452625-35ff-81cb-97af-ff4db487288d"><td id="WAdB" class="" style="width:241px">7.13</td><td id=":xE\" class="" style="width:240.71875px">5.5</td><td id="]XTJ" class="">1.63</td></tr></tbody></table><p id="25452625-35ff-810b-820f-f0e9e6ded2de" class="">Users that use the chatbot, are better satisfied with the resolution of their cases.</p><p id="25452625-35ff-812b-bf16-fc2ae936f598" class="">
+</p><h3 id="25452625-35ff-814f-8463-c23f770ae905" class="">Average # of tickets per user</h3><table id="25452625-35ff-81f8-917d-de76fcd4aab3" class="simple-table"><tbody><tr id="25452625-35ff-81e0-8906-f8a35a24a1c3"><td id="]Rrn" class="block-color-gray_background" style="width:246px">Chatbot Users</td><td id="BhCc" class="block-color-gray_background">Non-Chatbot users</td><td id="qFzS" class="block-color-gray_background">Difference</td></tr><tr id="25452625-35ff-81cf-80ed-fdcc876ea73b"><td id="]Rrn" class="" style="width:246px">3.84</td><td id="BhCc" class="">2.7</td><td id="qFzS" class="">1.14</td></tr></tbody></table><p id="25452625-35ff-81f0-a42e-c3a42e93aa95" class="">chatbot users seemed to be more satisfied in general. They experienced success with the chatbot. <br/>This is what probably leads them to using the chatbot more often.</p><h3 id="25452625-35ff-817e-b42c-f54b7a62b110" class="">Average time to resolution</h3><table id="25452625-35ff-81b0-95d9-d76d40dc24fa" class="simple-table"><tbody><tr id="25452625-35ff-81c9-bb0c-c47fccacf790"><td id="]Rrn" class="block-color-gray_background" style="width:246px">Chatbot Users</td><td id="BhCc" class="block-color-gray_background">Non-Chatbot users</td><td id="Yrjf" class="block-color-gray_background">Difference</td></tr><tr id="25452625-35ff-8148-bcf3-cc929f3fb3b5"><td id="]Rrn" class="" style="width:246px">0 Days<br/>16 Hours<br/>33 Minutes</td><td id="BhCc" class="">1 Days<br/>3 Hours<br/>55 Minutes</td><td id="Yrjf" class="">0 Days<br/>11 Hours<br/>22 Minutes</td></tr></tbody></table><p id="25452625-35ff-8103-9863-c1e1a29aee04" class=""><strong>This enhances the earlier conclusion that the more a user is satisfied with the chatbot → the more they will use it.</strong></p><h1 id="25452625-35ff-814c-952e-e8d6afcc898c" class=""><span style="border-bottom:0.05em solid">2. Product Impact and Recommendations</span></h1><blockquote id="25452625-35ff-815b-a41a-dae478fb12cb" class="">Now zoom out: how is this feature performing from a product and business perspective?</blockquote><h2 id="25452625-35ff-8146-be8e-cc6972033836" class="">What metrics would you track to evaluate success?<br/></h2><h3 id="25452625-35ff-81f7-aa56-d4dec01d8e20" class="">Adoption</h3><blockquote id="25452625-35ff-81f0-b8cf-ee78d283f133" class="">When users start using a feature or product for the first time.</blockquote><p id="25452625-35ff-81f0-b12c-de6ced77b8a1" class="">
+</p><p id="25452625-35ff-8119-b9e2-e320eaa4ba8f" class=""><strong>In this scenario:</strong><div class="indented"><p id="25452625-35ff-818f-b29e-cd33f7e93dc2" class="">When a user uses the chatbot for the first time.<br/>Calculation:</p><figure id="25452625-35ff-8146-84cb-e9a1998d24d5" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>T</mi><mi>i</mi><mi>c</mi><mi>k</mi><mi>e</mi><mi>t</mi><mi>C</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>C</mi><mi>h</mi><mi>a</mi><mi>t</mi><mi>b</mi><mi>o</mi><mi>t</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi mathvariant="normal">/</mi><mi>T</mi><mi>i</mi><mi>c</mi><mi>k</mi><mi>e</mi><mi>t</mi><mi>C</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">TicketCreatingChatbotUsers/TicketCreatingUsers</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.07153em;">tC</span><span class="mord mathnormal">re</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">in</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">ha</span><span class="mord mathnormal">t</span><span class="mord mathnormal">b</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">sers</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.07153em;">tC</span><span class="mord mathnormal">re</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">in</span><span class="mord mathnormal" style="margin-right:0.10903em;">gU</span><span class="mord mathnormal">sers</span></span></span></span></span></div></figure></div></p><p id="25452625-35ff-81b2-92c8-eb2d36ff7504" class="">
+</p><p id="25452625-35ff-8135-a05c-f014d57d83cd" class="">Total Number of Unique Users That ever created a ticket  = 2893</p><p id="25452625-35ff-814a-8f58-fb952a644199" class="">Total Number of Unique Users That ever created a ticket <em><strong>Using the chatbot</strong></em>  = 1917</p><p id="25452625-35ff-811c-ab5b-faf80fa56f3e" class=""><strong>Adoption = 1917/2893 = 66.26%</strong></p><h3 id="25452625-35ff-81a4-941b-c19e7229eb46" class="">Conversion</h3><blockquote id="25452625-35ff-8194-8857-cc9cf79f2e4e" class="">When users complete a desired action (e.g., sign-up → purchase).</blockquote><p id="25452625-35ff-8101-b847-c854397486f7" class="">
+</p><p id="25452625-35ff-81b3-8e0b-fdfafb622e7f" class=""><strong>In this scenario:</strong><div class="indented"><p id="25452625-35ff-81f5-b81e-cb23f6b13bed" class="">We can look at conversion in several ways for this scenario, but the one that will indicate most about the chatbot success is <strong>% of chatbot sessions that ended in &quot;Resolved Immediately&quot;.<br/></strong>This is the most straight-forward way to measure the efficiancy of the chatbot, since the more the chatbot helps us in reducing the number of tickets that need to be handled by technicians, the more time it saves and so the more efficient it is.</p><ul id="25452625-35ff-81c8-9cdf-d1e90b516af9" class="bulleted-list"><li style="list-style-type:disc"><strong>Direct efficiency indicator</strong> — It reflects how often the chatbot alone solved the problem.</li></ul><ul id="25452625-35ff-81b8-a2ec-f902177e9b32" class="bulleted-list"><li style="list-style-type:disc"><strong>Operational savings</strong> — Higher conversion = fewer tickets escalated to technicians.</li></ul><ul id="25452625-35ff-8186-9d8f-f934cb6171ce" class="bulleted-list"><li style="list-style-type:disc"><strong>Easy to track over time</strong> — You can trend this weekly or monthly to see if improvements in chatbot logic correlate with better resolution.</li></ul><p id="25452625-35ff-81fa-95eb-c0baf3c9f305" class="">Calculation:</p><figure id="25452625-35ff-818c-9485-e021d68c7cb0" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>I</mi><mi>m</mi><mi>m</mi><mi>e</mi><mi>d</mi><mi>i</mi><mi>a</mi><mi>t</mi><mi>e</mi><mi>l</mi><mi>y</mi><mi>R</mi><mi>e</mi><mi>s</mi><mi>o</mi><mi>l</mi><mi>v</mi><mi>e</mi><mi>d</mi><mi>T</mi><mi>i</mi><mi>c</mi><mi>k</mi><mi>e</mi><mi>t</mi><mi>s</mi><mi mathvariant="normal">/</mi><mi>C</mi><mi>h</mi><mi>a</mi><mi>t</mi><mi>b</mi><mi>o</mi><mi>t</mi><mi>T</mi><mi>i</mi><mi>c</mi><mi>k</mi><mi>e</mi><mi>t</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">Immediately Resolved Tickets / ChatbotTickets</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord mathnormal">mm</span><span class="mord mathnormal">e</span><span class="mord mathnormal">d</span><span class="mord mathnormal">ia</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mord mathnormal">eso</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">e</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal">e</span><span class="mord mathnormal">t</span><span class="mord mathnormal">s</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">ha</span><span class="mord mathnormal">t</span><span class="mord mathnormal">b</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.13889em;">tT</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal">e</span><span class="mord mathnormal">t</span><span class="mord mathnormal">s</span></span></span></span></span></div></figure></div></p><p id="25452625-35ff-8195-a0b2-ea1800932ace" class="">Total tickets that were created using the chatbot: 3400<br/>Total tickets that were created using the chatbot <strong>and Immediately resolved: </strong>1577</p><p id="25452625-35ff-81c9-b933-e2ab6aad0945" class=""><strong>Conversion: 1577/3400 = 46.38%</strong><br/></p><h3 id="25452625-35ff-811c-8731-e0a9365919b4" class="">Funnel Drop-off</h3><blockquote id="25452625-35ff-81ed-bcd0-c4bc7b6eeb2b" class="">Users abandoning a process at a specific stage within a predefined funnel, before completing the desired action</blockquote><p id="25452625-35ff-81cc-95f5-ca28716d4f3d" class="">
+</p><p id="25452625-35ff-816d-a380-d94d0a7f9b74" class=""><strong>In this scenario:</strong><div class="indented"><p id="25452625-35ff-8135-99ff-db16192827d7" class="">% of chatbot-initiated tickets that still required technician.<br/>Or in our case: (1 - Conversion%)</p></div></p><p id="25452625-35ff-81f1-ad90-d0ce52c8e1fc" class=""><strong>Funnel Drop-off rate = 1-0.4638 = 53.62%</strong></p><h3 id="25452625-35ff-814f-9356-d7273a68b69d" class="">Engagement</h3><blockquote id="25452625-35ff-81d4-98a9-feab5c11c89b" class="">Frequency and depth of user interactions (clicks, time spent, sessions).</blockquote><p id="25452625-35ff-8131-bcfc-fc4e3edf7222" class="">
+</p><p id="25452625-35ff-8108-a14c-ce2205463a87" class=""><strong>In this scenario:</strong><div class="indented"><p id="25452625-35ff-813e-9111-e308800b288a" class="">How frequently users interact with the chatbot</p><p id="25452625-35ff-81a3-bdf2-fdf4d7caabe1" class="">Avg. # of chatbot tickets per user (repeat usage)<br/></p><table id="25452625-35ff-8168-abf8-c168135b8055" class="simple-table"><tbody><tr id="25452625-35ff-8141-b4e4-eaba235f40dc"><td id="x]=]" class="">Chatbot Tickets per User</td><td id="_xTp" class="">Users</td><td id="y`wV" class="">%</td></tr><tr id="25452625-35ff-8139-9c7e-d2167df7355b"><td id="x]=]" class="">1 Ticket</td><td id="_xTp" class="">989</td><td id="y`wV" class="">52%</td></tr><tr id="25452625-35ff-818c-aae6-d25e4a850831"><td id="x]=]" class="">2 Tickets</td><td id="_xTp" class="">556</td><td id="y`wV" class="">29%</td></tr><tr id="25452625-35ff-8180-bc28-ec9342d7d76f"><td id="x]=]" class="">3 Tickets</td><td id="_xTp" class="">234</td><td id="y`wV" class="">12%</td></tr><tr id="25452625-35ff-8100-bfa0-e225a074aa5a"><td id="x]=]" class="">4 Tickets</td><td id="_xTp" class="">102</td><td id="y`wV" class="">5%</td></tr><tr id="25452625-35ff-8176-bf9f-d302b67805c7"><td id="x]=]" class="">5 Tickets</td><td id="_xTp" class="">27</td><td id="y`wV" class="">1%</td></tr><tr id="25452625-35ff-813c-8903-c62b87338f25"><td id="x]=]" class="">6 Tickets</td><td id="_xTp" class="">9</td><td id="y`wV" class="">&lt;1%</td></tr></tbody></table></div></p><figure id="25452625-35ff-81aa-b958-de401028f40c" class="image"><a href="image%209.png"><img style="width:614.9884643554688px" src="image%209.png"/></a></figure><figure id="25452625-35ff-81f8-a4fc-cfffcfd1a3e5" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>E</mi><mi>n</mi><mi>g</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mo>=</mo><mi>A</mi><mi>v</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi>C</mi><mi>h</mi><mi>a</mi><mi>t</mi><mi>b</mi><mi>o</mi><mi>t</mi><mi>T</mi><mi>i</mi><mi>c</mi><mi>k</mi><mi>e</mi><mi>t</mi><mi>P</mi><mi>e</mi><mi>r</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">Engagement = AverageChatbotTicketPerUser</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">e</span><span class="mord mathnormal">m</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">ha</span><span class="mord mathnormal">t</span><span class="mord mathnormal">b</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.13889em;">tT</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.13889em;">tP</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal" style="margin-right:0.02778em;">ser</span></span></span></span></span></div></figure><figure id="25452625-35ff-815a-904c-c48ec92ea351" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>E</mi><mi>n</mi><mi>g</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mo>=</mo><mi>T</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mi>C</mi><mi>h</mi><mi>a</mi><mi>t</mi><mi>b</mi><mi>o</mi><mi>t</mi><mi>T</mi><mi>i</mi><mi>c</mi><mi>k</mi><mi>e</mi><mi>t</mi><mi>s</mi><mi mathvariant="normal">/</mi><mi>U</mi><mi>n</mi><mi>i</mi><mi>q</mi><mi>u</mi><mi>e</mi><mi>C</mi><mi>h</mi><mi>a</mi><mi>t</mi><mi>b</mi><mi>o</mi><mi>t</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">Engagement = TotalChatbotTickets/UniqueChatbotUsers</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">e</span><span class="mord mathnormal">m</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.07153em;">lC</span><span class="mord mathnormal">ha</span><span class="mord mathnormal">t</span><span class="mord mathnormal">b</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.13889em;">tT</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal">e</span><span class="mord mathnormal">t</span><span class="mord mathnormal">s</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">ni</span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">ha</span><span class="mord mathnormal">t</span><span class="mord mathnormal">b</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">sers</span></span></span></span></span></div></figure><figure id="25452625-35ff-818c-8ab9-f1c980662e7a" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>U</mi><mi>n</mi><mi>i</mi><mi>q</mi><mi>u</mi><mi>e</mi><mi>C</mi><mi>h</mi><mi>a</mi><mi>t</mi><mi>b</mi><mi>o</mi><mi>t</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi><mo>=</mo><mn>1917</mn></mrow><annotation encoding="application/x-tex">UniqueChatbotUsers = 1917</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">ni</span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">ha</span><span class="mord mathnormal">t</span><span class="mord mathnormal">b</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">sers</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1917</span></span></span></span></span></div></figure><figure id="25452625-35ff-81bb-b47d-fe42fb135032" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>T</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mi>T</mi><mi>i</mi><mi>c</mi><mi>k</mi><mi>e</mi><mi>t</mi><mi>s</mi><mo>=</mo><mn>989</mn><mo>+</mo><mn>1112</mn><mo>+</mo><mn>702</mn><mo>+</mo><mn>408</mn><mo>+</mo><mn>135</mn><mo>+</mo><mn>54</mn><mo>=</mo><mn>3</mn><mo separator="true">,</mo><mn>400</mn></mrow><annotation encoding="application/x-tex">Total Tickets = 989 + 1112 + 702 + 408 + 135 + 54 = 3,400</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.13889em;">lT</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal">e</span><span class="mord mathnormal">t</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">989</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1112</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">702</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">408</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">135</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">54</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">400</span></span></span></span></span></div></figure><figure id="25452625-35ff-81fc-b39c-e9bcb5089711" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>E</mi><mi>n</mi><mi>g</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mo>=</mo><mn>3400</mn><mi mathvariant="normal">/</mi><mn>1917</mn><mo>=</mo><mn>1.77</mn></mrow><annotation encoding="application/x-tex">Engagement = 3400/1917 = 1.77</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">e</span><span class="mord mathnormal">m</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">3400/1917</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1.77</span></span></span></span></span></div></figure><p id="25452625-35ff-817d-9e2f-e8bfe6f64edf" class="">1.77 Tickets per User on average.</p><p id="25452625-35ff-8185-ae11-e2b497c2efc8" class="">
+</p><h3 id="25452625-35ff-818e-89f2-ee40b32561d0" class="">Retention</h3><blockquote id="25452625-35ff-8196-a0d2-cf46fe6f9911" class="">How many users return and keep using the product over time.</blockquote><p id="25452625-35ff-8130-a6ef-cea5a22a65db" class="">
+</p><p id="25452625-35ff-8153-a876-d5ee9bb2add4" class=""><strong>In this scenario:</strong><div class="indented"><p id="25452625-35ff-81be-940e-ce66cd4ca975" class="">Do users come back and use the chatbot again later?<br/>Cohort analysis: % of users who return and reuse chatbot over time</p></div></p><p id="25452625-35ff-81d0-8219-d2546451a472" class="">
+</p><table id="25452625-35ff-8150-a7b7-c4efa6ad1fcd" class="simple-table"><tbody><tr id="25452625-35ff-8105-9554-cda7da6bfeea"><td id="aBje" class="">Chatbot Tickets per User</td><td id="eTGy" class="">Users</td><td id="i}Ck" class="">%</td></tr><tr id="25452625-35ff-8107-8c36-ed235f6eab8d"><td id="aBje" class="">One Time Users</td><td id="eTGy" class="">989</td><td id="i}Ck" class="">51.6%</td></tr><tr id="25452625-35ff-81d7-8e23-ec6b4d4d6083"><td id="aBje" class="">Moderate Repeat Users<br/>2-4 tickets</td><td id="eTGy" class="">892</td><td id="i}Ck" class="">46.5%</td></tr><tr id="25452625-35ff-81db-b5e8-c20d348934fe"><td id="aBje" class="">Highly Engaged Users<br/>5+ tickets</td><td id="eTGy" class="">36</td><td id="i}Ck" class="">1.9%</td></tr></tbody></table><figure id="25452625-35ff-8153-9592-c2bb0937f1be" class="image"><a href="image%2010.png"><img style="width:613.9815063476562px" src="image%2010.png"/></a></figure><figure id="25452625-35ff-8187-a244-e4c369aeee55" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo stretchy="false">(</mo><mi>A</mi><mi>l</mi><mi>l</mi><mi>C</mi><mi>h</mi><mi>a</mi><mi>t</mi><mi>b</mi><mi>o</mi><mi>t</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi><mo>−</mo><mi>o</mi><mi>n</mi><mi>e</mi><mi>T</mi><mi>i</mi><mi>m</mi><mi>e</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mi>A</mi><mi>l</mi><mi>l</mi><mi>C</mi><mi>h</mi><mi>a</mi><mi>t</mi><mi>b</mi><mi>o</mi><mi>t</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">(All Chatbot Users - oneTimeUsers) / All Chatbot Users</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.07153em;">llC</span><span class="mord mathnormal">ha</span><span class="mord mathnormal">t</span><span class="mord mathnormal">b</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">sers</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">im</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">sers</span><span class="mclose">)</span><span class="mord">/</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.07153em;">llC</span><span class="mord mathnormal">ha</span><span class="mord mathnormal">t</span><span class="mord mathnormal">b</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">sers</span></span></span></span></span></div></figure><p id="25452625-35ff-81e0-b793-d31c54915fde" class=""><strong>Retention% = 1-0.516 = 48.4%</strong></p><p id="25452625-35ff-8150-8390-c63809ddc7e5" class="">
+</p><h3 id="25452625-35ff-81a9-90d5-e4022987df8c" class="">Satisfaction</h3><blockquote id="25452625-35ff-81ea-a9d2-d463afceb2d6" class="">The degree to which a product meets or exceeds customer expectations</blockquote><p id="25452625-35ff-8174-8925-ef15fcbd471c" class="">
+</p><p id="25452625-35ff-815a-81a5-f0e1f23b27e9" class=""><strong>In this scenario:</strong><div class="indented"><p id="25452625-35ff-8159-9737-e382613d5f61" class="">Average satisfaction score </p><p id="25452625-35ff-81d9-982c-c549fad07667" class="">
+</p><p id="25452625-35ff-8103-b8d5-dcdb08500713" class="">We have already shown the average satisfaction by user type :</p><table id="25452625-35ff-8137-b0a8-d7cc699f2cea" class="simple-table"><thead class="simple-table-header"><tr id="25452625-35ff-81eb-a321-cbe8d10faa7e"><th id="UMyb" class="simple-table-header-color simple-table-header">Users</th><th id="T:`x" class="simple-table-header-color simple-table-header">Avg. Satisfaction<br/>(across all tickets, chatbot or non chatbot)</th><th id="@pVh" class="simple-table-header-color simple-table-header">Δ vs. Non-Chatbot</th></tr></thead><tbody><tr id="25452625-35ff-8196-acba-dd940c556416"><td id="UMyb" class="">Users that created chatbot tickets</td><td id="T:`x" class=""><strong>7.13</strong></td><td id="@pVh" class="">+1.63</td></tr><tr id="25452625-35ff-812e-b194-fd4e48595111"><td id="UMyb" class="">Users that only create form tickets</td><td id="T:`x" class="">5.50</td><td id="@pVh" class="">-</td></tr></tbody></table><p id="25452625-35ff-8134-b066-d9906ec829ba" class="">However, the more general Satisfaction metric that is used to evaluate the chatbot efficiency  is the average satisfaction score across all chatbot generated tickets.</p><p id="25452625-35ff-81ab-ac12-c2d96c401bfa" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Σ</mi><mi>S</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>f</mi><mi>a</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>S</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>e</mi><mi>P</mi><mi>e</mi><mi>r</mi><mi>C</mi><mi>h</mi><mi>a</mi><mi>t</mi><mi>b</mi><mi>o</mi><mi>t</mi><mi>T</mi><mi>i</mi><mi>c</mi><mi>k</mi><mi>e</mi><mi>t</mi><mi mathvariant="normal">/</mi><mi>N</mi><mi>u</mi><mi>m</mi><mi>b</mi><mi>e</mi><mi>r</mi><mi>O</mi><mi>f</mi><mi>R</mi><mi>e</mi><mi>s</mi><mi>o</mi><mi>l</mi><mi>v</mi><mi>e</mi><mi>d</mi><mi>C</mi><mi>h</mi><mi>a</mi><mi>t</mi><mi>b</mi><mi>o</mi><mi>t</mi><mi>T</mi><mi>i</mi><mi>c</mi><mi>k</mi><mi>e</mi><mi>t</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">ΣSatisfactionScorePerChatbotTicket /  NumberOfResolvedChatbotTickets</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">Σ</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">s</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">a</span><span class="mord mathnormal">c</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord mathnormal">core</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">ha</span><span class="mord mathnormal">t</span><span class="mord mathnormal">b</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.13889em;">tT</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal">e</span><span class="mord mathnormal">t</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord mathnormal">u</span><span class="mord mathnormal">mb</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mord mathnormal">eso</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">e</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">ha</span><span class="mord mathnormal">t</span><span class="mord mathnormal">b</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.13889em;">tT</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal">e</span><span class="mord mathnormal">t</span><span class="mord mathnormal">s</span></span></span></span></span><span>﻿</span></span></p><p id="25452625-35ff-812d-a3f9-e479e45c251e" class="">Number of resolved chatbot tickets that have a satisfaction score: 3046</p><p id="25452625-35ff-81d9-8f04-d3691ec294d8" class="">
+</p><p id="25452625-35ff-81b2-95df-e7353eb172e1" class=""><strong>The satisfaction score is: 9</strong></p></div></p><p id="25452625-35ff-81e7-863e-dee514f612b8" class="">
+</p><h3 id="25452625-35ff-81dc-a481-ce8dcc015a90" class="">Resolution Time</h3><blockquote id="25452625-35ff-81c0-9d11-c7fe1ed446c9" class=""><strong>The average time it takes for a customer to have their product-related issue fully resolved after contacting support.</strong></blockquote><p id="25452625-35ff-818e-95b4-ec05fcbb0d1b" class="">
+</p><p id="25452625-35ff-816d-8fdd-efe4b45c5fc0" class=""><strong>In this scenario:</strong><div class="indented"><p id="25452625-35ff-810f-b758-ee41becbade6" class="">Time to resolve chatbot vs. non-chatbot tickets</p></div></p><p id="25452625-35ff-8164-8236-d29834d1a76e" class="">
+</p><p id="25452625-35ff-8136-8a6f-e76ee3719da3" class="">We have already shown the average resolution time by user type,</p><table id="25452625-35ff-811c-b7ca-d4764337052d" class="simple-table"><tbody><tr id="25452625-35ff-817e-9acb-ff211e65173a"><td id="b&lt;|\" class="">Chatbot Users</td><td id="Y[EA" class="">Non-Chatbot users</td><td id="_Pr&lt;" class="">Difference</td></tr><tr id="25452625-35ff-8195-8c48-c5fb6c200fde"><td id="b&lt;|\" class="">16 Hours 33 Minutes</td><td id="Y[EA" class="">27 Hours 55 Minutes</td><td id="_Pr&lt;" class="">11 Hours 22 Minutes</td></tr></tbody></table><p id="25452625-35ff-8146-a94a-cdc76f98eb2f" class="">However, this took into account all the tickets. In order to evaluate the chatbot efficiency, we need to look only at chatbot tickets and their resolution time:</p><p id="25452625-35ff-8156-91e2-d44f00e53de4" class=""><strong>Average Resolution Time (Chatbot Tickets:) 5 hours and 28 minutes.</strong></p><p id="25452625-35ff-815c-b260-cd7da79af7e3" class=""><strong>Average Resolution Time (Form Tickets:)  29 hours and 47 minutes.</strong></p><p id="25452625-35ff-8111-afbc-c50932d5c4e6" class=""><strong>Difference:  21 hours and 19 minutes. </strong></p><p id="25452625-35ff-8104-be4f-dee1b6674e3e" class=""><strong>This is the amount of techinician support time that the chatbot saves on average.<br/>This is almost a full day!</strong></p><h3 id="25452625-35ff-81c2-9aa0-eefd7ebe6b14" class="">Churn</h3><blockquote id="25452625-35ff-81c7-893f-cde67d9f629c" class="">Users who stop using the product or cancel their subscription.</blockquote><p id="25452625-35ff-813b-90e9-e4f3bc7b654c" class="">
+</p><p id="25452625-35ff-8152-aafb-d28a755dcdfd" class=""><strong>In this scenario:</strong><div class="indented"><p id="25452625-35ff-81ae-a772-fde529cf916f" class="">% of users who used chatbot once and never again<br/></p></div></p><p id="25452625-35ff-8184-802d-c5a688e825ad" class="">For this part, we need to map out the users who used the chatbot exactly once and all their following tickets were created manually.<br/>Then, divide thier number out of the total number of chatbot users.</p><figure id="25452625-35ff-81f3-86c2-efe8a9d03ef4" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>C</mi><mi>h</mi><mi>u</mi><mi>r</mi><mi>n</mi><mo>=</mo><mi>O</mi><mi>n</mi><mi>e</mi><mi>T</mi><mi>i</mi><mi>m</mi><mi>e</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>A</mi><mi>n</mi><mi>d</mi><mi>N</mi><mi>e</mi><mi>v</mi><mi>e</mi><mi>r</mi><mi>A</mi><mi>g</mi><mi>a</mi><mi>i</mi><mi>n</mi><mi mathvariant="normal">/</mi><mi>C</mi><mi>h</mi><mi>a</mi><mi>t</mi><mi>b</mi><mi>o</mi><mi>t</mi><mi>U</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">Churn = OneTimeUsersAndNeverAgain/ChatbotUsers</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">h</span><span class="mord mathnormal">u</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal">n</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">im</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">sers</span><span class="mord mathnormal">A</span><span class="mord mathnormal">n</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">ain</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">ha</span><span class="mord mathnormal">t</span><span class="mord mathnormal">b</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal">sers</span></span></span></span></span></div></figure><p id="25452625-35ff-81c8-a523-dd7e6b7461e8" class="">For example:<br/>User Id 1002 is a one time user beacause since first using the chatbot, he had opened more tickets, but never again using the chatbot.</p><table id="25452625-35ff-812d-b120-c232127da564" class="simple-table"><thead class="simple-table-header"><tr id="25452625-35ff-8116-9577-dda77b0382e6"><th id="hnyF" class="simple-table-header-color simple-table-header"><strong>user_id</strong></th><th id="||Rs" class="simple-table-header-color simple-table-header"><strong>opened_at</strong></th><th id="^kVr" class="simple-table-header-color simple-table-header"><strong>used_chatbot</strong></th></tr></thead><tbody><tr id="25452625-35ff-8188-8a2e-dc74724252be"><th id="hnyF" class="block-color-blue_background simple-table-header">1002</th><td id="||Rs" class="block-color-blue_background">2025-08-24</td><td id="^kVr" class="block-color-blue_background">True</td></tr><tr id="25452625-35ff-81c5-8770-d3952aed14ad"><th id="hnyF" class="simple-table-header-color simple-table-header">1002</th><td id="||Rs" class="">2025-08-31</td><td id="^kVr" class="">False</td></tr><tr id="25452625-35ff-813d-9a60-dafb20100c88"><th id="hnyF" class="simple-table-header-color simple-table-header">1002</th><td id="||Rs" class="">2025-08-31</td><td id="^kVr" class="">False</td></tr></tbody></table><p id="25452625-35ff-812c-a98b-d39ff2684476" class="">User Id 1009 is not a one time user, even though they did use the chatbot only once.<br/>This is because there wasn’t a following opportunity to see if they will choose the chotbot or not.<br/>The desicion for this user will be made on the next time they will submit a ticket.</p><table id="25452625-35ff-81ab-9e36-d14bceb3bee2" class="simple-table"><tbody><tr id="25452625-35ff-81ca-ac67-d73d7556e677"><th id="^d|v" class="simple-table-header-color simple-table-header"><strong>user_id</strong></th><td id="JOVb" class=""><strong>opened_at</strong></td><td id="E`MC" class=""><strong>used_chatbot</strong></td></tr><tr id="25452625-35ff-8107-9b46-e3b241a554ab"><th id="^d|v" class="simple-table-header-color simple-table-header">1009</th><td id="JOVb" class="">2025-07-09</td><td id="E`MC" class="">False</td></tr><tr id="25452625-35ff-8125-b562-fd32af8e10a7"><th id="^d|v" class="simple-table-header-color simple-table-header">1009</th><td id="JOVb" class="">2025-08-04</td><td id="E`MC" class="">False</td></tr><tr id="25452625-35ff-812f-a158-dac92630ff26"><th id="^d|v" class="simple-table-header-color simple-table-header">1009</th><td id="JOVb" class="">2025-08-25</td><td id="E`MC" class="">False</td></tr><tr id="25452625-35ff-8113-a917-d289ee7b65e8"><th id="^d|v" class="block-color-blue_background simple-table-header">1009</th><td id="JOVb" class="block-color-blue_background">2025-09-03</td><td id="E`MC" class="block-color-blue_background">True</td></tr></tbody></table><p id="25452625-35ff-8174-805c-e84dac00530e" class="">Number of One Time Chatbot Users:  354</p><p id="25452625-35ff-81ef-8c02-cc6da3048675" class="">Number of Chatbot Users (at least one use): 1917</p><p id="25452625-35ff-81bc-9f85-f02b56ed8877" class=""><strong>The Churn rate is 354/1917 =  18.47%</strong></p><h2 id="25452625-35ff-8132-863f-c7e8e05767d1" class="">How could these tie to broader outcomes like efficiency, satisfaction, or cost?</h2><p id="25452625-35ff-810c-96ec-e1c64c700775" class="">
+</p><table id="25452625-35ff-81f8-b244-e57f876ea7f4" class="simple-table"><tbody><tr id="25452625-35ff-8135-b1f8-e135ee661401"><td id="NYli" class="block-color-blue_background" style="width:88.375px"><strong>Chatbot Util%</strong></td><td id="YzWd" class="block-color-blue_background" style="width:88.375px"><strong>Adoption%</strong></td><td id="L@B|" class="block-color-blue_background" style="width:94.375px"><strong>Conversion%</strong></td><td id="lEsH" class="block-color-blue_background" style="width:88.375px"><strong>Resolution Time</strong></td><td id="_z^N" class="block-color-blue_background" style="width:88.375px"><strong>Churn%</strong></td><td id="VYAZ" class="block-color-blue_background" style="width:99.375px"><strong>Satisfaction</strong></td><td id="WkqO" class="block-color-blue_background" style="width:88.375px"><strong>Retention%</strong></td><td id="ZmI;" class="block-color-blue_background" style="width:104.375px"><strong>Engagement</strong></td></tr><tr id="25452625-35ff-8110-9d01-c51e28d66ef6"><td id="NYli" class="" style="width:88.375px">34%</td><td id="YzWd" class="" style="width:88.375px">66.26%</td><td id="L@B|" class="" style="width:94.375px">46.38%</td><td id="lEsH" class="" style="width:88.375px">21h 19m Faster</td><td id="_z^N" class="" style="width:88.375px">18.47%</td><td id="VYAZ" class="" style="width:99.375px">9/10</td><td id="WkqO" class="" style="width:88.375px">48.4%</td><td id="ZmI;" class="" style="width:104.375px">1.77 Tickets per user</td></tr></tbody></table><p id="25452625-35ff-8190-bfd9-d4e6b3ba0fa1" class=""><strong><span style="border-bottom:0.05em solid">Efficiency:</span></strong></p><table id="25452625-35ff-8149-bd84-d57e05098a47" class="simple-table"><tbody><tr id="25452625-35ff-81a8-b825-fe9a4ea1a9b6"><td id="vUXn" class=""><strong>Conversion%</strong></td><td id="|KvA" class=""><strong>Resolution Time</strong></td><td id="UkEc" class=""><strong>Chatbot Utilization</strong></td><td id="pvNu" class=""><strong>Engagement</strong></td></tr><tr id="25452625-35ff-81bc-893b-f8e9c259a92f"><td id="vUXn" class="">46.38%</td><td id="|KvA" class="">21h 19m Faster</td><td id="UkEc" class="">34%</td><td id="pvNu" class="">1.77 Tickets per User</td></tr></tbody></table><p id="25452625-35ff-811b-a430-f026e45c5a50" class="">Higher conversion leads fewer tickets passed to technicians, more support team capacity.</p><p id="25452625-35ff-81e2-a407-f2030aba5836" class="">Much faster resolution Time means direct reduction in average time to solve issues, more efficient service.</p><p id="25452625-35ff-8114-a6ed-cb9d8731f853" class="">Relatively low churn means that the chatbot does a good job at maintaining the employees trust.<br/><br/>Engagement - 1.77 tickets per user - Returning usage indicates that once people try the chatbot, they are willing to use it for multiple tickets, amplifying efficiency benefits over time.</p><p id="25452625-35ff-8167-b432-ef23688308b4" class=""><strong>Conclusion: the chatbot automates ticket resolution and cuts resolution time drastically.<br/></strong></p><p id="25452625-35ff-8178-ada6-ecc49931916a" class=""><strong><span style="border-bottom:0.05em solid">Satisfaction:</span></strong></p><table id="25452625-35ff-81a2-8027-d71d9b40b9ce" class="simple-table"><tbody><tr id="25452625-35ff-81aa-9a2d-eae1ff44d790"><td id="Zu:?" class=""><strong>Satisfaction</strong></td><td id="~hn]" class=""><strong>Retention%</strong></td><td id="\\q|" class=""><strong>Churn%</strong></td></tr><tr id="25452625-35ff-8174-bde2-e3430427ef57"><td id="Zu:?" class="">9/10</td><td id="~hn]" class="">48.4%</td><td id="\\q|" class="">18.47%</td></tr></tbody></table><ul id="25452625-35ff-811b-b7fd-e74911fd62a5" class="bulleted-list"><li style="list-style-type:disc"><strong>Satisfaction Score (9 for chatbot tickets)</strong> means a strong positive experience directly linked to chatbot interactions.<br/></li></ul><ul id="25452625-35ff-8102-802c-e6909e3f6263" class="bulleted-list"><li style="list-style-type:disc"><strong>Δ vs. Non-Chatbot Users (+1.63)</strong> → Suggests chatbot experience improves overall perception of support.<br/><br/>The users who occasionaly create a ticket using the chatbot are about 30% more satisfied<br/>than those who haven’t gotten to us the chatbot at all.</li></ul><table id="25452625-35ff-8125-9de9-e7a576261ea9" class="simple-table"><tbody><tr id="25452625-35ff-8191-9972-c8ae8b48251d"><td id="M}aa" class="">Chatbot/ not chatbot Tickets <span style="border-bottom:0.05em solid">Satisfaction across</span><br/>Ever Chatbot Users</td><td id="xHkJ" class="">Chatbot/ not chatbot Tickets <span style="border-bottom:0.05em solid">Satisfaction across</span><br/>Never-Chatbot users</td><td id="dqfx" class="">Difference</td></tr><tr id="25452625-35ff-81d2-98ff-c1c4941d34a6"><td id="M}aa" class="">7.13</td><td id="xHkJ" class="">5.5</td><td id="dqfx" class="">1.63</td></tr></tbody></table><p id="25452625-35ff-8126-8e44-d220eff15c0e" class=""><strong>Retention (48.4%)</strong> means that around half of the chatbot tickets are creating by returning chatbot users.<br/>Returning users imply that the chatbot experience was satisfying enough to reuse.</p><p id="25452625-35ff-8193-89a7-eb979996bde6" class=""><strong>Churn </strong>- Only ~20% stops using the chatbot after the first time (and continue creating more tickets using the form).<br/>High retention and low churn together indicate that most users who try the chatbot find it good enough to return. This reinforces satisfaction as a driver of repeat usage.<br/></p><p id="25452625-35ff-8158-908c-e95c977153a1" class=""><strong>Conclusion:  The chatbot users report higher satisfaction scores and come back for repeat usage.</strong></p><p id="25452625-35ff-819e-9743-cdf6071fe1d0" class="">
+</p><p id="25452625-35ff-818d-9f37-ea2aced13f9f" class=""><strong><span style="border-bottom:0.05em solid">Cost</span></strong></p><table id="25452625-35ff-811d-963a-c2b2a99693e0" class="simple-table"><tbody><tr id="25452625-35ff-8155-8203-f4616305c60b"><td id="=^a&lt;" class=""><strong>Adoption%</strong></td><td id="LAyy" class=""><strong>Conversion%</strong></td><td id="A`vk" class=""><strong>Resolution Time</strong></td><td id="vNUU" class=""><strong>Engagement</strong></td></tr><tr id="25452625-35ff-816e-913d-fc09a963c1f3"><td id="=^a&lt;" class="">66.26%</td><td id="LAyy" class="">46.38%</td><td id="A`vk" class="">21h 19m Faster</td><td id="vNUU" class="">1.77 Tickets per user</td></tr></tbody></table><p id="25452625-35ff-8180-979c-c225b263d405" class="">Resolution Time - Each hour saved from technician handling = lower labor costs.<br/>Each chatbot ticket creation saves in average around 21 hours in handling a ticket.<br/>Almost a full day.</p><p id="25452625-35ff-8166-a9a4-c2a9a1bd8e37" class=""><br/>66.26 % Adoption is quite good. High adoption rate means that the efficiency and the cost benefits of using the chatbot will actually spread to more users. </p><p id="25452625-35ff-81f9-a00e-e22e7f21acdb" class="">
+</p><p id="25452625-35ff-8100-bc33-f9a5bdbe3441" class="">Conversion means that the more self-resolved tickets are created, the lesser is the staffing need. Potentionally reducing the amount of technicians needed.</p><p id="25452625-35ff-8194-ae26-fdc39f6ff46c" class="">Because 46% of chatbot tickets are resolved immediately, that means half of the chatbot tickets never require a technician. Combine it with 21 hour reduction in average resolution time,  this directly reduced operational load and labor costs, while actually improving customer satisfaction.</p><p id="25452625-35ff-810a-b687-c7efdeeff0f2" class=""><strong>Conclusion:  Every efficiency gain and avoided escalation translates into tangible cost savings.<br/></strong></p><p id="25452625-35ff-819d-9d0d-ecef7007b35f" class=""><strong>Summary:</strong></p><p id="25452625-35ff-8160-b22e-f82a5d47683c" class="">High adoption (66%) combined with solid engagement (1.77 tickets/user) and good retention means the chatbot is not just being tried, but being <strong>integrated into user behavior</strong>. This recurring usage magnifies its efficiency benefits (less technician load, faster resolution) and cost benefits (lower labor per ticket), while the high satisfaction score indicates the experience is strong enough to sustain this loop.</p><h2 id="25452625-35ff-8157-ad6a-e158dd0ef7d1" class="">What would you recommend based on what you found?<br/></h2><p id="25452625-35ff-81d4-9106-f97a12723bff" class=""> 1) Increase Chatbot Utilization Beyond Current 34% of Tickets<div class="indented"><p id="25452625-35ff-81b1-94eb-f48f961c2af2" class="">The adoption is high in contrast to the Chatbot Utilization.<br/>The chatbot utilization is 34%. Not great.  Even though adoption among users is high (66%), only a third of all tickets flow through the chatbot. Increasing utilization would expand efficiency gains across more of the support load.<br/><span style="border-bottom:0.05em solid">How to accomplish that?</span><br/>* The self-service portal should have the chatbot open at the first entry point for all ticket submissions.<br/>There could be a button to refer to human. But the default interaction should be with the bot.</p><p id="25452625-35ff-8199-a12a-e1c059173ab8" class="">Promote the chatbot in help pages, email signatures of technicians/support reps.<br/>In promoting the chatbot, I would recommend leveraging on the high satisfaction score as a publicity method.</p><p id="25452625-35ff-8161-82bb-c5c007646e80" class="">
+</p></div></p><ol type="1" id="25452625-35ff-81a8-a8c5-e41d5ecd6064" class="numbered-list" start="2"><li>Detect commonly escalated issues and optimize the bot to resolve those issues.<br/>The funnel drop is 53.62%. which means that around half of the tickets submitted still require a technician to be invovled.<br/><span style="border-bottom:0.05em solid">Suggestions:</span><br/>*Analyze escalated chatbot tickets to identify the top recurring unresolved categories.<br/>*Enhance chatbot scripts and knowledge base for those topics.<br/>*Integrate guided troubleshooting for more complex issues before escalation.</li></ol><p id="25452625-35ff-81c6-bb07-fe25851c9aa9" class="">The impact will reflect in improved conversion rate, reducing technicians load and perhaps resolution time.</p><p id="25452625-35ff-815c-8ece-c6d698b94619" class="">
+</p><ol type="1" id="25452625-35ff-8165-99af-fd603e6213d3" class="numbered-list" start="1"><li>Approach the users that had used the chatbot once and no more.  Try to reengage them. <br/>These users have tried the chatbot but then switched back to ticketing using the form.<br/>The 48% retention does show that there is room to grow repeat use.<br/><span style="border-bottom:0.05em solid">Methods I would recommend:</span><br/>*Identify reasons for abandonment through surveys. <br/>*Sending an email after users first use with tips for using the chatbot and how to query it.<br/>*Try to understand the churn reasons better (maybe there is a common reasoning that may lead to churn, maybe the chatbot isn’t quite good at supporting a certain device or department) and improve the underlying code to promote chatbot resolution for those tickets.</li></ol><h2 id="25452625-35ff-81a8-95b1-e78a017f3d68" class="">What additional context or data would help you validate your ideas?</h2><p id="25452625-35ff-8140-af30-eb8ba6a07f68" class="">I think that the data was quite thourough and good for this type of initial analysis.</p><p id="25452625-35ff-813b-90df-dbb97f7c52b8" class="">I would have liked to know more about each ticket’s context a bit more and maybe to analyse the chatbot logs to better understand the chatbot’s weak points and then point those out to increase.<br/><br/>I would have like to learn if there are issues that the chatbot solves better than the technicians and how to capitalize on that.</p><h1 id="25452625-35ff-817f-ba58-eda53b501c4c" class=""><span style="border-bottom:0.05em solid">3. Reflection </span></h1><h2 id="25452625-35ff-819c-b7a4-cb230e6edcde" class="">What challenges did you run into?</h2><p id="25452625-35ff-81c7-8051-dc99aab45c1f" class="">The ticket opening time has no HH:MM:SS indication, they all appear to be created at midnight. <br/>7/3/2025  12:00:00 AM<br/>This is a data issue clearly that prevents from calculating exact resolution time or identifiyng the “resolved immediatly” tickets, at least without being able to use a technichian_id to mark tickets that were handled by a technician (and therefore not the bot).<br/><br/>For this assignment purposes I defined that an immediatly resolved ticket is a ticket that was resolved in 30 minutes from opening it.<br/></p><h2 id="25452625-35ff-81da-ab90-fc21448c7cd9" class="">What tools or data would have helped you go deeper?</h2><p id="25452625-35ff-8134-9180-cffd2705a3e3" class="">4)Technician Id:<br/>Having this data would have help in identifying tickets that were handled by a technician. Hence clearly marking tickets that were resolved immediaty or dissmissed by a user.<br/>Another proposal - having a ticket status that is “resolved immediately”.<br/><br/>2)Full opening ticket time would have helped in calculating accurate resolution time. </p><p id="25452625-35ff-81d2-a86c-c10440b0e791" class="">3)Post launch data woule have been helpful  to evaluate post-launch impact on ticket volume.</p><p id="25452625-35ff-8136-bd79-fdef637eb219" class="">4) Moreover, if I were to be average hourly fee for a technician, I could probably estimate the chatbot success in saving money in saved expance information.<br/></p><h2 id="25452625-35ff-81e1-a645-c923382dea29" class="">Anything you’d approach differently with more time? </h2><p id="25452625-35ff-812d-bf7d-f68d43d45e68" class="">With more time, I would design a dashboard to help keep track of the presented metrics over time.<br/>Why? <br/>Sustained improvement depends on tracking adoption, utilization, conversion, retention, and satisfaction.<br/>I would create a monthly dashboard to teack each KPI alongside efficiency and cost metrics and run a quarterly review sessions to align chatbot updates with observed trends.<br/>The impact of such a tool will result in transparent performance and ensure early detection of usage drops or satisfaction drops.</p><p id="25452625-35ff-81fc-a8fe-eb885196e753" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
