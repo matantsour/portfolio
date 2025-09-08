@@ -1,0 +1,1099 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Raven Data Home Assignment</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="26752625-35ff-80ff-8c20-f981b2ee5f8c" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🔠</span></div><h1 class="page-title">Raven Data Home Assignment</h1><p class="page-description"></p></header><div class="page-body"><h2 id="26752625-35ff-8096-b40e-cf85cebd69b0" class=""><strong>Part 1: Google Cloud, BigQuery &amp; Looker Studio</strong></h2><ol type="1" id="26752625-35ff-8034-ab21-c6603cef5f7d" class="numbered-list" start="1"><li><strong>Choose a public dataset</strong> from Google Cloud:<p id="26752625-35ff-8069-8238-cde3c0ea962b" class=""><a href="https://cloud.google.com/bigquery/public-data">https://cloud.google.com/bigquery/public-data</a><br/><br/>I choose <code>U.S. Census American Community Survey (ACS)</code><br/>This is a public dataset under <mark class="highlight-pink"><mark class="highlight-gray_background">bigquery-public-data.census_bureau_acs</mark></mark><br/></p><p id="26752625-35ff-809c-b2b6-d3b024b691d7" class="">the dataset includes a variety of <strong>subject-specific tables</strong>, each identified by codes.</p><p id="26752625-35ff-8074-887d-e61ae04739d0" class="">For insight into occupations, the relevant tables you&#x27;d want to explore include:</p><ul id="26752625-35ff-801f-9697-c5b3a4927aae" class="bulleted-list"><li style="list-style-type:disc"><strong>Subject Tables</strong> (starting with <code>S</code>), such as:<ul id="26752625-35ff-80ba-9ebe-d496d59173de" class="bulleted-list"><li style="list-style-type:circle"><code>S2401</code>: Occupation by Sex for the Employed Population</li></ul><ul id="26752625-35ff-80c8-bce2-c5fca9e2045f" class="bulleted-list"><li style="list-style-type:circle"><code><strong>S2406</strong></code><strong>: Occupation by Class of Worker for Civilian Employed Population -</strong><br/>this appears to be most directly relevant to jobs/occupations.</li></ul><p id="26752625-35ff-8005-b655-fc796905cca9" class="">Read more here:<br/><a href="https://www.census.gov/programs-surveys/acs/data/data-tables.html">https://www.census.gov/programs-surveys/acs/data/data-tables.html</a> </p><figure id="26752625-35ff-8030-98bc-f79a26f04917" class="image"><a href="image.png"><img style="width:653.96875px" src="image.png"/></a></figure><p id="26752625-35ff-8058-b65b-ff2e437ce72d" class="">
+</p><p id="26752625-35ff-80ba-9c15-c3e0e6d9252b" class="">I’ll be using the following tables:</p></li></ul><ul id="26752625-35ff-8015-92db-efd6a2468a2b" class="bulleted-list"><li style="list-style-type:disc"><code><strong>zip_code_2020_5yr</strong></code> - more granular for regional targeting.</li></ul><ul id="26752625-35ff-80d1-8ad4-d0f218da86fd" class="bulleted-list"><li style="list-style-type:disc"><code><strong>place_2020_5yr</strong></code> - city-level analysis.</li></ul><ul id="26752625-35ff-80af-a5dc-ef07ea2bda60" class="bulleted-list"><li style="list-style-type:disc"></li></ul></li></ol><ol type="1" id="26752625-35ff-8072-841d-e44b2d272ae6" class="numbered-list" start="2"><li><strong>Write at least 3 SQL queries</strong> that include data analysis and calculations.<ol type="a" id="26752625-35ff-80cd-a57b-f235016b68c6" class="numbered-list" start="1"><li>No specific dataset is required — feel free to choose one that interests you.</li></ol><ol type="a" id="26752625-35ff-8093-b253-d5c01ba98d29" class="numbered-list" start="2"><li>Queries should include:<ol type="i" id="26752625-35ff-808f-8fe4-e3482f63b6e3" class="numbered-list" start="1"><li>Data manipulation</li></ol><ol type="i" id="26752625-35ff-80f5-b3cb-f711d77554c9" class="numbered-list" start="2"><li>Aggregations</li></ol><ol type="i" id="26752625-35ff-8007-8f9e-d26c2e44bd55" class="numbered-list" start="3"><li>Table joins<em>(not just column selections)</em></li></ol></li></ol></li></ol><p id="26752625-35ff-8030-922a-ebdbc3719f81" class=""><strong>Some Business questions: </strong></p><ol type="1" id="26752625-35ff-80f4-8373-c6d3dc6b0bbd" class="numbered-list" start="1"><li>Where are highly educated labor pools located? (<code>bachelors_degree_or_higher_25_64</code>)</li></ol><ol type="1" id="26752625-35ff-80b0-ac3a-d308c4338df6" class="numbered-list" start="2"><li>Income and poverty distributions by state and county</li></ol><ol type="1" id="26752625-35ff-8001-b42a-e0c6190ebdda" class="numbered-list" start="3"><li>Commuting patterns and travel time to work — can inform logistics or hiring outreach</li></ol><ol type="1" id="26752625-35ff-8018-af6b-db205c07bc6e" class="numbered-list" start="4"><li>Employment distribution by sector (agriculture, retail, education, etc.)</li></ol><ol type="1" id="26752625-35ff-8052-aeae-fa2731903971" class="numbered-list" start="5"><li>Housing and rental affordability trends</li></ol><p id="26752625-35ff-804a-b967-fbee81d261ff" class=""><br/>These can later be <strong>enriched with Adzuna API data - </strong>historical job postings, salaries, or employer concentration.<br/><br/></p><p id="26752625-35ff-80ab-a9bb-f7beb0c8d539" class=""><strong>Query 1: County-level education &amp; labor participation by state</strong></p><p id="26752625-35ff-80f1-9d82-fac8b62d54c4" class=""><strong>Business question:</strong> Identify states with the highest proportion of highly educated working-age adults.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26752625-35ff-8037-8ffb-e31e7ff3cb96" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">CREATE OR REPLACE TABLE `ravendataanalyst.dbo.q1_education_labor` AS
+SELECT
+  s.state_name,
+  SUM(c.total_pop) AS total_pop,
+  SUM(c.pop_25_64) as pop_25_64,
+  SUM(c.bachelors_degree_or_higher_25_64) AS bachelors_degree_or_higher_25_64,
+  ROUND(SAFE_DIVIDE(SUM(c.bachelors_degree_or_higher_25_64), SUM(c.pop_25_64)),4) AS pct_bachelors_plus,
+  ROUND(SAFE_DIVIDE(SUM(c.civilian_labor_force), SUM(c.pop_16_over)),4) AS labor_force_participation
+FROM `bigquery-public-data.census_bureau_acs.county_2020_5yr` AS c
+JOIN `bigquery-public-data.geo_us_boundaries.states` AS s
+  ON c.geo_id LIKE CONCAT(s.geo_id, &#x27;%&#x27;)
+WHERE c.pop_25_64 &gt; 10000
+GROUP BY s.state_name
+ORDER BY pct_bachelors_plus DESC;
+
+</code></pre><figure id="26752625-35ff-80e7-b9fc-e4c275759ac9" class="image"><a href="image%201.png"><img style="width:709.984375px" src="image%201.png"/></a></figure><p id="26752625-35ff-805c-b59a-eddf53846e4b" class="">
+</p><p id="26752625-35ff-80cd-a19a-f32f19d84725" class=""><strong>Query 2: Employment distribution by sector (state-level)</strong><br/><strong>Business question:</strong> Understand which sectors dominate employment in different states.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26752625-35ff-8051-995e-f48004805b3b" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">CREATE OR REPLACE TABLE `ravendataanalyst.dbo.q2_employment_sectors` AS
+SELECT
+  s.state_name,
+  SUM(e.employed_agriculture_forestry_fishing_hunting_mining) AS agri_employed,
+  SUM(e.employed_arts_entertainment_recreation_accommodation_food) AS arts_food_employed,
+  SUM(e.employed_education_health_social) AS edu_health_employed,
+  SUM(e.employed_finance_insurance_real_estate) AS finance_employed,
+  SUM(e.employed_manufacturing) AS manufacturing_employed,
+  SUM(e.employed_retail_trade) AS retail_employed,
+  SUM(e.employed_pop) AS total_employed,
+  ROUND(SAFE_DIVIDE(SUM(e.employed_education_health_social), SUM(e.employed_pop)),2) AS pct_edu_health
+FROM `bigquery-public-data.census_bureau_acs.state_2020_5yr` AS e
+JOIN `bigquery-public-data.geo_us_boundaries.states` AS s
+  ON e.geo_id = s.geo_id
+GROUP BY s.state_name
+ORDER BY pct_edu_health DESC;
+</code></pre><figure id="26752625-35ff-8078-b2b5-e96d6ebf31ef" class="image"><a href="image%202.png"><img style="width:709.96875px" src="image%202.png"/></a></figure><p id="26752625-35ff-808c-b696-cc566f6e319d" class="">
+</p><p id="26752625-35ff-80c4-b9f5-e58f009028e1" class="">data should be unpivoted for dashboard:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26752625-35ff-8044-997c-e5ecf482b8ed" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">CREATE OR REPLACE TABLE `ravendataanalyst.dbo.q2_employment_sectors_unpivot` AS
+SELECT
+  state_name,
+  industry,
+  employees
+FROM `ravendataanalyst.dbo.q2_employment_sectors`
+UNPIVOT (
+  employees FOR industry IN (
+    agri_employed,
+    arts_food_employed,
+    edu_health_employed,
+    finance_employed,
+    manufacturing_employed,
+    retail_employed
+  )
+)
+</code></pre><figure id="26752625-35ff-8030-bf8c-d8edb604b12d" class="image"><a href="image%203.png"><img style="width:590px" src="image%203.png"/></a></figure><p id="26752625-35ff-80f2-9575-da99f1bac8d3" class=""><strong>Query 3: Housing affordability analysis (state-level)</strong><br/><strong>Business question:</strong> Identify counties where median rent relative to income is highest (potential target for remote job campaigns).<br/><br/>The <code><strong>avg_owner_occupied_housing_value</strong></code> is an additional context metric that tells the average market value of owner occupied homes in each state.<br/>a combination of this value with rent to income ratio could tell a story:</p><p id="26752625-35ff-803f-ac90-e4802771395a" class="">High rent-to-income ratio + high owner-occupied value → extremely expensive housing market</p><p id="26752625-35ff-8088-b79f-f059469c2ccb" class="">High rent-to-income ratio + moderate owner-occupied value → renting is the main affordability challenge<br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26752625-35ff-805b-afb1-d37543acea3d" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">CREATE OR REPLACE TABLE `ravendataanalyst.dbo.q3_income_rent_housing` AS
+SELECT
+  s.state_name,
+  ROUND(AVG(c.median_income),2) AS avg_median_income,
+  ROUND(AVG(c.median_rent)*12,2) AS avg_median_yearly_rent,
+  ROUND(SAFE_DIVIDE(AVG(c.median_rent)*12, AVG(c.median_income)),4) AS avg_rent_to_income_ratio,
+  ROUND(AVG(c.owner_occupied_housing_units_median_value),2) AS avg_owner_occupied_housing_value
+FROM `bigquery-public-data.census_bureau_acs.county_2020_5yr` AS c
+JOIN `bigquery-public-data.geo_us_boundaries.states` AS s
+  ON c.geo_id LIKE CONCAT(s.geo_id, &#x27;%&#x27;)
+WHERE c.median_income IS NOT NULL
+  AND c.median_income &gt; 0
+  AND c.median_rent &gt; 0
+  AND c.owner_occupied_housing_units_median_value &gt; 0
+GROUP BY s.state_name
+ORDER BY avg_owner_occupied_housing_value DESC
+LIMIT 50;
+</code></pre><figure id="26752625-35ff-8053-bb0c-d7981c5989b9" class="image"><a href="image%204.png"><img style="width:709.9375px" src="image%204.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26752625-35ff-8088-8b1a-fa02f936071b" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">-- Since this will go into the map visualization:
+CREATE OR REPLACE TABLE `ravendataanalyst.dbo.state_location_mapping` AS
+SELECT
+  state_name,
+  state_geom
+FROM `bigquery-public-data.geo_us_boundaries.states`;
+
+
+-- Looker query #3 but with geo_location incorporated
+select 
+q.*,s.state_geom
+from `ravendataanalyst.dbo.q3_income_rent_housing` q
+left join `ravendataanalyst.dbo.state_location_mapping` s
+on s.state_name=q.state_name</code></pre><p id="26752625-35ff-80c9-acb7-e3771e7b68b5" class=""><strong>Query 4 (State-level Commute &amp; Remote Work)</strong><br/><strong>Business question:</strong> Determine counties with long commutes and high remote work potential.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26752625-35ff-801c-a242-f5ed91ea82a0" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">CREATE OR REPLACE TABLE `ravendataanalyst.dbo.q4_commute_remote` AS
+SELECT
+  s.state_name,
+  ROUND(SAFE_DIVIDE(SUM(c.aggregate_travel_time_to_work), SUM(c.workers_16_and_over)),2) AS avg_travel_time_to_work,
+  SUM(c.commuters_drove_alone) AS total_commuters_drove_alone,
+  SUM(c.commuters_by_public_transportation) AS total_commuters_public_transport,
+  ROUND(SAFE_DIVIDE(SUM(c.worked_at_home), SUM(c.workers_16_and_over)),4) AS pct_remote_avg
+FROM `bigquery-public-data.census_bureau_acs.county_2020_5yr` AS c
+JOIN `bigquery-public-data.geo_us_boundaries.states` AS s
+  ON c.geo_id LIKE CONCAT(s.geo_id, &#x27;%&#x27;)
+WHERE c.aggregate_travel_time_to_work IS NOT NULL
+GROUP BY s.state_name
+ORDER BY pct_remote_avg DESC, avg_travel_time_to_work DESC
+LIMIT 50;
+</code></pre><figure id="26752625-35ff-8002-94f7-f81862fd7275" class="image"><a href="image%205.png"><img style="width:709.953125px" src="image%205.png"/></a></figure><p id="26752625-35ff-80bb-bebd-c104c6ba59e6" class="">
+</p><p id="26752625-35ff-8040-9f28-f789c3044d8e" class=""><strong>Query 5 (State-level  and State+Income Bucket Level households)</strong></p><p id="26752625-35ff-8075-8576-d0a47f0db414" class="">What is the income distribution across U.S. states, and what share of households falls into each income bracket?</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26752625-35ff-8080-a173-c294d1bc6034" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">CREATE OR REPLACE TABLE `ravendataanalyst.dbo.q5_households_per_income` AS
+WITH income_buckets AS (
+  SELECT
+    geo_id,
+    &#x27;0-14,999&#x27; AS income_bucket, SUM(income_10000_14999) AS households
+  FROM `bigquery-public-data.census_bureau_acs.state_2020_5yr`
+  GROUP BY geo_id
+  UNION ALL
+  SELECT geo_id, &#x27;15,000-24,999&#x27;, SUM(income_15000_19999)+SUM(income_20000_24999)
+  FROM `bigquery-public-data.census_bureau_acs.state_2020_5yr`
+  GROUP BY geo_id
+  UNION ALL
+  SELECT geo_id, &#x27;25,000-49,999&#x27;, SUM(income_25000_29999)+SUM(income_30000_34999)+SUM(income_35000_39999)+SUM(income_40000_44999)+SUM(income_45000_49999)
+  FROM `bigquery-public-data.census_bureau_acs.state_2020_5yr`
+  GROUP BY geo_id
+  UNION ALL
+  SELECT geo_id, &#x27;50,000-99,999&#x27;, SUM(income_50000_59999)+SUM(income_60000_74999)+SUM(income_75000_99999)
+  FROM `bigquery-public-data.census_bureau_acs.state_2020_5yr`
+  GROUP BY geo_id
+  UNION ALL
+  SELECT geo_id, &#x27;100,000+&#x27;, SUM(income_100000_124999)+SUM(income_125000_149999)+SUM(income_150000_199999)+SUM(income_200000_or_more)
+  FROM `bigquery-public-data.census_bureau_acs.state_2020_5yr`
+  GROUP BY geo_id
+),
+
+state_income_totals AS (
+  SELECT
+    geo_id,
+    SUM(households) AS total_households
+  FROM income_buckets
+  GROUP BY geo_id
+),
+total_total as (
+  SELECT
+    SUM(households) AS total_households_us
+  FROM income_buckets
+)
+
+SELECT
+  s.state_name,
+  i.income_bucket,
+  i.households,
+  ROUND(SAFE_DIVIDE(i.households, t.total_households),4) AS pct_of_state_households,
+  ROUND(SAFE_DIVIDE(i.households, (select total_households_us from total_total)),8) AS pct_of_total
+FROM income_buckets AS i
+JOIN state_income_totals AS t
+  ON i.geo_id = t.geo_id
+JOIN `bigquery-public-data.geo_us_boundaries.states` AS s
+  ON i.geo_id = s.geo_id
+ORDER BY s.state_name, i.income_bucket;
+</code></pre><p id="26752625-35ff-8037-82d9-c6b6c54fe18e" class="">
+</p><ol type="1" id="26752625-35ff-8058-ad42-d4c8a76f4973" class="numbered-list" start="4"><li>Save the query results as tables (<a href="https://cloud.google.com/bigquery/docs/writing-results">https://cloud.google.com/bigquery/docs/writing-results</a>)<br/>done</li></ol><p id="26752625-35ff-809e-b424-d50ea6dc0e18" class="">
+</p><ol type="1" id="26752625-35ff-80df-9f8e-f2794d741758" class="numbered-list" start="1"><li><strong>Create a Looker Studio dashboard</strong> to present your analysis (<a href="https://lookerstudio.google.com/u/0/navigation/reporting">https://lookerstudio.google.com/u/0/navigation/reporting</a>)<ol type="a" id="26752625-35ff-80f2-8601-e00e88f4f921" class="numbered-list" start="1"><li>please follow the following requirements:<ol type="i" id="26752625-35ff-807e-b60f-ccdd10e641b8" class="numbered-list" start="1"><li>Use at least 5 different types of charts</li></ol><ol type="i" id="26752625-35ff-8064-a034-efabad13ded7" class="numbered-list" start="2"><li>Use at least 3 different types of filters</li></ol><ol type="i" id="26752625-35ff-80a4-86c1-f6ac9b8b1d5b" class="numbered-list" start="3"><li>Use at least 3 of the following features:<mark class="highlight-teal"><strong> Drill Down Tables</strong></mark>;<mark class="highlight-teal"> </mark><mark class="highlight-teal"><strong>Cross Filtering Elements</strong></mark>; Optional Metrics,<strong> </strong><mark class="highlight-teal"><strong>Calculated Field</strong></mark>; Parameters; <mark class="highlight-teal"><strong>Dimension Control</strong></mark>; Previous Period Comparison</li></ol></li></ol><ol type="a" id="26752625-35ff-801b-b1f3-e73a506bd4ae" class="numbered-list" start="2"><li>Please make sure your Dashboard is well designed and documented for a non-technical</li></ol><ol type="a" id="26752625-35ff-8014-9e6c-c54e927a5c08" class="numbered-list" start="3"><li></li></ol></li></ol><figure id="26752625-35ff-8051-938d-ca529f6159b3" class="image"><a href="image%206.png"><img style="width:709.984375px" src="image%206.png"/></a></figure><p id="26752625-35ff-8043-98b5-fb0204fbf8dd" class="">
+</p><p id="26752625-35ff-8070-bce9-d35b57c1d7a3" class=""><strong><span style="border-bottom:0.05em solid">The Dashboard</span></strong></p><p id="26752625-35ff-802e-8f4a-f6b32d389f57" class=""><mark class="highlight-blue">Link: </mark><mark class="highlight-blue"><a href="https://lookerstudio.google.com/reporting/56c22da1-0eab-4c40-90be-1ed546c9d901">https://lookerstudio.google.com/reporting/56c22da1-0eab-4c40-90be-1ed546c9d901</a></mark></p><figure id="26852625-35ff-80bb-8252-d239171d5160" class="image"><a href="image%207.png"><img style="width:709.9147338867188px" src="image%207.png"/></a></figure><figure id="26752625-35ff-8042-8f96-f84369172171" class="image"><a href="image%208.png"><img style="width:709.9810180664062px" src="image%208.png"/></a></figure><figure id="26752625-35ff-8049-a160-eaaf3cf8ad79" class="image"><a href="image%209.png"><img style="width:709.9620971679688px" src="image%209.png"/></a></figure><figure id="26852625-35ff-8007-8487-db0e04743573" class="image"><a href="image%2010.png"><img style="width:709.928955078125px" src="image%2010.png"/></a></figure><p id="26752625-35ff-8081-b484-c962c920b2b2" class=""><strong><span style="border-bottom:0.05em solid">KPIs:</span></strong></p><ul id="26752625-35ff-80b1-b955-d9e9bd4e2064" class="bulleted-list"><li style="list-style-type:disc"><strong>Bachelor Plus:</strong> % of adults with bachelor’s degree or higher</li></ul><ul id="26752625-35ff-804c-b43a-d76896746439" class="bulleted-list"><li style="list-style-type:disc"><strong>Labor Force Participation:</strong> The share of the population 16 years and over that is either working or actively seeking work.</li></ul><ul id="26752625-35ff-80a9-a765-f61b20e1d2ae" class="bulleted-list"><li style="list-style-type:disc"><strong>Education/Health:</strong> People that are employed in either schools, universities, hospitals, clinics or social services (like child care, elder care and counseling). This is just how the data appears in ACS Employement tables (census_bureau_acs.state_2020_5yr). </li></ul><ul id="26752625-35ff-801c-bfa0-ddad43c7cb1a" class="bulleted-list"><li style="list-style-type:disc"><strong>Rent to Income:</strong> Ratio of annual rent to annual income gives affordability metric</li></ul><ul id="26752625-35ff-80b1-988d-c438fb45a292" class="bulleted-list"><li style="list-style-type:disc"><strong>Avg Owner Occupied Housing Value:</strong> For each county, ACS reports the median home value of all owner-occupied housing units (homes that people live in and own, not rentals).<br/>The query I created (#3) takes the average across counties within each state and performs an average:<br/>This metric is a proxy for property market values (what it typically costs to buy a home in that estate)<p id="26852625-35ff-80dd-b3b9-dd845abaec4f" class="">Example in a certain state:</p><p id="26852625-35ff-80ab-8826-d99daa72cde0" class="">County A: median owner home = $500,000</p><p id="26852625-35ff-8023-b472-cf5ec8cb9e89" class="">County B: median owner home = $700,000</p><p id="26852625-35ff-8016-9b06-ca0d4f205a7e" class="">County C: median owner home = $600,000</p><p id="26852625-35ff-809c-9029-ca7b3ebae6fb" class="">The query will average these to ~$600,000 for California.</p></li></ul><p id="26852625-35ff-800c-9246-cf04305ef651" class="">
+</p><p id="26752625-35ff-80b8-a4af-d7c1b081dee3" class=""><strong>Employment Sector Distribution:</strong><br/>Helps to understand which sectors dominate the labor market per state and compare across states.<br/>Stacked Bar Chart (state on X-axis, # of employees by sector stacked, e.g., education/health, finance, manufacturing, etc.)<br/></p><p id="26852625-35ff-80e1-ad30-ff4c31256c23" class=""><strong>Housing Affordability Heatmap</strong></p><p id="26852625-35ff-80df-84ae-c0ee6a77068e" class="">Helps to see which states have the most expensive housing relative to income. Combining color + bubble size highlights rent burden vs property wealth.<br/>Geo Map<br/>Bubble size:avg_owner_occupied_housing_value<br/>Color intensity: avg_rent_to_income_ratio</p><p id="26852625-35ff-80b4-a636-ee19cee8a088" class="">
+</p><p id="26852625-35ff-80a1-970c-d339ab517e81" class=""><strong>Commute &amp; Remote Work Analysis</strong></p><p id="26852625-35ff-8044-8653-e8290c9823b4" class="">Helps to quickly identify states with high commuting times and remote work potential.<br/>Scatter Plot</p><ul id="26852625-35ff-80a2-b1af-c585c568b1ed" class="bulleted-list"><li style="list-style-type:disc">X-axis → <code>avg_travel_time_to_work</code></li></ul><ul id="26852625-35ff-80cf-9dbc-c434427e9e69" class="bulleted-list"><li style="list-style-type:disc">Y-axis → <code>pct_remote_avg</code></li></ul><ul id="26852625-35ff-804e-b201-f7ee1b21dd69" class="bulleted-list"><li style="list-style-type:disc">Bubble size → <code>total_commuters_drove_alone</code></li></ul><p id="26852625-35ff-803e-8df3-fbcc60f5e513" class="">
+</p><p id="26852625-35ff-80e2-aab0-df93e0a445bb" class=""><strong>Income Distribution</strong></p><p id="26852625-35ff-80ab-b17c-ff20986c4a43" class="">Helps to understand income distribution across states, identify high/low income clusters<br/>Stacked Bar Chart<br/>X-axis → <code>state_name</code></p><ul id="26852625-35ff-802a-98ad-f2e6d0f6382e" class="bulleted-list"><li style="list-style-type:disc">Y-axis → % of households per income bracket (<code>pct_of_state_households</code>)</li></ul><ul id="26852625-35ff-8017-984d-f572d27db15a" class="bulleted-list"><li style="list-style-type:disc">Each color → income bucket (0–15k, 15–25k, …, 100k+)</li></ul><p id="26852625-35ff-801d-bc0d-e6a53d73b1f8" class="">
+</p><p id="26852625-35ff-802a-b17d-d2f8a4636459" class=""><strong>Working-age Population per state (ages 25-64)</strong></p><p id="26852625-35ff-8048-bca8-d4beadfead24" class="">Helps to assess which states have more working-age population as well as education quality.<br/>The size of the square = size of working-age population<br/>The color of the square = the education level.<br/>For example, a state with a lot of potential workers but most of them have higher education quality (New York), we can infer that there might be a high level of competition for highly technical jobs.</p><p id="26852625-35ff-803e-82af-cdedc2f2328a" class="">
+</p><h2 id="26752625-35ff-8030-9f22-e2d2031509e1" class=""><strong>Part 2: Python &amp; API Integration</strong></h2><p id="26752625-35ff-805c-8332-e25ce2e0de6c" class="">Please enhance your project with some Python scripting:<br/></p><ol type="1" id="26752625-35ff-80d8-b6af-d5df11b9df9a" class="numbered-list" start="1"><li>Choose an API you are familiar with and integrate its data into your project.</li></ol><ol type="1" id="26752625-35ff-80a8-825e-eea1db0a2dea" class="numbered-list" start="2"><li>Use Postman to test your API call and verify the data you receive.</li></ol><ol type="1" id="26752625-35ff-80c7-aab2-f9d40179e154" class="numbered-list" start="3"><li>Deploy the API integration logic as python code using <strong>Cloud Run</strong>:<ol type="a" id="26752625-35ff-80cc-a4b6-c06feeac92f4" class="numbered-list" start="1"><li><a href="https://cloud.google.com/run">https://cloud.google.com/run</a></li></ol><ol type="a" id="26752625-35ff-8073-b82c-cf18cd6eeac6" class="numbered-list" start="2"><li><span style="border-bottom:0.05em solid">Notice:</span> you should use an inline editor to create a function. your function should be a si<p id="26752625-35ff-806f-85dd-df684e67defc" class="">mple python code that writes data to a bigquery table and runs daily.</p></li></ol></li></ol><ol type="1" id="26752625-35ff-80ad-9763-f3d93e02657c" class="numbered-list" start="4"><li>Do your best to use the data that collected by your function within your queries and dashboard</li></ol><hr id="26852625-35ff-80de-b964-de4e99d93e6b"/><p id="26852625-35ff-8033-8c02-e319aeec3300" class="">
+</p><p id="26852625-35ff-80cc-81bd-da5c459a698e" class="">I am going to use Adzuna API.<br/>Adzuna is a job board allowing companies to publish ads to attract job seekers.</p><figure id="26852625-35ff-8078-b647-d4a58465a51e" class="image"><a href="image%2011.png"><img style="width:709.9573364257812px" src="image%2011.png"/></a></figure><p id="26852625-35ff-806f-81fe-dc73cf2130a3" class="">
+</p><p id="26852625-35ff-8020-886b-edbf630a8300" class=""><span style="border-bottom:0.05em solid">The API request:</span></p><p id="26852625-35ff-8077-bebf-fc1f5c740cff" class="">GET <a href="https://api.adzuna.com/v1/api/jobs/us/search/1">https://api.adzuna.com/v1/api/jobs/us/search/1</a><br/>?app_id=YOUR_APP_ID<br/>&amp;app_key=YOUR_APP_KEY<br/>&amp;results_per_page=10<br/>&amp;what=data%20analyst<br/>&amp;where=New%20York</p><p id="26752625-35ff-80b6-af9b-f9b0518cec64" class="">I already have an app id and and app key.<br/>This returns JSON with job postings (title, company, salary, location, etc.).</p><p id="26852625-35ff-808d-ae30-d20649c96965" class="">for example (using Postman)</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26852625-35ff-80a2-a726-cce308805273" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=223d9f60&amp;app_key=3f4c7510782d76d9edffe71e90119545&amp;what=Product+Manager&amp;where=Los+Angeles%2C+California&amp;results_per_page=20&amp;sort_by=date</code></pre><figure id="26852625-35ff-8019-9627-d0590ad66bf2" class="image"><a href="image%2012.png"><img style="width:709.9573364257812px" src="image%2012.png"/></a></figure><p id="26852625-35ff-804a-97a5-db42428b9b99" class="">
+</p><p id="26852625-35ff-80ab-9d44-c50e29b72b1b" class="">There are 20 results returned per each API call, this is a single result out of the 20:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26852625-35ff-80f8-81a0-d3d8f5264acf" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">        {
+            &quot;company&quot;: {
+                &quot;display_name&quot;: &quot;Smiths Detection&quot;,
+                &quot;__CLASS__&quot;: &quot;Adzuna::API::Response::Company&quot;
+            },
+            &quot;id&quot;: &quot;5389047862&quot;,
+            &quot;title&quot;: &quot;Traveling Support Technician I - $7,000 Sign On Bonus&quot;,
+            &quot;description&quot;: &quot;Job Description Job Description Company Description Smiths Detection is a global leader in detection and screening technologies for the protection of people and assets, supporting safety, security and freedom of movement in today’s world. At Smiths Group plc, we apply leading-edge technology to design, manufacture and deliver market-leading innovative solutions that meet our customers&#x27; evolving needs, and touch the lives of millions of people every day. We are a FTSE100, global business of arou…&quot;,
+            &quot;location&quot;: {
+                &quot;display_name&quot;: &quot;Los Angeles, Los Angeles County&quot;,
+                &quot;__CLASS__&quot;: &quot;Adzuna::API::Response::Location&quot;,
+                &quot;area&quot;: [
+                    &quot;US&quot;,
+                    &quot;California&quot;,
+                    &quot;Los Angeles County&quot;,
+                    &quot;Los Angeles&quot;
+                ]
+            },
+            &quot;redirect_url&quot;: &quot;https://www.adzuna.com/details/5389047862?utm_medium=api&amp;utm_source=223d9f60&quot;,
+            &quot;salary_max&quot;: 46080.22,
+            &quot;adref&quot;: &quot;eyJhbGciOiJIUzI1NiJ9.eyJzIjoiZm4xMzJIYU04QkdJNDRyaENrcHB1dyIsImkiOiI1Mzg5MDQ3ODYyIn0.X0DR4nIoHCLRHb3P_SpUlGY3-rTZY7ajvUbIoPgmcXY&quot;,
+            &quot;created&quot;: &quot;2025-09-07T23:56:19Z&quot;,
+            &quot;__CLASS__&quot;: &quot;Adzuna::API::Response::Job&quot;,
+            &quot;category&quot;: {
+                &quot;label&quot;: &quot;Engineering Jobs&quot;,
+                &quot;tag&quot;: &quot;engineering-jobs&quot;,
+                &quot;__CLASS__&quot;: &quot;Adzuna::API::Response::Category&quot;
+            },
+            &quot;salary_is_predicted&quot;: &quot;1&quot;,
+            &quot;salary_min&quot;: 46080.22
+        }</code></pre><p id="26852625-35ff-806d-870b-ee85aaee528c" class="">
+</p><p id="26852625-35ff-8060-a00c-ef669aa696bf" class="">If we use a python code to flatten the returned data:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26852625-35ff-8046-81c5-ee19f779c28c" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def flatten_job(job):
+    # Flatten nested fields category, company, location with safe defaults
+    area_dict = get_job_location_area(job.get(&quot;location&quot;, {}).get(&quot;area&quot;))
+    return {
+        &quot;title&quot;: job.get(&quot;title&quot;),
+        &quot;salary_max&quot;: job.get(&quot;salary_max&quot;),
+        &quot;salary_min&quot;: job.get(&quot;salary_min&quot;),
+        &quot;salary_is_predicted&quot;: job.get(&quot;salary_is_predicted&quot;),
+        &quot;description&quot;: job.get(&quot;description&quot;),
+        &quot;redirect_url&quot;: job.get(&quot;redirect_url&quot;),
+        &quot;id&quot;: job.get(&quot;id&quot;),
+        &quot;created&quot;: job.get(&quot;created&quot;),
+        &#x27;contract_type&#x27;: job.get(&#x27;contract_type&#x27;),
+        &#x27;contract_time&#x27;: job.get(&#x27;contract_time&#x27;),
+        # Flatten category
+        &quot;category_label&quot;: job.get(&quot;category&quot;, {}).get(&quot;label&quot;),
+        &quot;category_tag&quot;: job.get(&quot;category&quot;, {}).get(&quot;tag&quot;),
+        # Flatten company
+        &quot;company_display_name&quot;: job.get(&quot;company&quot;, {}).get(&quot;display_name&quot;),
+        # Flatten location
+        &quot;location_display_name&quot;: job.get(&quot;location&quot;, {}).get(&quot;display_name&quot;),
+        &#x27;location_Country&#x27;:area_dict.get(&#x27;Country&#x27;),
+        &#x27;location_State&#x27;: area_dict.get(&#x27;State&#x27;),
+        &#x27;location_County&#x27;: area_dict.get(&#x27;County&#x27;),
+        &#x27;location_City&#x27;: area_dict.get(&#x27;City&#x27;),
+        &#x27;latitude&#x27;: job.get(&#x27;latitude&#x27;),
+        &#x27;longitude&#x27;: job.get(&#x27;longitude&#x27;),
+    }</code></pre><p id="26852625-35ff-801a-8120-ef7d88256e2e" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26852625-35ff-80bc-b883-d6976627945d" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">    flattened_jobs = [flatten_job(job) for job in results.get(&quot;results&quot;, [])]</code></pre><p id="26852625-35ff-805f-87d2-c1830cbda7eb" class="">we then get a list for which each element is a dictionary with  this structure:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26852625-35ff-8058-b1bc-cae587b70477" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">{&#x27;title&#x27;: &#x27;Supply Chain Programs &amp; Operations Planning Lead&#x27;,
+&#x27;salary_max&#x27;: 79455.12,
+&#x27;salary_min&#x27;: 79455.12,
+ &#x27;salary_is_predicted&#x27;: &#x27;1&#x27;,
+  &#x27;description&#x27;: &#x27;Job Description Job Description Divergent is a technology company that has architected, invented, built, and commercialized an end-to-end factory system called the Divergent Adaptive Production System (DAPS™) that comprehensively uses machine learning to optimally engineer, additively manufacture, and flexibly assemble complex integrated vehicle structures and subsystems. Products created using DAPS are superior in performance, lower in cost, rapidly customizable to meet mission and customer-sp…&#x27;, 
+ &#x27;redirect_url&#x27;: &#x27;https://www.adzuna.com/details/5389063010?utm_medium=api&amp;utm_source=223d9f60&#x27;,
+&#x27;id&#x27;: &#x27;5389063010&#x27;,
+&#x27;created&#x27;: &#x27;2025-09-08T00:40:19Z&#x27;,
+&#x27;contract_type&#x27;: None,
+&#x27;contract_time&#x27;: None,
+&#x27;category_label&#x27;: &#x27;Engineering Jobs&#x27;,
+&#x27;category_tag&#x27;: &#x27;engineering-jobs&#x27;,
+&#x27;company_display_name&#x27;: &#x27;Divergent&#x27;,
+&#x27;location_display_name&#x27;:
+&#x27;Los Angeles, Los Angeles County&#x27;,
+&#x27;location_Country&#x27;: &#x27;US&#x27;, 
+&#x27;location_State&#x27;: &#x27;California&#x27;,
+&#x27;location_County&#x27;: &#x27;Los Angeles County&#x27;,
+&#x27;location_City&#x27;: &#x27;Los Angeles&#x27;,
+&#x27;latitude&#x27;: None,
+&#x27;longitude&#x27;: None}</code></pre><p id="26852625-35ff-80cb-a6f7-d9012157692e" class="">
+</p><p id="26852625-35ff-80a1-bcff-ca90a6cc7cf2" class="">Using Cloud Run to add a service “extract-raw-from-adzuna”</p><figure id="26852625-35ff-808d-ae2d-cf20af986783" class="image"><a href="image%2013.png"><img style="width:709.9573364257812px" src="image%2013.png"/></a></figure><figure id="26852625-35ff-8075-87b6-f7ae8fa034d3" class="image"><a href="image%2014.png"><img style="width:709.9857788085938px" src="image%2014.png"/></a></figure><p id="26852625-35ff-8019-b341-ff0d580f4ef0" class="">
+</p><figure id="26852625-35ff-8057-9e6f-e028c58f2bde" class="image"><a href="image%2015.png"><img style="width:709.9431762695312px" src="image%2015.png"/></a></figure><p id="26852625-35ff-8001-ae8c-c89c73a548a8" class="">full python code:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26852625-35ff-80db-891c-d7ca70c4247c" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># main.py
+import requests
+from google.cloud import bigquery
+import json
+from typing import List, Dict, Any
+import time
+from datetime import datetime
+
+# --- CONFIGURATION ---
+PROJECT_ID = &quot;ravendataanalyst&quot;
+DATASET = &quot;dbo&quot;
+TABLE = &quot;adzuna_jobs&quot;
+APP_ID = &#x27;223d9f60&#x27;
+APP_KEY = &#x27;3f4c7510782d76d9edffe71e90119545&#x27;
+
+# --- JOB TITLES AND STATES ---
+JOB_TITLES_BY_CATEGORY = {
+    &quot;it-jobs&quot;: [&quot;Software Developer&quot;, &quot;Data Scientist&quot;],
+    &quot;healthcare-nursing-jobs&quot;: [&quot;Registered Nurse&quot;]
+}
+US_STATES = [&quot;California&quot;, &quot;New York&quot;, &quot;Texas&quot;]
+
+# --- FUNCTIONS ---
+def create_search_list(limit_titles=1, limit_states=1) -&gt; List[Dict[str, str]]:
+    search_list = []
+    titles = []
+    for titles_in_cat in JOB_TITLES_BY_CATEGORY.values():
+        titles.extend(titles_in_cat[:limit_titles])
+    for title in titles:
+        for state in US_STATES[:limit_states]:
+            search_list.append({&quot;Job Title&quot;: title, &quot;State&quot;: state})
+    return search_list
+
+def flatten_job(job: Dict[str, Any], job_title: str, state: str) -&gt; Dict[str, Any]:
+    return {
+        &#x27;id&#x27;: job.get(&#x27;id&#x27;),
+        &#x27;title&#x27;: job.get(&#x27;title&#x27;),
+        &#x27;description&#x27;: job.get(&#x27;description&#x27;, &#x27;&#x27;),
+        &#x27;created&#x27;: job.get(&#x27;created&#x27;),
+        &#x27;redirect_url&#x27;: job.get(&#x27;redirect_url&#x27;),
+        &#x27;salary_min&#x27;: job.get(&#x27;salary_min&#x27;),
+        &#x27;salary_max&#x27;: job.get(&#x27;salary_max&#x27;),
+        &#x27;salary_is_predicted&#x27;: job.get(&#x27;salary_is_predicted&#x27;, False),
+        &#x27;contract_type&#x27;: job.get(&#x27;contract_type&#x27;),
+        &#x27;contract_time&#x27;: job.get(&#x27;contract_time&#x27;),
+        &#x27;category_tag&#x27;: job.get(&#x27;category&#x27;, {}).get(&#x27;tag&#x27;) if job.get(&#x27;category&#x27;) else None,
+        &#x27;category_label&#x27;: job.get(&#x27;category&#x27;, {}).get(&#x27;label&#x27;) if job.get(&#x27;category&#x27;) else None,
+        &#x27;company_display_name&#x27;: job.get(&#x27;company&#x27;, {}).get(&#x27;display_name&#x27;) if job.get(&#x27;company&#x27;) else None,
+        &#x27;location_area&#x27;: &#x27;, &#x27;.join(job.get(&#x27;location&#x27;, {}).get(&#x27;area&#x27;, [])) if job.get(&#x27;location&#x27;) else None,
+        &#x27;location_display_name&#x27;: job.get(&#x27;location&#x27;, {}).get(&#x27;display_name&#x27;) if job.get(&#x27;location&#x27;) else None,
+        &#x27;adref&#x27;: job.get(&#x27;adref&#x27;),
+        &#x27;extracted_at&#x27;: datetime.utcnow().isoformat(),
+        &#x27;search_job_title&#x27;: job_title,
+        &#x27;search_state&#x27;: state
+    }
+
+def write_to_bigquery(jobs: List[Dict[str, Any]]):
+    client = bigquery.Client(project=PROJECT_ID)
+    table_id = f&quot;{PROJECT_ID}.{DATASET}.{TABLE}&quot;
+    job_config = bigquery.LoadJobConfig(write_disposition=&quot;WRITE_APPEND&quot;)
+    load_job = client.load_table_from_json(jobs, table_id, job_config=job_config)
+    load_job.result()
+    print(f&quot;Loaded {len(jobs)} jobs into {table_id}&quot;)
+
+def extract_from_adzuna(job_title: str, state: str) -&gt; int:
+    endpoint = &quot;https://api.adzuna.com/v1/api/jobs/us/search/1&quot;
+    params = {
+        &quot;app_id&quot;: APP_ID,
+        &quot;app_key&quot;: APP_KEY,
+        &quot;what&quot;: job_title,
+        &quot;where&quot;: state,
+        &quot;results_per_page&quot;: 10,
+        &quot;sort_by&quot;: &quot;date&quot;
+    }
+    resp = requests.get(endpoint, params=params, timeout=30)
+    if resp.status_code == 200:
+        results = resp.json().get(&quot;results&quot;, [])
+        if results:
+            jobs = [flatten_job(j, job_title, state) for j in results]
+            write_to_bigquery(jobs)
+            return len(jobs)
+    return 0
+
+def run_full_extraction():
+    search_list = create_search_list(limit_titles=1, limit_states=2)
+    total = 0
+    for item in search_list:
+        total += extract_from_adzuna(item[&quot;Job Title&quot;], item[&quot;State&quot;])
+        time.sleep(1)
+    print(f&quot;Extraction finished. Total jobs loaded: {total}&quot;)
+</code></pre><p id="26852625-35ff-80ec-9bcf-c1dd302123b2" class="">
+</p><h3 id="26852625-35ff-806f-8dee-d430da8994a5" class="">How can Adzuna Jobs data help us?</h3><p id="26852625-35ff-80f9-ab73-e92128855329" class="">we can make some useful aggregations:</p><ul id="26852625-35ff-8067-9be1-dbff1ab1a927" class="bulleted-list"><li style="list-style-type:disc">total jobs:<br/>count of jobs per state<br/>this can be compared to the population of working-age in each state (25-64)<br/>or it can be compared to the bachelors degree (or plus) percentage.</li></ul><ul id="26852625-35ff-80e8-b925-dacd363695ef" class="bulleted-list"><li style="list-style-type:disc">average salary min/max - <br/>salary statistics per state.<br/>this can be compared to average median income. of course this will not help us too much in this initial state of the dashboard (data is still underdeveloped)</li></ul><ul id="26852625-35ff-800c-8a44-cc57eebaa80d" class="bulleted-list"><li style="list-style-type:disc">jobs by category:<br/>count per category and per state<br/>this is usefull for drill downs by sector.</li></ul><ul id="26852625-35ff-8078-9565-cb6408bece0a" class="bulleted-list"><li style="list-style-type:disc">job density:<br/>a ratio of total jobs / population 25-64<br/>this shows relative opportunity per working-age population.</li></ul><p id="26852625-35ff-80eb-82e2-c64d2ef7e3eb" class="">
+</p><p id="26852625-35ff-8089-aabb-cc4a7483adf2" class=""><span style="border-bottom:0.05em solid">Query 6- Total jobs per state</span></p><p id="26852625-35ff-801c-ae10-f67dc70a3afe" class="">We want state-level total jobs. We’ll also include population 25-64 and % with bachelor&#x27;s degree so you can compare.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26852625-35ff-804c-9660-fe20bc55a697" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">CREATE OR REPLACE TABLE `ravendataanalyst.dbo.q6_total_jobs` AS
+SELECT
+    l.state_name,
+    COUNT(a.id) AS total_jobs,
+    l.pop_25_64,
+    l.bachelors_degree_or_higher_25_64,
+    l.pct_bachelors_plus
+FROM `ravendataanalyst.dbo.adzuna_jobs` AS a
+JOIN `ravendataanalyst.dbo.q1_education_labor` AS l
+    ON a.search_state = l.state_name
+GROUP BY l.state_name, l.pop_25_64, l.bachelors_degree_or_higher_25_64, l.pct_bachelors_plus
+ORDER BY total_jobs DESC;
+</code></pre><p id="26852625-35ff-8001-914a-da3f9269f67f" class="">Looker use:<br/>new metric: Adzuna Jobs</p><figure id="26852625-35ff-80d7-ae7a-eb98174496de" class="image"><a href="image%2016.png"><img style="width:709.9573364257812px" src="image%2016.png"/></a></figure><p id="26852625-35ff-80dc-bbec-c4dfd2ba84c7" class=""><span style="border-bottom:0.05em solid">Query 7 - Jobs by category per state (drill-down table)</span></p><p id="26852625-35ff-80a2-b456-c43dcf24ca79" class=""><strong>jobs broken down by category per state</strong>, for drill-down functionality in Looker.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26852625-35ff-80da-9ec5-ca34923b993c" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">CREATE OR REPLACE TABLE `ravendataanalyst.dbo.q7_jobs_by_category` AS
+SELECT
+    search_state AS state_name,
+    category_label,
+    COUNT(*) AS jobs_count
+FROM `ravendataanalyst.dbo.adzuna_jobs`
+GROUP BY search_state, category_label
+ORDER BY state_name, jobs_count DESC;
+</code></pre><p id="26852625-35ff-8007-beb2-d39a7dd263ba" class="">
+</p><p id="26852625-35ff-80e7-b3ae-ca180a02ab28" class="">Looker use:<br/>A table visualization state drill down category:</p><figure id="26852625-35ff-80e5-97a0-d65682e86925" class="image"><a href="image%2017.png"><img style="width:406.9886169433594px" src="image%2017.png"/></a></figure><figure id="26852625-35ff-80d3-b8af-c1c2fb0df026" class="image"><a href="image%2018.png"><img style="width:381.97442626953125px" src="image%2018.png"/></a></figure><p id="26852625-35ff-8004-b790-f88c2e510544" class="">
+</p><p id="26852625-35ff-80d4-a6d7-c6855f28ea9c" class=""><span style="border-bottom:0.05em solid">Query 8 -Job density </span></p><p id="26852625-35ff-8001-bdf7-e525de8302f2" class="">This will be enriched later on by a calculated field in Looker<br/>Job density will be the division between total_jobs and pop25_64</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26852625-35ff-80aa-bfbd-c535b299e189" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">CREATE OR REPLACE TABLE `ravendataanalyst.dbo.q8_job_density_base` AS
+SELECT
+    state_name,
+    total_jobs,
+    pop_25_64
+FROM `ravendataanalyst.dbo.q6_total_jobs`;</code></pre><p id="26852625-35ff-8077-9d3a-d81e566dabf7" class="">
+</p><figure id="26852625-35ff-803c-b554-e201b9243400" class="image"><a href="image%2019.png"><img style="width:224.9857940673828px" src="image%2019.png"/></a></figure><figure id="26852625-35ff-8015-9096-e0673fe79a3f" class="image"><a href="image%2020.png"><img style="width:396.97442626953125px" src="image%2020.png"/></a></figure><p id="26852625-35ff-80a8-a6fb-dd2f19b562e0" class=""><span style="border-bottom:0.05em solid">Query 9 - Track jobs over time</span></p><p id="26852625-35ff-80a1-970f-fe11fc0de6a6" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26852625-35ff-8003-ba6b-eb24c0a03b09" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">CREATE OR REPLACE TABLE `ravendataanalyst.dbo.q9_jobs_over_time` AS
+WITH jobs_per_category AS (
+  SELECT
+    DATE(created) AS created_date,
+    search_state AS state_name,
+    category_label,
+    COUNT(*) AS jobs_in_category
+  FROM `ravendataanalyst.dbo.adzuna_jobs`
+  GROUP BY created_date, state_name, category_label
+)
+
+SELECT
+  created_date,
+  state_name,
+  SUM(jobs_in_category) AS total_jobs,
+  round(AVG(jobs_in_category),2) AS avg_jobs_per_category
+FROM jobs_per_category
+GROUP BY created_date, state_name
+ORDER BY created_date, state_name;
+</code></pre><p id="26852625-35ff-806a-9515-d3a58e374e72" class="">
+</p><p id="26852625-35ff-804c-98a6-fc36a3519348" class="">Looker:<br/>Time series chart</p><figure id="26852625-35ff-8095-9b51-dd47c18bada7" class="image"><a href="image%2021.png"><img style="width:709.9431762695312px" src="image%2021.png"/></a></figure><p id="26852625-35ff-8082-a1a5-e13d0dcf120b" class="">with optional metric as average jobs per category</p><figure id="26852625-35ff-80c2-a397-ef72bb363569" class="image"><a href="image%2022.png"><img style="width:709.9573364257812px" src="image%2022.png"/></a></figure><figure id="26852625-35ff-80cd-8858-c28f3b2b8e43" class="image"><a href="image%2023.png"><img style="width:166.97442626953125px" src="image%2023.png"/></a></figure><h2 id="26752625-35ff-8093-bf7c-deb8ef83a51a" class=""><strong>Part 3 (Bonus): Add an orchestration layer using DBT</strong></h2><ol type="1" id="26752625-35ff-8046-8ae8-d34b61dead0f" class="numbered-list" start="1"><li>Use dbt to manage SQL transformations and trigger your query execution workflow.</li></ol><ol type="1" id="26752625-35ff-80f8-a851-f8cf97b6f62b" class="numbered-list" start="2"><li>Your dbt project should handle the scheduling and management of your analysis queries, including saving results as tables and maintaining dependencies.</li></ol><ol type="1" id="26752625-35ff-805a-9515-dea71fe79a9d" class="numbered-list" start="3"><li>Resources:</li></ol><ol type="1" id="26752625-35ff-80b4-8283-fa691e2da34f" class="numbered-list" start="4"><li>Introduction: <a href="https://docs.getdbt.com/docs/introduction">https://docs.getdbt.com/docs/introduction</a></li></ol><ol type="1" id="26752625-35ff-806c-8526-cd209a12af6a" class="numbered-list" start="5"><li>BigQuery Setup Guide: <a href="https://docs.getdbt.com/guides/bigquery?step=1">https://docs.getdbt.com/guides/bigquery?step=1</a></li></ol><p id="26852625-35ff-8071-9d6d-dc329f8455ad" class="">
+</p><p id="26852625-35ff-8007-afd6-d9f96ea888a0" class="">DBT Package for reference:</p><figure id="26852625-35ff-802f-9586-c292d46cf57b"><div class="source"><a href="ravendataanalyst_project.zip">ravendataanalyst_project.zip</a></div></figure><p id="26852625-35ff-80c5-b7bd-f79dba1de85c" class="">
+</p><p id="26852625-35ff-80e9-a01c-ded5e234399c" class="">
+</p><p id="26852625-35ff-8057-a00b-c5ffa6fe81ad" class="">steps:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26852625-35ff-8086-9035-fa832c482396" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">pip install dbt-bigquery</code></pre><p id="26752625-35ff-8052-a392-dbc7c7f92d7e" class="">
+</p><p id="26852625-35ff-8023-b772-e83440d569d6" class="">then, initialize the dbt project</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26852625-35ff-809e-9d85-c7f686c8180a" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">dbt init ravendataanalyst_project</code></pre><p id="26852625-35ff-8012-b01a-c6b777c0e35e" class="">
+</p><p id="26852625-35ff-8038-8203-ff35d7124a94" class="">set  profiles.yml</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26852625-35ff-80cf-b973-ddae1a551d57" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">ravendataanalyst_project:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: ravendataanalyst
+      dataset: dbo     
+      keyfile: C:\Users\Matan\Documents\Studies\InterviewPrep\pythonProject\exams\Raven\ravendataanalyst-bigquery-key.json
+      threads: 4
+      timeout_seconds: 300
+      location: US
+      priority: interactive
+</code></pre><p id="26852625-35ff-8009-9e7e-ca846c15d96c" class="">
+</p><p id="26852625-35ff-8072-8a80-f779f6e5945c" class="">set models→ sources.yml to include tables that are not generated by dbt as data sources</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26852625-35ff-80eb-a320-f8ae77c763cd" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">version: 2
+
+sources:
+  - name: ravendataanalyst
+    database: ravendataanalyst
+    schema: dbo
+    tables:
+      - name: adzuna_jobs
+</code></pre><p id="26852625-35ff-8092-bc6d-db96831c2010" class="">
+</p><p id="26852625-35ff-804c-bfc1-febf2c4a6a5b" class="">add all the models:</p><figure id="26852625-35ff-8041-acb9-f1947f11c835" class="image"><a href="image%2024.png"><img style="width:542.98291015625px" src="image%2024.png"/></a></figure><p id="26852625-35ff-808f-b528-fcfb8a42c81e" class="">
+</p><p id="26852625-35ff-8045-abd4-dbea6baa6454" class="">run a test: </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26852625-35ff-802a-ae9d-ea1c5f572750" class="code code-wrap"><code class="language-SQL" style="white-space:pre-wrap;word-break:break-all">dbt run --select q6</code></pre><figure id="26852625-35ff-8054-a323-eedc7bfec162" class="image"><a href="image%2025.png"><img style="width:667.3295288085938px" src="image%2025.png"/></a></figure><p id="26852625-35ff-8063-89c5-c2643c50842c" class="">
+</p><p id="26852625-35ff-804c-b012-dee4ff064d14" class="">
+</p><p id="26852625-35ff-80f4-852a-d8b9481cb8a4" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
